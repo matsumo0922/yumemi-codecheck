@@ -30,7 +30,7 @@ class OneViewModel(
 ) : ViewModel() {
 
     // 検索結果
-    fun searchResults(inputText: String): List<Item> = runBlocking {
+    fun searchResults(inputText: String): List<item> = runBlocking {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
@@ -43,7 +43,7 @@ class OneViewModel(
 
             val jsonItems = jsonBody.optJSONArray("items")!!
 
-            val items = mutableListOf<Item>()
+            val items = mutableListOf<item>()
 
             /**
              * アイテムの個数分ループする
@@ -59,15 +59,15 @@ class OneViewModel(
                 val openIssuesCount = jsonItem.optLong("open_issues_count")
 
                 items.add(
-                    Item(
+                    item(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
                         language = context.getString(R.string.written_language, language),
                         stargazersCount = stargazersCount,
                         watchersCount = watchersCount,
                         forksCount = forksCount,
-                        openIssuesCount = openIssuesCount,
-                    ),
+                        openIssuesCount = openIssuesCount
+                    )
                 )
             }
 
@@ -79,7 +79,7 @@ class OneViewModel(
 }
 
 @Parcelize
-data class Item(
+data class item(
     val name: String,
     val ownerIconUrl: String,
     val language: String,
