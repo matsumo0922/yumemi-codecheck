@@ -3,9 +3,9 @@ import com.android.build.api.variant.ResValue
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
-    id("klms.primitive.kmp.common")
-    id("klms.primitive.kmp.android.application")
-    id("klms.primitive.kmp.android.compose")
+    id("yumemi.primitive.kmp.common")
+    id("yumemi.primitive.kmp.android.application")
+    id("yumemi.primitive.kmp.android.compose")
 }
 
 android {
