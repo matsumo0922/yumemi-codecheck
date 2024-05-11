@@ -18,6 +18,10 @@ permissions:
 jobs:
   Lint:
     uses: ./.github/workflows/call-lint.yml
+    secrets:
+      CI_TOKEN: ${{ secrets.CI_TOKEN }}
 
   Build:
     uses: ./.github/workflows/call-build.yml
+    secrets:
+      CI_TOKEN: ${{ secrets.CI_TOKEN }}
