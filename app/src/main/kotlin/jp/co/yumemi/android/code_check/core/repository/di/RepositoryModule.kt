@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single<UserDataRepository> {
         UserDataRepositoryImpl(
-            userDataStore = get()
+            userDataStore = get(),
         )
     }
 }

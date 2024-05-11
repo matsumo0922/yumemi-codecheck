@@ -12,7 +12,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-class YacApplication: Application() {
+class YacApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -28,7 +28,7 @@ class YacApplication: Application() {
     }
 
     private fun setupAdMob() {
-        //MobileAds.initialize(this)
+        // MobileAds.initialize(this)
         /*MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
                 .setTestDeviceIds(listOf("5BF0B07F227A5817A04A51CEED4B4608"))
