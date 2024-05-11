@@ -90,6 +90,9 @@ firebase = "32.7.2"
 leakCanary = "2.12"
 flipper = "0.240.0"
 napier = "2.7.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
@@ -234,6 +237,9 @@ facebook-soloader = { module = "com.facebook.soloader:soloader", version = "0.10
 facebook-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "flipper" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 [bundles]
 infra-api = [

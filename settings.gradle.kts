@@ -1,7 +1,7 @@
 rootProject.name = "Android Engineer CodeCheck"
 include(":app")
 
-/*pluginManagement {
+pluginManagement {
     includeBuild("build-logic")
     repositories {
         google()
@@ -9,7 +9,7 @@ include(":app")
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
-}*/
+}
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
