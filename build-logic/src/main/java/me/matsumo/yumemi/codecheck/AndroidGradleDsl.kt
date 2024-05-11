@@ -46,6 +46,9 @@ fun Project.setupAndroid() {
         }
 
         dependencies {
+            testImplementation(libs.library("junit"))
+            androidTestImplementation(libs.library("androidx-test-ext-junit"))
+            androidTestImplementation(libs.library("androidx-test-espresso-espresso-core"))
             add("coreLibraryDesugaring", libs.library("desugar"))
         }
     }
