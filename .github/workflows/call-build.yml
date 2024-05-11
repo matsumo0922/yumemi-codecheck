@@ -16,8 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: true
-          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_KEY }}
           ref: "refs/pull/${{ github.event.pull_request.number }}/merge"
 
       - name: Setup JDK
