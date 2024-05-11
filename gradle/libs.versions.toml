@@ -209,6 +209,7 @@ ui-android-api = [
     "androidx-compose-animation-graphics",
     "androidx-compose-material",
     "androidx-compose-material3",
+    "androidx-compose-material3-window",
     "androidx-compose-material-icons-extended",
     "google-material",
 ]
