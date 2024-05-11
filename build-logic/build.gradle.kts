@@ -20,26 +20,31 @@ kotlin {
 dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.detekt.gradlePlugin)
     implementation(libs.gms.services)
 }
 
 gradlePlugin {
     plugins {
         register("KmpPlugin") {
-            id = "klms.primitive.kmp.common"
+            id = "yumemi.primitive.kmp.common"
             implementationClass = "primitive.KmpCommonPlugin"
         }
         register("KmpAndroidApplication") {
-            id = "klms.primitive.kmp.android.application"
+            id = "yumemi.primitive.kmp.android.application"
             implementationClass = "primitive.KmpAndroidApplication"
         }
         register("KmpAndroidLibrary") {
-            id = "klms.primitive.kmp.android.library"
+            id = "yumemi.primitive.kmp.android.library"
             implementationClass = "primitive.KmpAndroidLibrary"
         }
         register("KmpAndroidCompose") {
-            id = "klms.primitive.kmp.android.compose"
+            id = "yumemi.primitive.kmp.android.compose"
             implementationClass = "primitive.KmpAndroidCompose"
+        }
+        register("DetektPlugin") {
+            id = "yumemi.primitive.detekt"
+            implementationClass = "primitive.DetektPlugin"
         }
     }
 }
