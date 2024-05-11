@@ -11,7 +11,7 @@ class GhSearchRepositoriesPaging(
     private val sort: GitHubRepository.RepositorySort?,
     private val order: GitHubRepository.Order?,
     private val gitHubRepository: GitHubRepository,
-): PagingSource<Int, SearchRepositories.Item>() {
+) : PagingSource<Int, SearchRepositories.Item>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchRepositories.Item> {
         return suspendRunCatching {
@@ -26,7 +26,7 @@ class GhSearchRepositoriesPaging(
             },
             onFailure = {
                 LoadResult.Error(it)
-            }
+            },
         )
     }
 

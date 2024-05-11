@@ -94,7 +94,7 @@ data class GhRepositoryDetail(
     val url: String,
     val visibility: String,
     val watchers: Int,
-    val watchersCount: Int
+    val watchersCount: Int,
 ) {
     @Serializable
     data class License(
@@ -102,7 +102,7 @@ data class GhRepositoryDetail(
         val name: String,
         val nodeId: String,
         val spdxId: String,
-        val url: String
+        val url: String,
     )
 
     @Serializable
@@ -124,7 +124,7 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String
+        val url: String,
     )
 
     @Serializable
@@ -146,14 +146,14 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String
+        val url: String,
     )
 
     @Serializable
     data class Permissions(
         val admin: Boolean,
         val pull: Boolean,
-        val push: Boolean
+        val push: Boolean,
     )
 }
 
@@ -249,7 +249,7 @@ fun RepositoryDetailEntity.translate(): GhRepositoryDetail {
         url = this.url,
         visibility = this.visibility,
         watchers = this.watchers,
-        watchersCount = this.watchersCount
+        watchersCount = this.watchersCount,
     )
 }
 
@@ -259,7 +259,7 @@ fun RepositoryDetailEntity.License.translate() = GhRepositoryDetail.License(
     name = this.name,
     nodeId = this.nodeId,
     spdxId = this.spdxId,
-    url = this.url
+    url = this.url,
 )
 
 fun RepositoryDetailEntity.Organization.translate() = GhRepositoryDetail.Organization(
@@ -280,7 +280,7 @@ fun RepositoryDetailEntity.Organization.translate() = GhRepositoryDetail.Organiz
     starredUrl = this.starredUrl,
     subscriptionsUrl = this.subscriptionsUrl,
     type = this.type,
-    url = this.url
+    url = this.url,
 )
 
 fun RepositoryDetailEntity.Owner.translate() = GhRepositoryDetail.Owner(
@@ -301,11 +301,11 @@ fun RepositoryDetailEntity.Owner.translate() = GhRepositoryDetail.Owner(
     starredUrl = this.starredUrl,
     subscriptionsUrl = this.subscriptionsUrl,
     type = this.type,
-    url = this.url
+    url = this.url,
 )
 
 fun RepositoryDetailEntity.Permissions.translate() = GhRepositoryDetail.Permissions(
     admin = this.admin,
     pull = this.pull,
-    push = this.push
+    push = this.push,
 )

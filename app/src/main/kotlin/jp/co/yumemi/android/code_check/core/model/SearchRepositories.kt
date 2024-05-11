@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class SearchRepositories(
     val isIncompleteResults: Boolean,
     val items: List<Item>,
-    val totalCount: Int
+    val totalCount: Int,
 ) {
     @Serializable
     data class Item(
@@ -87,7 +87,7 @@ data class SearchRepositories(
         val url: String,
         val visibility: String,
         val watchers: Int,
-        val watchersCount: Int
+        val watchersCount: Int,
     ) {
         @Serializable
         data class License(
@@ -96,7 +96,7 @@ data class SearchRepositories(
             val name: String,
             val nodeId: String,
             val spdxId: String,
-            val url: String
+            val url: String,
         )
 
         @Serializable
@@ -118,7 +118,7 @@ data class SearchRepositories(
             val starredUrl: String,
             val subscriptionsUrl: String,
             val type: String,
-            val url: String
+            val url: String,
         )
     }
 }
@@ -127,7 +127,7 @@ fun SearchRepositoriesEntity.translate(): SearchRepositories {
     return SearchRepositories(
         isIncompleteResults = this.incompleteResults,
         totalCount = this.totalCount,
-        items = this.items.map { it.translate() }
+        items = this.items.map { it.translate() },
     )
 }
 
@@ -208,7 +208,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         url = this.url,
         visibility = this.visibility,
         watchers = this.watchers,
-        watchersCount = this.watchersCount
+        watchersCount = this.watchersCount,
     )
 }
 
@@ -219,7 +219,7 @@ fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.L
         name = this.name,
         nodeId = this.nodeId,
         spdxId = this.spdxId,
-        url = this.url
+        url = this.url,
     )
 }
 
@@ -242,6 +242,6 @@ fun SearchRepositoriesEntity.Item.Owner.translate(): SearchRepositories.Item.Own
         starredUrl = this.starredUrl,
         subscriptionsUrl = this.subscriptionsUrl,
         type = this.type,
-        url = this.url
+        url = this.url,
     )
 }

@@ -11,7 +11,7 @@ class GhSearchUsersPaging(
     private val sort: GitHubRepository.UserSort?,
     private val order: GitHubRepository.Order?,
     private val gitHubRepository: GitHubRepository,
-): PagingSource<Int, SearchUsers.Item>() {
+) : PagingSource<Int, SearchUsers.Item>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchUsers.Item> {
         return suspendRunCatching {
@@ -26,7 +26,7 @@ class GhSearchUsersPaging(
             },
             onFailure = {
                 LoadResult.Error(it)
-            }
+            },
         )
     }
 

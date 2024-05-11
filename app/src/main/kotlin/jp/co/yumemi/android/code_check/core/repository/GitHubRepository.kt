@@ -41,21 +41,21 @@ interface GitHubRepository {
     // order
     enum class Order(val value: String) {
         ASC("asc"),
-        DESC("desc")
+        DESC("desc"),
     }
 
     // sort
     enum class UserSort(val value: String) {
         FOLLOWERS("followers"),
         REPOSITORIES("repositories"),
-        JOINED("joined")
+        JOINED("joined"),
     }
 
     enum class RepositorySort(val value: String) {
         STARS("stars"),
         FORKS("forks"),
         HELP_WANTED_ISSUES("help-wanted-issues"),
-        UPDATED("updated")
+        UPDATED("updated"),
     }
 }
 
@@ -69,7 +69,7 @@ class GitHubRepositoryImpl(
     override fun getSearchUsersPaging(
         query: String,
         sort: GitHubRepository.UserSort?,
-        order: GitHubRepository.Order?
+        order: GitHubRepository.Order?,
     ): Flow<PagingData<SearchUsers.Item>> {
         return Pager(
             config = PagingConfig(pageSize = 30),
@@ -90,7 +90,7 @@ class GitHubRepositoryImpl(
     override fun getSearchRepositoriesPaging(
         query: String,
         sort: GitHubRepository.RepositorySort?,
-        order: GitHubRepository.Order?
+        order: GitHubRepository.Order?,
     ): Flow<PagingData<SearchRepositories.Item>> {
         return Pager(
             config = PagingConfig(pageSize = 30),
@@ -112,13 +112,13 @@ class GitHubRepositoryImpl(
         query: String,
         sort: GitHubRepository.UserSort?,
         order: GitHubRepository.Order?,
-        page: Int
+        page: Int,
     ): GhPaging<SearchUsers> = withContext(ioDispatcher) {
         val params = mapOf(
             "q" to query,
             "sort" to sort?.value,
             "order" to order?.value,
-            "page" to page.toString()
+            "page" to page.toString(),
         )
 
         client.get("search/users", params).parsePaging {
@@ -130,13 +130,13 @@ class GitHubRepositoryImpl(
         query: String,
         sort: GitHubRepository.RepositorySort?,
         order: GitHubRepository.Order?,
-        page: Int
+        page: Int,
     ): GhPaging<SearchRepositories> = withContext(ioDispatcher) {
         val params = mapOf(
             "q" to query,
             "sort" to sort?.value,
             "order" to order?.value,
-            "page" to page.toString()
+            "page" to page.toString(),
         )
 
         client.get("search/repositories", params).parsePaging {

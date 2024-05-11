@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.code_check.core.model.entity
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,7 +10,7 @@ data class SearchRepositoriesEntity(
     @SerialName("items")
     val items: List<Item>,
     @SerialName("total_count")
-    val totalCount: Int
+    val totalCount: Int,
 ) {
     @Serializable
     data class Item(
@@ -166,7 +165,7 @@ data class SearchRepositoriesEntity(
         @SerialName("watchers")
         val watchers: Int,
         @SerialName("watchers_count")
-        val watchersCount: Int
+        val watchersCount: Int,
     ) {
         @Serializable
         data class License(
@@ -181,7 +180,7 @@ data class SearchRepositoriesEntity(
             @SerialName("spdx_id")
             val spdxId: String,
             @SerialName("url")
-            val url: String
+            val url: String,
         )
 
         @Serializable
@@ -221,7 +220,7 @@ data class SearchRepositoriesEntity(
             @SerialName("type")
             val type: String,
             @SerialName("url")
-            val url: String
+            val url: String,
         )
     }
 }

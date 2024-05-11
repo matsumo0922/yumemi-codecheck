@@ -10,7 +10,7 @@ data class GhPage(
     val last: Int?,
 )
 
-data class GhPaging <out T> (
+data class GhPaging<out T> (
     val data: T,
     val pagination: GhPage,
 )

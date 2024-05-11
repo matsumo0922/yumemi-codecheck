@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class SearchUsers(
     val incompleteResults: Boolean,
     val items: List<Item>,
-    val totalCount: Int
+    val totalCount: Int,
 ) {
     @Serializable
     data class Item(
@@ -29,14 +29,14 @@ data class SearchUsers(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String
+        val url: String,
     )
 }
 
 fun SearchUsersEntity.translate() = SearchUsers(
     incompleteResults = this.incompleteResults,
     items = this.items.map { it.translate() },
-    totalCount = this.totalCount
+    totalCount = this.totalCount,
 )
 
 fun SearchUsersEntity.Item.translate() = SearchUsers.Item(
@@ -58,5 +58,5 @@ fun SearchUsersEntity.Item.translate() = SearchUsers.Item(
     starredUrl = this.starredUrl,
     subscriptionsUrl = this.subscriptionsUrl,
     type = this.type,
-    url = this.url
+    url = this.url,
 )

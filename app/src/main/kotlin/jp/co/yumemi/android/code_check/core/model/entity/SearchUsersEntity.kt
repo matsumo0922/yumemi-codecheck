@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.code_check.core.model.entity
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,7 +10,7 @@ data class SearchUsersEntity(
     @SerialName("items")
     val items: List<Item>,
     @SerialName("total_count")
-    val totalCount: Int
+    val totalCount: Int,
 ) {
     @Serializable
     data class Item(
@@ -52,6 +51,6 @@ data class SearchUsersEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String
+        val url: String,
     )
 }
