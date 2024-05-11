@@ -6,6 +6,7 @@ plugins {
     id("yumemi.primitive.kmp.common")
     id("yumemi.primitive.kmp.android.application")
     id("yumemi.primitive.kmp.android.compose")
+    id("yumemi.primitive.detekt")
 }
 
 android {

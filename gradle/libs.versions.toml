@@ -52,6 +52,7 @@ ktor = "2.3.9"
 coil = "2.5.0"
 coil3 = "3.0.0-alpha06"
 uuid = "0.8.2"
+twitterComposeRule = "0.0.26"
 
 # Debugs
 napier = "2.7.1"
@@ -157,6 +158,7 @@ coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3
 coil3-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
 coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3" }
 uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
+twitter-compose-rule = { module = "com.twitter.compose.rules:detekt", version.ref = "twitterComposeRule" }
 
 # Debugs
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
