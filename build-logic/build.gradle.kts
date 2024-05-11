@@ -9,18 +9,17 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-/*kotlin {
+kotlin {
     sourceSets.all {
         languageSettings {
             languageVersion = "2.0"
         }
     }
-}*/
+}
 
 dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
-    implementation(libs.detekt.gradlePlugin)
     implementation(libs.gms.services)
 }
 
