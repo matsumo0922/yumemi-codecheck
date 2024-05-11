@@ -4,6 +4,7 @@
 package jp.co.yumemi.android.code_check
 
 import androidx.appcompat.app.AppCompatActivity
+import me.matsumo.yumemi.codecheck.R
 import java.util.*
 
 class TopActivity : AppCompatActivity(R.layout.activity_top) {

@@ -9,6 +9,7 @@ import me.matsumo.yumemi.codecheck.setupAndroid
 import me.matsumo.yumemi.codecheck.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 
 class KmpAndroidApplication : Plugin<Project> {
@@ -16,12 +17,12 @@ class KmpAndroidApplication : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.application")
+                apply("kotlin-android")
                 apply("kotlin-parcelize")
                 apply("kotlinx-serialization")
                 apply("project-report")
-                apply("com.google.firebase.crashlytics")
+                apply("androidx.navigation.safeargs.kotlin")
                 apply("com.google.devtools.ksp")
-                apply("com.google.gms.google-services")
             }
 
             androidApplication {

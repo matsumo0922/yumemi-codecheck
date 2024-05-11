@@ -1,31 +1,24 @@
 [versions]
 # Application
-versionName = "2.0.4"
-versionCode = "18"
+versionName = "1.0.0"
+versionCode = "1"
 
 # SDK
-minSdk = "26"
+minSdk = "23"
 targetSdk = "34"
 compileSdk = "34"
 
 # Gradle
-gradle = "8.2.0"
+gradle = "8.3.2"
 
 # Kotlin
-kotlin = "1.9.22"
-kotlinCompiler = "1.5.3"
+kotlin = "2.0.0-RC3"
 
 # KotlinX
 kotlinxCoroutines = "1.7.3"
 kotlinxDatetime = "0.5.0"
 kotlinxSerializationJson = "1.6.2"
 kotlinxImmutable = "0.3.7"
-
-# KMP
-kmpCompose = "1.6.0"
-kmpComplete = "1.1.0"
-kmpSwiftKlib = "0.5.1"
-mokoResource = "0.23.0"
 
 # AndroidX
 androidxCore = "1.12.0"
@@ -53,19 +46,13 @@ androidxComposeMaterial3 = "1.2.0"
 androidxComposeConstraintLayout = "1.1.0-alpha13"
 
 # Google
-playReview = "2.0.1"
-playUpdate = "2.1.0"
 playServiceAds = "22.6.0"
 playServiceOss = "17.0.1"
 material = "1.11.0"
 ksp = "1.9.22-1.0.17"
 gms = "4.4.1"
 
-# Billing
-billing = "6.1.0"
-
 # Others
-dagger = "2.49"
 koin = "3.5.1"
 ktor = "2.3.8"
 coil = "2.5.0"
@@ -76,13 +63,7 @@ uuid = "0.8.2"
 composeWebView = "1.8.8"
 windowSize = "0.3.2"
 detekt = "1.23.4"
-balloon = "1.5.3"
-orbital = "0.2.4"
-chaquopy = "15.0.0"
 libraries = "10.9.1"
-ffmpeg = "5.1"
-buildKonfig = "0.15.1"
-cupertino = "0.1.0-alpha03"
 twitterComposeRule = "0.0.26"
 
 # Debugs
@@ -98,16 +79,11 @@ espressoCore = "3.5.1"
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.0" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidxNavigation" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kmpCompose = { id = "org.jetbrains.compose", version.ref = "kmpCompose" }
-kmpComplete = { id = "com.louiscad.complete-kotlin", version.ref = "kmpComplete" }
 
 [libraries]
 ## Dependency of the include build-logic
@@ -136,6 +112,7 @@ androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", ve
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "androidxLifecycle" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -206,8 +183,7 @@ koin-annotation = { module = "io.insert-koin:koin-annotation" }
 # Ktor
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktot-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
@@ -221,8 +197,6 @@ coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
 uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
-webview-compose = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebView" }
-window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "windowSize" }
 desugar = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.4" }
 placeholder = { module = "com.eygraber:compose-placeholder-material3", version = "1.0.7" }
 libraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "libraries" }
@@ -259,6 +233,10 @@ ui-android-api = [
     "androidx-activity",
     "androidx-activity-compose",
     "androidx-fragment",
+    "androidx-lifecycle-common",
+    "androidx-lifecycle-livedata",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-compose",
     "androidx-transition",
     "androidx-recyclerview",
     "androidx-constraintlayout",
@@ -266,6 +244,8 @@ ui-android-api = [
     "androidx-foundation-compose",
     "androidx-cardview",
     "androidx-viewpager2",
+    "androidx-navigation-ui",
+    "androidx-navigation-fragment",
     "androidx-compose-runtime",
     "androidx-compose-ui",
     "androidx-compose-ui-util",
@@ -281,7 +261,6 @@ ui-common-api = [
     "coil3-compose",
     "coil3-network",
     "coil3-gif",
-    "window-size",
 ]
 
 firebase = [
@@ -295,6 +274,7 @@ firebase = [
 ktor = [
     "ktor-core",
     "ktor-cio",
+    "ktor-android",
     "ktor-content-negotiation",
     "ktor-serialization-json",
     "ktot-logging",

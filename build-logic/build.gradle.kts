@@ -30,10 +30,6 @@ gradlePlugin {
             id = "klms.primitive.kmp.common"
             implementationClass = "primitive.KmpCommonPlugin"
         }
-        register("KmpAndroidPlugin") {
-            id = "klms.primitive.kmp.android"
-            implementationClass = "primitive.KmpAndroidPlugin"
-        }
         register("KmpAndroidApplication") {
             id = "klms.primitive.kmp.android.application"
             implementationClass = "primitive.KmpAndroidApplication"
