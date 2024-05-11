@@ -7,6 +7,8 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.client.statement.request
 import io.ktor.serialization.kotlinx.serializerForTypeInfo
 import io.ktor.util.reflect.typeInfo
+import jp.co.yumemi.android.code_check.core.model.GhPaging
+import jp.co.yumemi.android.code_check.core.model.getGhPage
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
@@ -61,4 +63,15 @@ fun HttpResponse.isSuccess(allowRange: IntRange = 200..299): Boolean {
 fun HttpResponse.requireSuccess(allowRange: IntRange = 200..299): HttpResponse {
     if (!isSuccess(allowRange)) error("Request failed: ${this.status.value}")
     return this
+}
+
+suspend fun <T> HttpResponse.parsePaging(
+    translate: suspend (HttpResponse) -> T,
+): GhPaging<T> {
+    val pagination = headers.getGhPage()
+
+    return GhPaging(
+        data = translate.invoke(this),
+        pagination = pagination,
+    )
 }

@@ -12,7 +12,6 @@ import io.ktor.util.InternalAPI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
 
 open class ApiClient(
     private val client: HttpClient,
@@ -20,13 +19,13 @@ open class ApiClient(
 ) {
     suspend fun get(
         url: String,
-        params: List<Pair<String, String>> = emptyList(),
+        params: Map<String, String?> = emptyMap(),
     ): HttpResponse = withContext(ioDispatcher) {
         client.get {
             url(url.buildUrl())
 
             for ((key, value) in params) {
-                parameter(key, value)
+                value?.let { parameter(key, it) }
             }
 
             parameter("per_page", PER_PAGE)
@@ -36,14 +35,14 @@ open class ApiClient(
     @OptIn(InternalAPI::class)
     suspend fun post(
         url: String,
-        params: List<Pair<String, String>> = emptyList(),
+        params: Map<String, String?> = emptyMap(),
     ): HttpResponse = withContext(ioDispatcher) {
         client.post {
             url(url.buildUrl())
 
             body = buildJsonObject {
                 for ((key, value) in params) {
-                    put(key, value)
+                    value?.let { parameter(key, it) }
                 }
             }.toString()
         }
@@ -51,19 +50,19 @@ open class ApiClient(
 
     suspend fun form(
         url: String,
-        params: List<Pair<String, String>> = emptyList(),
-        formParams: List<Pair<String, String>> = emptyList(),
+        params: Map<String, String?> = emptyMap(),
+        formParams: Map<String, String?> = emptyMap(),
     ): HttpResponse = withContext(ioDispatcher) {
         client.submitForm(
             url = url.buildUrl(),
             formParameters = Parameters.build {
                 for ((key, value) in formParams) {
-                    append(key, value)
+                    value?.let { append(key, it) }
                 }
             },
         ) {
             for ((key, value) in params) {
-                parameter(key, value)
+                value?.let { parameter(key, it) }
             }
         }
     }
