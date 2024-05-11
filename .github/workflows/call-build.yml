@@ -31,6 +31,9 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Create local.properties
         run: echo > local.properties
 
