@@ -20,7 +20,7 @@ import jp.co.yumemi.android.code_check.core.ui.theme.shouldUseDarkTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class YacMainActivity: ComponentActivity(), KoinComponent {
+class YacMainActivity : ComponentActivity(), KoinComponent {
 
     private val viewModel by viewModel<YacMainViewModel>()
 

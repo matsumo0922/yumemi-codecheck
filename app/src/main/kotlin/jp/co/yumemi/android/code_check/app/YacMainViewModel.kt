@@ -18,7 +18,7 @@ class YacMainViewModel(
         ScreenState.Idle(
             YacMainUiState(
                 userData = it,
-            )
+            ),
         )
     }.stateIn(
         scope = viewModelScope,
