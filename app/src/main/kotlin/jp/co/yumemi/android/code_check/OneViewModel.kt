@@ -16,6 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
+import me.matsumo.yumemi.codecheck.R
 import org.json.JSONObject
 import java.util.*
 
@@ -31,12 +32,12 @@ class OneViewModel(
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client?.get("https://api.github.com/search/repositories") {
+            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
                 header("Accept", "application/vnd.github.v3+json")
                 parameter("q", inputText)
             }
 
-            val jsonBody = JSONObject(response.receive<String>())
+            val jsonBody = JSONObject(response.body<String>())
 
             val jsonItems = jsonBody.optJSONArray("items")!!
 
