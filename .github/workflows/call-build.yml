@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.SSH_KEY }}
+          token: ${{ secrets.CI_TOKEN }}
           ref: "refs/pull/${{ github.event.pull_request.number }}/merge"
 
       - name: Setup JDK
