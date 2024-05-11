@@ -114,8 +114,7 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "a
 androidx-datastore-proto = { module = "androidx.datastore:datastore-core", version.ref = "androidxDataStore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidxDataStore" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
-androidx-paging-common = { module = "app.cash.paging:paging-common", version.ref = "androidxPaging" }
-androidx-paging-compose = { module = "app.cash.paging:paging-compose-common", version.ref = "androidxPaging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPaging" }
 androidx-foundation-compose = { module = "androidx.compose.foundation:foundation-android", version = "1.6.0-alpha07" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "androidxNavigation" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "androidxNavigation" }
@@ -202,6 +201,8 @@ ui-android-api = [
     "androidx-viewpager2",
     "androidx-navigation-ui",
     "androidx-navigation-fragment",
+    "androidx-paging-runtime",
+    "androidx-paging-compose",
     "androidx-compose-runtime",
     "androidx-compose-ui",
     "androidx-compose-ui-util",
