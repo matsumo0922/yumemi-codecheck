@@ -1,9 +1,8 @@
 # https://github.com/github/gitignore/blob/master/Android.gitignore
-# Built application files
 *.apk
-*.aar
-*.ap_
+*.apks
 *.aab
+*.ap_
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -11,16 +10,19 @@
 # Java class files
 *.class
 
+# Gradle cache
+.gradle
+
 # Generated files
 bin/
 gen/
 out/
-#  Uncomment the following line in case you need and you don't have the release build type files in your app
-# release/
-
-# Gradle files
-.gradle/
 build/
+app/release/
+!src/**/build/
+
+# Room schema
+core/database/schemas
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -37,28 +39,16 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# IntelliJ
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle.kts
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-.idea/jarRepositories.xml
-.idea/misc.xml
-# Android Studio 3 in .gitignore file.
-.idea/caches
-.idea/modules.xml
-# Comment next line if keeping position of elements in Navigation Editor is relevant for you
-.idea/navEditor.xml
-# Android Studio Arctic Fox in .gitignore file.
-.idea/deploymentTargetDropDown.xml
+.idea
 
-# Keystore files
-# Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+# MacOS thumbnail db
+.DS_Store
+
+# Keystore
+gradle/keystore/release.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
@@ -91,3 +81,15 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# iOS secret files
+iosApp/iosApp/secret.plist
+
+# Xcode
+xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
