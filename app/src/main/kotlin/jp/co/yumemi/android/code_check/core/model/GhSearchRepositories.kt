@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SearchRepositories(
+data class GhSearchRepositories(
     val isIncompleteResults: Boolean,
     val items: List<Item>,
     val totalCount: Int,
@@ -80,6 +80,7 @@ data class SearchRepositories(
         val svnUrl: String,
         val tagsUrl: String,
         val teamsUrl: String,
+        val topics: List<String>,
         val treesUrl: String,
         val updatedAt: Instant,
         val url: String?,
@@ -124,16 +125,16 @@ data class SearchRepositories(
     }
 }
 
-fun SearchRepositoriesEntity.translate(): SearchRepositories {
-    return SearchRepositories(
+fun SearchRepositoriesEntity.translate(): GhSearchRepositories {
+    return GhSearchRepositories(
         isIncompleteResults = this.incompleteResults,
         totalCount = this.totalCount,
         items = this.items.map { it.translate() },
     )
 }
 
-fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
-    return SearchRepositories.Item(
+fun SearchRepositoriesEntity.Item.translate(): GhSearchRepositories.Item {
+    return GhSearchRepositories.Item(
         archiveUrl = this.archiveUrl,
         isArchived = this.archived,
         assigneesUrl = this.assigneesUrl,
@@ -202,6 +203,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         svnUrl = this.svnUrl,
         tagsUrl = this.tagsUrl,
         teamsUrl = this.teamsUrl,
+        topics = this.topics,
         treesUrl = this.treesUrl,
         updatedAt = Instant.parse(this.updatedAt),
         url = this.url,
@@ -211,8 +213,8 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
     )
 }
 
-fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.License {
-    return SearchRepositories.Item.License(
+fun SearchRepositoriesEntity.Item.License.translate(): GhSearchRepositories.Item.License {
+    return GhSearchRepositories.Item.License(
         key = this.key,
         name = this.name,
         nodeId = this.nodeId,
@@ -221,8 +223,8 @@ fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.L
     )
 }
 
-fun SearchRepositoriesEntity.Item.Owner.translate(): SearchRepositories.Item.Owner {
-    return SearchRepositories.Item.Owner(
+fun SearchRepositoriesEntity.Item.Owner.translate(): GhSearchRepositories.Item.Owner {
+    return GhSearchRepositories.Item.Owner(
         avatarUrl = this.avatarUrl,
         eventsUrl = this.eventsUrl,
         followersUrl = this.followersUrl,

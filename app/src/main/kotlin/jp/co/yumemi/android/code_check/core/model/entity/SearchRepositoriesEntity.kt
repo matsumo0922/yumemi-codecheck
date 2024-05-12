@@ -150,6 +150,8 @@ data class SearchRepositoriesEntity(
         val tagsUrl: String,
         @SerialName("teams_url")
         val teamsUrl: String,
+        @SerialName("topics")
+        val topics: List<String>,
         @SerialName("trees_url")
         val treesUrl: String,
         @SerialName("updated_at")

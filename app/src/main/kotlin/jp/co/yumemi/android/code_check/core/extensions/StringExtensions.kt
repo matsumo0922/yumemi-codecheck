@@ -1,5 +1,11 @@
 package jp.co.yumemi.android.code_check.core.extensions
 
+import androidx.compose.ui.graphics.Color
+
+fun String.toColor(): Color {
+    return Color(android.graphics.Color.parseColor(this))
+}
+
 fun String.indexOfWordStartsWith(prefix: String): Int {
     if (prefix.split(" ").size > 1) {
         return indexOf(string = prefix, ignoreCase = true)

@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -26,7 +27,7 @@ import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.model.ScreenState
-import jp.co.yumemi.android.code_check.core.model.SearchRepositories
+import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
 import jp.co.yumemi.android.code_check.core.ui.component.SimpleAlertDialog
@@ -60,6 +61,7 @@ fun HomeSearchRoute(
             suggestions = it.suggestions,
             searchHistories = it.searchHistories,
             searchRepositoriesPaging = it.searchRepositoriesPaging,
+            languageColors = it.languageColors,
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
             onClickRemoveSearchHistory = viewModel::removeSearchHistory,
@@ -73,7 +75,8 @@ private fun HomeSearchScreen(
     query: String,
     suggestions: List<GhSearchHistory>,
     searchHistories: List<GhSearchHistory>,
-    searchRepositoriesPaging: Flow<PagingData<SearchRepositories.Item>>,
+    searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
+    languageColors: Map<String, Color?>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
@@ -112,6 +115,7 @@ private fun HomeSearchScreen(
             HomeSearchIdleSection(
                 modifier = Modifier.fillMaxSize(),
                 query = query,
+                languageColors = languageColors,
                 pagingAdapter = repositoriesPager,
                 contentPadding = PaddingValues(
                     top = with(density) { topAppBarHeight.toDp() + 16.dp },

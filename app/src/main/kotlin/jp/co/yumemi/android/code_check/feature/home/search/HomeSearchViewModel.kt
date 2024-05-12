@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.feature.home.search
 
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -11,7 +12,7 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.model.ScreenState
-import jp.co.yumemi.android.code_check.core.model.SearchRepositories
+import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.updateWhenIdle
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
@@ -44,6 +45,7 @@ class HomeSearchViewModel(
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
                     favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     searchRepositoriesPaging = emptyPaging(),
+                    languageColors = ghApiRepository.getLanguageColors()
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -89,5 +91,6 @@ data class HomeSearchUiState(
     val suggestions: List<GhSearchHistory>,
     val searchHistories: List<GhSearchHistory>,
     val favoriteRepositories: List<GhRepositoryDetail>,
-    val searchRepositoriesPaging: Flow<PagingData<SearchRepositories.Item>>,
+    val searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
+    val languageColors: Map<String, Color?>,
 )

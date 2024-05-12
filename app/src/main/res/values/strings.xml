@@ -39,10 +39,10 @@
     <string name="error_developing_feature">開発中の機能です</string>
 
     <!-- Common Unit -->
-    <string name="unit_day_before">%1$d日前</string>
-    <string name="unit_hour_before">%1$d時間前</string>
-    <string name="unit_minute_before">%1$d分前</string>
-    <string name="unit_second_before">%1$d秒前</string>
+    <string name="unit_day_before">%1$d days ago</string>
+    <string name="unit_hour_before">%1$d hours ago</string>
+    <string name="unit_minute_before">%1$d minutes ago</string>
+    <string name="unit_second_before">%1$d seconds ago</string>
 
     <!-- Navigation -->
     <string name="navigation_search">検索</string>

@@ -57,6 +57,7 @@ val repositoryModule = module {
 
     single<GhApiRepository> {
         GhApiRepositoryImpl(
+            context = get(),
             ghCacheDataStore = get(),
             client = get(),
             ioDispatcher = get(),
