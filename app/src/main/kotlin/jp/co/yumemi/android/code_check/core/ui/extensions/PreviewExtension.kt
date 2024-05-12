@@ -8,14 +8,14 @@ import androidx.compose.ui.tooling.preview.Preview
     group = "Component",
     showBackground = true,
     backgroundColor = 0xFFF8F6F2,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Preview(
     name = "2. Dark",
     group = "Component",
     showBackground = true,
     backgroundColor = 0xFF0F0F0F,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 annotation class ComponentPreviews
 
@@ -24,13 +24,13 @@ annotation class ComponentPreviews
     group = "Screen",
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Preview(
     name = "2. Dark",
     group = "Screen",
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 annotation class ScreenPreviews

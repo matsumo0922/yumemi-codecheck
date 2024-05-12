@@ -150,7 +150,7 @@ private fun TitleSection(
                 } else {
                     onClickAddFavorite.invoke(item.repoName)
                 }
-            }
+            },
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

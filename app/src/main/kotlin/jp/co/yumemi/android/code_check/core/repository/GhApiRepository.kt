@@ -162,7 +162,7 @@ class GhApiRepositoryImpl(
     override suspend fun getLanguageColors(): Map<String, Color?> = withContext(ioDispatcher) {
         cachedLanguageColors ?: context.resources.openRawResource(R.raw.github_colors).use { inputStream ->
             val json = Json.decodeFromString(JsonObject.serializer(), inputStream.bufferedReader().readText())
-            val dataMap = json.map {it.key to it.value.jsonObject["color"]?.jsonPrimitive?.contentOrNull?.toColor() }
+            val dataMap = json.map { it.key to it.value.jsonObject["color"]?.jsonPrimitive?.contentOrNull?.toColor() }
 
             dataMap.toMap()
         }.also {

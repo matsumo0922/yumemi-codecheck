@@ -30,7 +30,7 @@ internal fun HomeSearchHistoryItem(
             .clickable { onClick.invoke() }
             .padding(16.dp, 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
             modifier = Modifier.size(24.dp),

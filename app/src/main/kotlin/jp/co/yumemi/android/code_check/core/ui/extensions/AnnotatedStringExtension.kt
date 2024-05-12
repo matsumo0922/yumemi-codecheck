@@ -25,7 +25,7 @@ fun getAnnotatedString(targetStr: String, range: IntRange): AnnotatedString {
             SpanStyle(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
-            )
+            ),
         ) {
             append(annotatedStr)
         }

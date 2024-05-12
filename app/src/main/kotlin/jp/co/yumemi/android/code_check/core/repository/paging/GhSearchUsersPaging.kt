@@ -4,8 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
 import jp.co.yumemi.android.code_check.core.model.GhOrder
-import jp.co.yumemi.android.code_check.core.model.GhUserSort
 import jp.co.yumemi.android.code_check.core.model.GhSearchUsers
+import jp.co.yumemi.android.code_check.core.model.GhUserSort
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 
 class GhSearchUsersPaging(

@@ -26,13 +26,17 @@ import jp.co.yumemi.android.code_check.core.extensions.koinViewModel
 import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
-import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
+import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
 import jp.co.yumemi.android.code_check.core.ui.component.SimpleAlertDialog
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchIdleSection
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchTopAppBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.Flow
 import me.matsumo.yumemi.codecheck.R
 
@@ -53,15 +57,15 @@ fun HomeSearchRoute(
     AsyncLoadContents(
         modifier = modifier,
         screenState = screenState,
-        retryAction = viewModel::fetch
+        retryAction = viewModel::fetch,
     ) {
         HomeSearchScreen(
             modifier = Modifier.fillMaxSize(),
             query = it.query,
-            suggestions = it.suggestions,
-            searchHistories = it.searchHistories,
+            suggestions = it.suggestions.toImmutableList(),
+            searchHistories = it.searchHistories.toImmutableList(),
             searchRepositoriesPaging = it.searchRepositoriesPaging,
-            languageColors = it.languageColors,
+            languageColors = it.languageColors.toImmutableMap(),
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
             onClickRemoveSearchHistory = viewModel::removeSearchHistory,
@@ -73,10 +77,10 @@ fun HomeSearchRoute(
 @Composable
 private fun HomeSearchScreen(
     query: String,
-    suggestions: List<GhSearchHistory>,
-    searchHistories: List<GhSearchHistory>,
+    suggestions: ImmutableList<GhSearchHistory>,
+    searchHistories: ImmutableList<GhSearchHistory>,
     searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
-    languageColors: Map<String, Color?>,
+    languageColors: ImmutableMap<String, Color?>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
@@ -90,7 +94,7 @@ private fun HomeSearchScreen(
     var topAppBarHeight by remember { mutableIntStateOf(0) }
 
     Box(
-        modifier = modifier.semantics { isTraversalGroup = true }
+        modifier = modifier.semantics { isTraversalGroup = true },
     ) {
         HomeSearchTopAppBar(
             modifier = Modifier
@@ -100,8 +104,8 @@ private fun HomeSearchScreen(
                     if (topAppBarHeight == 0) topAppBarHeight = it.size.height
                 },
             query = query,
-            suggestions = suggestions,
-            searchHistories = searchHistories,
+            suggestions = suggestions.toImmutableList(),
+            searchHistories = searchHistories.toImmutableList(),
             onClickDrawerMenu = onClickDrawerMenu,
             onClickSearch = { onClickSearch.invoke(it, null, null) },
             onClickRemoveSearchHistory = { removeSearchHistoryItem = it },
@@ -115,14 +119,14 @@ private fun HomeSearchScreen(
             HomeSearchIdleSection(
                 modifier = Modifier.fillMaxSize(),
                 query = query,
-                languageColors = languageColors,
+                languageColors = languageColors.toImmutableMap(),
                 pagingAdapter = repositoriesPager,
                 contentPadding = PaddingValues(
                     top = with(density) { topAppBarHeight.toDp() + 16.dp },
                     start = 16.dp,
                     end = 16.dp,
-                    bottom = 16.dp
-                )
+                    bottom = 16.dp,
+                ),
             )
         }
     }

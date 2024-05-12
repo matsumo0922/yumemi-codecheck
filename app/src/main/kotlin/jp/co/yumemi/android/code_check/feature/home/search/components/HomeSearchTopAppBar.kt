@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import me.matsumo.yumemi.codecheck.R
 
@@ -41,8 +43,8 @@ import me.matsumo.yumemi.codecheck.R
 @Composable
 internal fun HomeSearchTopAppBar(
     query: String,
-    suggestions: List<GhSearchHistory>,
-    searchHistories: List<GhSearchHistory>,
+    suggestions: ImmutableList<GhSearchHistory>,
+    searchHistories: ImmutableList<GhSearchHistory>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
@@ -132,7 +134,7 @@ internal fun HomeSearchTopAppBar(
 @ComponentPreviews
 @Composable
 private fun HomeSearchTopAppBarPreview() {
-    val searchHistories = listOf(
+    val searchHistories = persistentListOf(
         GhSearchHistory("query1", Instant.DISTANT_FUTURE),
         GhSearchHistory("query2", Instant.DISTANT_FUTURE),
         GhSearchHistory("query3", Instant.DISTANT_FUTURE),

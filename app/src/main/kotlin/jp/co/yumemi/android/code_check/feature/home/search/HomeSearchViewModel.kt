@@ -11,8 +11,8 @@ import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
-import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
+import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.updateWhenIdle
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
@@ -45,11 +45,11 @@ class HomeSearchViewModel(
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
                     favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     searchRepositoriesPaging = emptyPaging(),
-                    languageColors = ghApiRepository.getLanguageColors()
+                    languageColors = ghApiRepository.getLanguageColors(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
-                onFailure = { ScreenState.Error(R.string.error_executed) }
+                onFailure = { ScreenState.Error(R.string.error_executed) },
             )
         }
     }

@@ -23,6 +23,7 @@ import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import jp.co.yumemi.android.code_check.core.ui.theme.bold
 
+@Suppress("ModifierMissing")
 @Composable
 fun SimpleAlertDialog(
     title: String,
@@ -31,7 +32,7 @@ fun SimpleAlertDialog(
     negativeText: String?,
     onClickPositive: () -> Unit,
     onClickNegative: () -> Unit,
-    isCaution: Boolean
+    isCaution: Boolean,
 ) {
     Dialog(
         onDismissRequest = onClickNegative,
