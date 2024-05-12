@@ -17,7 +17,7 @@ fun NavGraphBuilder.homeSearchScreen(
     openDrawer: () -> Unit,
 ) {
     composable(HomeSearchRoute) {
-        HomeSearchScreen(
+        HomeSearchRoute(
             modifier = Modifier.fillMaxSize(),
             openDrawer = openDrawer,
         )

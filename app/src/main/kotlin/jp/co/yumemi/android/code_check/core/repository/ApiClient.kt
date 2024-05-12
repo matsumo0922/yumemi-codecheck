@@ -27,8 +27,6 @@ open class ApiClient(
             for ((key, value) in params) {
                 value?.let { parameter(key, it) }
             }
-
-            parameter("per_page", PER_PAGE)
         }
     }
 
@@ -73,6 +71,6 @@ open class ApiClient(
 
     companion object {
         const val DEFAULT_API = "https://api.github.com"
-        const val PER_PAGE = 20
+        const val PER_PAGE = 30
     }
 }

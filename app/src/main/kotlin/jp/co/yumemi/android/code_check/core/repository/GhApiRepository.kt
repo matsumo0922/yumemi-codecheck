@@ -7,10 +7,13 @@ import androidx.paging.cachedIn
 import jp.co.yumemi.android.code_check.core.datastore.GhCacheDataStore
 import jp.co.yumemi.android.code_check.core.extensions.parse
 import jp.co.yumemi.android.code_check.core.extensions.parsePaging
+import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhPaging
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
+import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
+import jp.co.yumemi.android.code_check.core.model.GhUserSort
 import jp.co.yumemi.android.code_check.core.model.SearchRepositories
 import jp.co.yumemi.android.code_check.core.model.SearchUsers
 import jp.co.yumemi.android.code_check.core.model.entity.RepositoryDetailEntity
@@ -29,36 +32,16 @@ import kotlinx.coroutines.withContext
 interface GhApiRepository {
 
     // paging
-    fun getSearchUsersPaging(query: String, sort: UserSort?, order: Order?): Flow<PagingData<SearchUsers.Item>>
-    fun getSearchRepositoriesPaging(query: String, sort: RepositorySort?, order: Order?): Flow<PagingData<SearchRepositories.Item>>
+    fun getSearchUsersPaging(query: String, sort: GhUserSort?, order: GhOrder?): Flow<PagingData<SearchUsers.Item>>
+    fun getSearchRepositoriesPaging(query: String, sort: GhRepositorySort?, order: GhOrder?): Flow<PagingData<SearchRepositories.Item>>
 
     // search
-    suspend fun searchUsers(query: String, sort: UserSort?, order: Order?, page: Int): GhPaging<SearchUsers>
-    suspend fun searchRepositories(query: String, sort: RepositorySort?, order: Order?, page: Int): GhPaging<SearchRepositories>
+    suspend fun searchUsers(query: String, sort: GhUserSort?, order: GhOrder?, page: Int): GhPaging<SearchUsers>
+    suspend fun searchRepositories(query: String, sort: GhRepositorySort?, order: GhOrder?, page: Int): GhPaging<SearchRepositories>
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
     suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
-
-    // order
-    enum class Order(val value: String) {
-        ASC("asc"),
-        DESC("desc"),
-    }
-
-    // sort
-    enum class UserSort(val value: String) {
-        FOLLOWERS("followers"),
-        REPOSITORIES("repositories"),
-        JOINED("joined"),
-    }
-
-    enum class RepositorySort(val value: String) {
-        STARS("stars"),
-        FORKS("forks"),
-        HELP_WANTED_ISSUES("help-wanted-issues"),
-        UPDATED("updated"),
-    }
 }
 
 class GhApiRepositoryImpl(
@@ -71,11 +54,11 @@ class GhApiRepositoryImpl(
 
     override fun getSearchUsersPaging(
         query: String,
-        sort: GhApiRepository.UserSort?,
-        order: GhApiRepository.Order?,
+        sort: GhUserSort?,
+        order: GhOrder?,
     ): Flow<PagingData<SearchUsers.Item>> {
         return Pager(
-            config = PagingConfig(pageSize = 30),
+            config = PagingConfig(pageSize = ApiClient.PER_PAGE),
             initialKey = null,
             pagingSourceFactory = {
                 GhSearchUsersPaging(
@@ -92,11 +75,11 @@ class GhApiRepositoryImpl(
 
     override fun getSearchRepositoriesPaging(
         query: String,
-        sort: GhApiRepository.RepositorySort?,
-        order: GhApiRepository.Order?,
+        sort: GhRepositorySort?,
+        order: GhOrder?,
     ): Flow<PagingData<SearchRepositories.Item>> {
         return Pager(
-            config = PagingConfig(pageSize = 30),
+            config = PagingConfig(pageSize = ApiClient.PER_PAGE),
             initialKey = null,
             pagingSourceFactory = {
                 GhSearchRepositoriesPaging(
@@ -113,8 +96,8 @@ class GhApiRepositoryImpl(
 
     override suspend fun searchUsers(
         query: String,
-        sort: GhApiRepository.UserSort?,
-        order: GhApiRepository.Order?,
+        sort: GhUserSort?,
+        order: GhOrder?,
         page: Int,
     ): GhPaging<SearchUsers> = withContext(ioDispatcher) {
         val params = mapOf(
@@ -122,6 +105,7 @@ class GhApiRepositoryImpl(
             "sort" to sort?.value,
             "order" to order?.value,
             "page" to page.toString(),
+            "per_page" to ApiClient.PER_PAGE.toString(),
         )
 
         client.get("search/users", params).parsePaging {
@@ -131,8 +115,8 @@ class GhApiRepositoryImpl(
 
     override suspend fun searchRepositories(
         query: String,
-        sort: GhApiRepository.RepositorySort?,
-        order: GhApiRepository.Order?,
+        sort: GhRepositorySort?,
+        order: GhOrder?,
         page: Int,
     ): GhPaging<SearchRepositories> = withContext(ioDispatcher) {
         val params = mapOf(
@@ -140,6 +124,7 @@ class GhApiRepositoryImpl(
             "sort" to sort?.value,
             "order" to order?.value,
             "page" to page.toString(),
+            "per_page" to ApiClient.PER_PAGE.toString(),
         )
 
         client.get("search/repositories", params).parsePaging {
