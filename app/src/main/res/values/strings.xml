@@ -49,4 +49,7 @@
     <string name="navigation_favorite">お気に入り</string>
     <string name="navigation_settings">設定</string>
     <string name="navigation_about">アプリについて</string>
+
+    <!-- Search -->
+    <string name="search_title">GitHubのリポジトリを検索できるよ〜</string>
 </resources>
