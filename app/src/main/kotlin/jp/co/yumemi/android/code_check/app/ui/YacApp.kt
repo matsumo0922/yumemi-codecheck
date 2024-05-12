@@ -1,12 +1,10 @@
-package jp.co.yumemi.android.code_check.app
+package jp.co.yumemi.android.code_check.app.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import jp.co.yumemi.android.code_check.core.model.UserData
-import jp.co.yumemi.android.code_check.core.ui.theme.MMTheme
+import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import org.koin.compose.KoinContext
 
 @Composable
@@ -16,13 +14,13 @@ fun YacApp(
     modifier: Modifier = Modifier,
 ) {
     KoinContext {
-        MMTheme(
+        YacTheme(
             themeConfig = userData.themeConfig,
             windowWidthSize = windowWidthSize,
         ) {
-            Box(modifier) {
-                Text(text = "Hello, YacApp!")
-            }
+            YacNavHost(
+                modifier = modifier,
+            )
         }
     }
 }

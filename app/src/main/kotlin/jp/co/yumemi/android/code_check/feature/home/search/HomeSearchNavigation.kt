@@ -4,12 +4,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 
 const val HomeSearchRoute = "homeSearch"
 
-fun NavController.navigateToHomeSearch() {
-    this.navigate(HomeSearchRoute)
+fun NavController.navigateToHomeSearch(navOptions: NavOptions? = null) {
+    this.navigate(HomeSearchRoute, navOptions)
 }
 
 fun NavGraphBuilder.homeSearchScreen(
