@@ -43,4 +43,10 @@
     <string name="unit_hour_before">%1$d時間前</string>
     <string name="unit_minute_before">%1$d分前</string>
     <string name="unit_second_before">%1$d秒前</string>
+
+    <!-- Navigation -->
+    <string name="navigation_search">検索</string>
+    <string name="navigation_favorite">お気に入り</string>
+    <string name="navigation_settings">設定</string>
+    <string name="navigation_about">アプリについて</string>
 </resources>
