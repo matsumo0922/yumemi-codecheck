@@ -1,5 +1,7 @@
 package jp.co.yumemi.android.code_check.app.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +21,7 @@ fun YacApp(
             windowWidthSize = windowWidthSize,
         ) {
             YacNavHost(
-                modifier = modifier,
+                modifier = modifier.background(MaterialTheme.colorScheme.surface),
             )
         }
     }

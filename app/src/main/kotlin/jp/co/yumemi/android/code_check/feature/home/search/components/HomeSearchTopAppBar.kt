@@ -19,11 +19,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -52,13 +53,14 @@ internal fun HomeSearchTopAppBar(
 ) {
     val (isActive, setActive) = remember { mutableStateOf(false) }
 
-    DockedSearchBar(
+    SearchBar(
         modifier = modifier,
         query = query,
         onQueryChange = onUpdateQuery,
         onSearch = onClickSearch,
         active = isActive,
         onActiveChange = setActive,
+        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
         placeholder = { Text(stringResource(R.string.search_title)) },
         leadingIcon = {
             Icon(
