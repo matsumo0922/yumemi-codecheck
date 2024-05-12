@@ -13,6 +13,8 @@ import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepositoryImpl
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepositoryImpl
+import jp.co.yumemi.android.code_check.core.repository.GhSearchHistoryRepository
+import jp.co.yumemi.android.code_check.core.repository.GhSearchHistoryRepositoryImpl
 import jp.co.yumemi.android.code_check.core.repository.UserDataRepository
 import jp.co.yumemi.android.code_check.core.repository.UserDataRepositoryImpl
 import kotlinx.serialization.json.Json
@@ -66,6 +68,13 @@ val repositoryModule = module {
             ghFavoriteDataStore = get(),
             ghCacheDataStore = get(),
             ghApiRepository = get(),
+            ioDispatcher = get(),
+        )
+    }
+
+    single<GhSearchHistoryRepository> {
+        GhSearchHistoryRepositoryImpl(
+            ghSearchHistoryDataStore = get(),
             ioDispatcher = get(),
         )
     }
