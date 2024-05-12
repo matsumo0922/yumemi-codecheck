@@ -9,8 +9,8 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import jp.co.yumemi.android.code_check.core.extensions.formatter
 import jp.co.yumemi.android.code_check.core.repository.ApiClient
-import jp.co.yumemi.android.code_check.core.repository.GitHubRepository
-import jp.co.yumemi.android.code_check.core.repository.GitHubRepositoryImpl
+import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
+import jp.co.yumemi.android.code_check.core.repository.GhApiRepositoryImpl
 import jp.co.yumemi.android.code_check.core.repository.UserDataRepository
 import jp.co.yumemi.android.code_check.core.repository.UserDataRepositoryImpl
 import kotlinx.serialization.json.Json
@@ -51,8 +51,8 @@ val repositoryModule = module {
         )
     }
 
-    single<GitHubRepository> {
-        GitHubRepositoryImpl(
+    single<GhApiRepository> {
+        GhApiRepositoryImpl(
             client = get(),
             ioDispatcher = get(),
         )

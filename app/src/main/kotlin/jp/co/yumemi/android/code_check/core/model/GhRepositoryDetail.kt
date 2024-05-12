@@ -96,6 +96,11 @@ data class GhRepositoryDetail(
     val watchers: Int,
     val watchersCount: Int,
 ) {
+    val repo: GhRepositoryName = GhRepositoryName(
+        owner = this.owner.login,
+        name = this.name,
+    )
+
     @Serializable
     data class License(
         val key: String,

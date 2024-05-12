@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
@@ -15,10 +16,10 @@ class GhCacheDataStore(
     private val formatter: Json,
     private val ioDispatcher: CoroutineDispatcher,
 ) {
-    private val loginPreference = preferenceHelper.create(PreferenceName.GH_CACHE)
+    private val preference = preferenceHelper.create(PreferenceName.GH_CACHE)
 
-    suspend fun setUserCache(ghUserDetail: GhUserDetail) = withContext(ioDispatcher) {
-        loginPreference.edit {
+    suspend fun addUserCache(ghUserDetail: GhUserDetail) = withContext(ioDispatcher) {
+        preference.edit {
             val key = createUserCacheKey(ghUserDetail.name)
             val json = formatter.encodeToString(GhUserDetail.serializer(), ghUserDetail)
 
@@ -26,8 +27,8 @@ class GhCacheDataStore(
         }
     }
 
-    suspend fun setRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) = withContext(ioDispatcher) {
-        loginPreference.edit {
+    suspend fun addRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) = withContext(ioDispatcher) {
+        preference.edit {
             val key = createRepositoryCacheKey(ghRepositoryDetail.name)
             val json = formatter.encodeToString(GhRepositoryDetail.serializer(), ghRepositoryDetail)
 
@@ -37,14 +38,14 @@ class GhCacheDataStore(
 
     suspend fun getUserCache(userName: String): GhUserDetail? {
         val key = createUserCacheKey(userName)
-        val json = loginPreference.data.firstOrNull()?.get(key)
+        val json = preference.data.firstOrNull()?.get(key)
 
         return json?.let { formatter.decodeFromString(GhUserDetail.serializer(), it) }
     }
 
-    suspend fun getRepositoryCache(repositoryName: String): GhRepositoryDetail? {
-        val key = createRepositoryCacheKey(repositoryName)
-        val json = loginPreference.data.firstOrNull()?.get(key)
+    suspend fun getRepositoryCache(repo: GhRepositoryName): GhRepositoryDetail? {
+        val key = createRepositoryCacheKey(repo.toString())
+        val json = preference.data.firstOrNull()?.get(key)
 
         return json?.let { formatter.decodeFromString(GhRepositoryDetail.serializer(), it) }
     }

@@ -8,6 +8,7 @@ import jp.co.yumemi.android.code_check.core.extensions.parse
 import jp.co.yumemi.android.code_check.core.extensions.parsePaging
 import jp.co.yumemi.android.code_check.core.model.GhPaging
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
 import jp.co.yumemi.android.code_check.core.model.SearchRepositories
 import jp.co.yumemi.android.code_check.core.model.SearchUsers
@@ -24,7 +25,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-interface GitHubRepository {
+interface GhApiRepository {
 
     // paging
     fun getSearchUsersPaging(query: String, sort: UserSort?, order: Order?): Flow<PagingData<SearchUsers.Item>>
@@ -36,7 +37,7 @@ interface GitHubRepository {
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
-    suspend fun getRepositoryDetail(owner: String, name: String): GhRepositoryDetail
+    suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
 
     // order
     enum class Order(val value: String) {
@@ -59,17 +60,17 @@ interface GitHubRepository {
     }
 }
 
-class GitHubRepositoryImpl(
+class GhApiRepositoryImpl(
     private val client: ApiClient,
     private val ioDispatcher: CoroutineDispatcher,
-) : GitHubRepository {
+) : GhApiRepository {
 
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     override fun getSearchUsersPaging(
         query: String,
-        sort: GitHubRepository.UserSort?,
-        order: GitHubRepository.Order?,
+        sort: GhApiRepository.UserSort?,
+        order: GhApiRepository.Order?,
     ): Flow<PagingData<SearchUsers.Item>> {
         return Pager(
             config = PagingConfig(pageSize = 30),
@@ -79,7 +80,7 @@ class GitHubRepositoryImpl(
                     query = query,
                     sort = sort,
                     order = order,
-                    gitHubRepository = this,
+                    ghApiRepository = this,
                 )
             },
         )
@@ -89,8 +90,8 @@ class GitHubRepositoryImpl(
 
     override fun getSearchRepositoriesPaging(
         query: String,
-        sort: GitHubRepository.RepositorySort?,
-        order: GitHubRepository.Order?,
+        sort: GhApiRepository.RepositorySort?,
+        order: GhApiRepository.Order?,
     ): Flow<PagingData<SearchRepositories.Item>> {
         return Pager(
             config = PagingConfig(pageSize = 30),
@@ -100,7 +101,7 @@ class GitHubRepositoryImpl(
                     query = query,
                     sort = sort,
                     order = order,
-                    gitHubRepository = this,
+                    ghApiRepository = this,
                 )
             },
         )
@@ -110,8 +111,8 @@ class GitHubRepositoryImpl(
 
     override suspend fun searchUsers(
         query: String,
-        sort: GitHubRepository.UserSort?,
-        order: GitHubRepository.Order?,
+        sort: GhApiRepository.UserSort?,
+        order: GhApiRepository.Order?,
         page: Int,
     ): GhPaging<SearchUsers> = withContext(ioDispatcher) {
         val params = mapOf(
@@ -128,8 +129,8 @@ class GitHubRepositoryImpl(
 
     override suspend fun searchRepositories(
         query: String,
-        sort: GitHubRepository.RepositorySort?,
-        order: GitHubRepository.Order?,
+        sort: GhApiRepository.RepositorySort?,
+        order: GhApiRepository.Order?,
         page: Int,
     ): GhPaging<SearchRepositories> = withContext(ioDispatcher) {
         val params = mapOf(
@@ -148,7 +149,7 @@ class GitHubRepositoryImpl(
         client.get("users/$userName").parse<UserDetailEntity>()!!.translate()
     }
 
-    override suspend fun getRepositoryDetail(owner: String, name: String): GhRepositoryDetail = withContext(ioDispatcher) {
-        client.get("repos/$owner/$name").parse<RepositoryDetailEntity>()!!.translate()
+    override suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail = withContext(ioDispatcher) {
+        client.get("repos/$repo").parse<RepositoryDetailEntity>()!!.translate()
     }
 }
