@@ -98,7 +98,7 @@ data class GhRepositoryDetail(
     val watchers: Int,
     val watchersCount: Int,
 ) {
-    val repo: GhRepositoryName = GhRepositoryName(
+    val repoName: GhRepositoryName = GhRepositoryName(
         owner = this.owner.login,
         name = this.name,
     )

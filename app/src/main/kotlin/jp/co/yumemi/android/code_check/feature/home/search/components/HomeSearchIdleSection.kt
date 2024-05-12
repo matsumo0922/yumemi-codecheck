@@ -2,9 +2,8 @@ package jp.co.yumemi.android.code_check.feature.home.search.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,6 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import jp.co.yumemi.android.code_check.core.model.SearchRepositories
+import jp.co.yumemi.android.code_check.core.ui.component.SearchRepositoryItem
 
 @Composable
 internal fun HomeSearchIdleSection(
@@ -30,10 +30,13 @@ internal fun HomeSearchIdleSection(
             contentType = pagingAdapter.itemContentType(),
         ) { index ->
             pagingAdapter[index]?.let { item ->
-                Text(
-                    text = item.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                SearchRepositoryItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    isFavorite = false,
+                    item = item,
+                    onClickRepository = {},
+                    onClickAddFavorite = {},
+                    onClickRemoveFavorite = {},
                 )
             }
         }
