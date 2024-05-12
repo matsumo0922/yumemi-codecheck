@@ -10,6 +10,10 @@ import androidx.compose.ui.text.withStyle
 
 @Composable
 fun getAnnotatedString(targetStr: String, range: IntRange): AnnotatedString {
+    if (range.first < 0 || range.last >= targetStr.length || range == 0..0) {
+        return AnnotatedString(targetStr)
+    }
+
     val startStr = targetStr.substring(0, (range.first).coerceAtLeast(0))
     val endStr = targetStr.substring((range.last + 1).coerceAtMost(targetStr.length))
     val annotatedStr = targetStr.substring(range)

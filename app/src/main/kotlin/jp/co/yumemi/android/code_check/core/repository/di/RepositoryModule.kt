@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.code_check.core.repository.di
 
-import io.github.aakira.napier.Napier
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
@@ -31,7 +31,7 @@ val repositoryModule = module {
                 level = LogLevel.INFO
                 logger = object : Logger {
                     override fun log(message: String) {
-                        Napier.d(message)
+                        Log.d("HttpClient", message)
                     }
                 }
             }

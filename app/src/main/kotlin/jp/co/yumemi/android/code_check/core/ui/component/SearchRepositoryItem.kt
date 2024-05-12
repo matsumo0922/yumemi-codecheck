@@ -55,7 +55,7 @@ internal fun SearchRepositoryItem(
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
-    markupRange: IntRange? = null,
+    markupRange: IntRange = 0..0,
     languageColor: Color? = null,
 ) {
     Card(
@@ -83,7 +83,7 @@ internal fun SearchRepositoryItem(
             if (item.description != null) {
                 Text(
                     modifier = Modifier
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = 4.dp)
                         .fillMaxWidth(),
                     text = item.description,
                     style = MaterialTheme.typography.bodyMedium,
@@ -94,7 +94,7 @@ internal fun SearchRepositoryItem(
             if (item.topics.isNotEmpty()) {
                 TopicItems(
                     modifier = Modifier
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = 4.dp)
                         .fillMaxWidth(),
                     topics = item.topics.take(5).toImmutableList(),
                     onClickTag = {},
@@ -114,7 +114,7 @@ internal fun SearchRepositoryItem(
 private fun TitleSection(
     isFavorite: Boolean,
     item: GhSearchRepositories.Item,
-    markupRange: IntRange?,
+    markupRange: IntRange,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
@@ -136,7 +136,7 @@ private fun TitleSection(
 
         Text(
             modifier = Modifier.weight(1f),
-            text = getAnnotatedString(item.repoName.toString(), markupRange ?: 0..0),
+            text = getAnnotatedString(item.repoName.toString(), markupRange),
             style = MaterialTheme.typography.bodyMedium.size(18.sp),
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
