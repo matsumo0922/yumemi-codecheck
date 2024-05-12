@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.ExperimentalComposeUiApi
 import jp.co.yumemi.android.code_check.core.extensions.LocalStateHolder
 import jp.co.yumemi.android.code_check.core.extensions.StateHolder
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig

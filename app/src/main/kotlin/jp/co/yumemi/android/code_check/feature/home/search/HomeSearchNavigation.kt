@@ -14,7 +14,7 @@ fun NavController.navigateToHomeSearch(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeSearchScreen(
-    openDrawer: () -> Unit
+    openDrawer: () -> Unit,
 ) {
     composable(HomeSearchRoute) {
         HomeSearchScreen(

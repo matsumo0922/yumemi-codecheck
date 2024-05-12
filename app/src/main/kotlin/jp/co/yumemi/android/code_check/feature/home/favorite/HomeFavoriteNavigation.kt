@@ -14,7 +14,7 @@ fun NavController.navigateToHomeFavorite(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeScreenFavorite(
-    openDrawer: () -> Unit
+    openDrawer: () -> Unit,
 ) {
     composable(HomeFavoriteRoute) {
         HomeFavoriteRoute(

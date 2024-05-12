@@ -1,4 +1,4 @@
-package me.matsumo.klms.screen.library.components
+package jp.co.yumemi.android.code_check.feature.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,8 +36,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import jp.co.yumemi.android.code_check.feature.home.components.HomeDestination
-import jp.co.yumemi.android.code_check.feature.home.components.isHomeDestinationInHierarchy
 import kotlinx.coroutines.launch
 import me.matsumo.yumemi.codecheck.R
 
@@ -78,7 +76,7 @@ fun HomeDrawerContent(
         HorizontalDivider(
             modifier = Modifier
                 .padding(vertical = 8.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
 
         NavigationDrawerItem(

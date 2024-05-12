@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -42,7 +42,7 @@ fun HomeScreen(
                 navigateToSetting = {},
                 navigateToAbout = {},
             )
-        }
+        },
     ) {
         Column {
             HomeNavHost(
@@ -52,7 +52,7 @@ fun HomeScreen(
                     scope.launch {
                         drawerState.open()
                     }
-                }
+                },
             )
 
             HomeBottomBar(
