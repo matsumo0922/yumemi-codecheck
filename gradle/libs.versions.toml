@@ -201,6 +201,7 @@ ui-android-api = [
     "androidx-viewpager2",
     "androidx-navigation-ui",
     "androidx-navigation-fragment",
+    "androidx-navigation-compose",
     "androidx-paging-runtime",
     "androidx-paging-compose",
     "androidx-compose-runtime",

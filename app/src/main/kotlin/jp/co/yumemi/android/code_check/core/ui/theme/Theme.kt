@@ -8,16 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.ExperimentalComposeUiApi
 import jp.co.yumemi.android.code_check.core.extensions.LocalStateHolder
 import jp.co.yumemi.android.code_check.core.extensions.StateHolder
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
 import jp.co.yumemi.android.code_check.core.ui.theme.color.DarkBlueColorScheme
 import jp.co.yumemi.android.code_check.core.ui.theme.color.LightBlueColorScheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-internal fun MMTheme(
+internal fun YacTheme(
     themeConfig: ThemeConfig = ThemeConfig.System,
     windowWidthSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
     content: @Composable () -> Unit,
