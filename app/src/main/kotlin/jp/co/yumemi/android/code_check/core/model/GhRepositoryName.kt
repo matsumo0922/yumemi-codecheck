@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GhRepositoryName(
     val name: String,
-    val owner: String
+    val owner: String,
 ) {
     override fun toString(): String = "$owner/$name"
 }

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GhFavorites(
     val userIds: List<String>,
-    val repos: List<GhRepositoryName>
+    val repos: List<GhRepositoryName>,
 ) {
     companion object {
         fun default() = GhFavorites(emptyList(), emptyList())
