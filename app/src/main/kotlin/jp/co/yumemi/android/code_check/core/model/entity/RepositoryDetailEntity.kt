@@ -176,7 +176,7 @@ data class RepositoryDetailEntity(
     @SerialName("updated_at")
     val updatedAt: String,
     @SerialName("url")
-    val url: String,
+    val url: String?,
     @SerialName("visibility")
     val visibility: String,
     @SerialName("watchers")
@@ -195,7 +195,7 @@ data class RepositoryDetailEntity(
         @SerialName("spdx_id")
         val spdxId: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -233,7 +233,7 @@ data class RepositoryDetailEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -271,7 +271,7 @@ data class RepositoryDetailEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable

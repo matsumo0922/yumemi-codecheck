@@ -29,7 +29,7 @@ data class SearchUsers(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String,
+        val url: String?,
     )
 }
 

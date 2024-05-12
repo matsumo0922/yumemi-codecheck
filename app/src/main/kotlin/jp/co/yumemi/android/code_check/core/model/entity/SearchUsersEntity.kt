@@ -49,6 +49,6 @@ data class SearchUsersEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 }

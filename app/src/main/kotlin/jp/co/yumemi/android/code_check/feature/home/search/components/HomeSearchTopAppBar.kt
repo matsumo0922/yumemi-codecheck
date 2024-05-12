@@ -7,8 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,11 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -31,13 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
+import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import kotlinx.datetime.Instant
 import me.matsumo.yumemi.codecheck.R
 
@@ -100,7 +96,7 @@ internal fun HomeSearchTopAppBar(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-        }
+        },
     ) {
         LazyColumn(
             modifier = Modifier
@@ -117,59 +113,18 @@ internal fun HomeSearchTopAppBar(
                     enter = fadeIn(tween(150)),
                     exit = fadeOut(tween(150)),
                 ) {
-                    SearchHistoryItem(
+                    HomeSearchHistoryItem(
                         modifier = Modifier.fillMaxWidth(),
                         searchHistory = it,
                         onClick = {
                             setActive.invoke(false)
+                            onUpdateQuery.invoke(it.query)
                             onClickSearch.invoke(it.query)
                         },
                         onClickRemove = { onClickRemoveSearchHistory.invoke(it) },
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun SearchHistoryItem(
-    searchHistory: GhSearchHistory,
-    onClick: () -> Unit,
-    onClickRemove: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .clickable { onClick.invoke() }
-            .padding(16.dp, 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Icon(
-            modifier = Modifier.size(24.dp),
-            imageVector = Icons.Default.History,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        Text(
-            modifier = Modifier.weight(1f),
-            text = searchHistory.query,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        IconButton(
-            modifier = Modifier.size(32.dp),
-            onClick = { onClickRemove.invoke() },
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                imageVector = Icons.Default.Clear,
-                contentDescription = "Remove search history \"${searchHistory.query}\"",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
         }
     }
 }
@@ -183,14 +138,16 @@ private fun HomeSearchTopAppBarPreview() {
         GhSearchHistory("query3", Instant.DISTANT_FUTURE),
     )
 
-    HomeSearchTopAppBar(
-        modifier = Modifier.fillMaxWidth(),
-        query = "query",
-        suggestions = searchHistories,
-        searchHistories = searchHistories,
-        onClickDrawerMenu = {},
-        onClickSearch = {},
-        onClickRemoveSearchHistory = {},
-        onUpdateQuery = {},
-    )
+    YacTheme {
+        HomeSearchTopAppBar(
+            modifier = Modifier.fillMaxWidth(),
+            query = "query",
+            suggestions = searchHistories,
+            searchHistories = searchHistories,
+            onClickDrawerMenu = {},
+            onClickSearch = {},
+            onClickRemoveSearchHistory = {},
+            onUpdateQuery = {},
+        )
+    }
 }

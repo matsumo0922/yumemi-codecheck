@@ -111,6 +111,7 @@ private fun HomeSearchScreen(
         ) {
             HomeSearchIdleSection(
                 modifier = Modifier.fillMaxSize(),
+                query = query,
                 pagingAdapter = repositoriesPager,
                 contentPadding = PaddingValues(
                     top = with(density) { topAppBarHeight.toDp() + 16.dp },

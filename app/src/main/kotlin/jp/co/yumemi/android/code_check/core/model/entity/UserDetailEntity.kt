@@ -66,5 +66,5 @@ data class UserDetailEntity(
     @SerialName("updated_at")
     val updatedAt: String,
     @SerialName("url")
-    val url: String,
+    val url: String?,
 )

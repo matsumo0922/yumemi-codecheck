@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.SearchRepositories
+import jp.co.yumemi.android.code_check.core.ui.extensions.getAnnotatedString
 
 @Composable
 internal fun SearchRepositoryItem(
@@ -38,6 +40,7 @@ internal fun SearchRepositoryItem(
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
+    markupRange: IntRange? = null,
 ) {
     Card(
         modifier = modifier
@@ -54,6 +57,7 @@ internal fun SearchRepositoryItem(
                 modifier = Modifier.fillMaxWidth(),
                 isFavorite = isFavorite,
                 item = item,
+                markupRange = markupRange,
                 onClickAddFavorite = onClickAddFavorite,
                 onClickRemoveFavorite = onClickRemoveFavorite,
             )
@@ -65,12 +69,13 @@ internal fun SearchRepositoryItem(
 private fun TitleSection(
     isFavorite: Boolean,
     item: SearchRepositories.Item,
+    markupRange: IntRange?,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -86,7 +91,7 @@ private fun TitleSection(
 
         Text(
             modifier = Modifier.weight(1f),
-            text = item.repoName.name,
+            text = getAnnotatedString(item.repoName.toString(), markupRange ?: 0..0),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
@@ -107,5 +112,19 @@ private fun TitleSection(
                 contentDescription = "Favorite",
             )
         }
+    }
+}
+
+@Composable
+private fun InfoSection(
+    item: SearchRepositories.Item,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
     }
 }

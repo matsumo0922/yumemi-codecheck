@@ -93,7 +93,7 @@ data class GhRepositoryDetail(
     val topics: List<String>,
     val treesUrl: String,
     val updatedAt: Instant,
-    val url: String,
+    val url: String?,
     val visibility: String,
     val watchers: Int,
     val watchersCount: Int,
@@ -109,7 +109,7 @@ data class GhRepositoryDetail(
         val name: String,
         val nodeId: String,
         val spdxId: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -130,7 +130,7 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -151,7 +151,7 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
