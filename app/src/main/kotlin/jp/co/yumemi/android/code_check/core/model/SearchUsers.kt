@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.core.model
 
 import jp.co.yumemi.android.code_check.core.model.entity.SearchUsersEntity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,14 +18,13 @@ data class SearchUsers(
         val followingUrl: String,
         val gistsUrl: String,
         val gravatarId: String,
-        val htmlUrl: String,
         val id: Int,
         val login: String,
         val nodeId: String,
         val organizationsUrl: String,
         val receivedEventsUrl: String,
         val reposUrl: String,
-        val score: Int,
+        val score: Float,
         val siteAdmin: Boolean,
         val starredUrl: String,
         val subscriptionsUrl: String,
@@ -46,7 +46,6 @@ fun SearchUsersEntity.Item.translate() = SearchUsers.Item(
     followingUrl = this.followingUrl,
     gistsUrl = this.gistsUrl,
     gravatarId = this.gravatarId,
-    htmlUrl = this.htmlUrl,
     id = this.id,
     login = this.login,
     nodeId = this.nodeId,

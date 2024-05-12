@@ -40,7 +40,7 @@ class HomeSearchViewModel(
             _screenState.value = suspendRunCatching {
                 HomeSearchUiState(
                     query = "",
-                    suggestions = emptyList(),
+                    suggestions = ghSearchHistoryRepository.searchHistories.first(),
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
                     favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     searchRepositoriesPaging = emptyPaging(),
@@ -89,5 +89,5 @@ data class HomeSearchUiState(
     val suggestions: List<GhSearchHistory>,
     val searchHistories: List<GhSearchHistory>,
     val favoriteRepositories: List<GhRepositoryDetail>,
-    val searchRepositoriesPaging: Flow<PagingData<SearchRepositories.Item>>
+    val searchRepositoriesPaging: Flow<PagingData<SearchRepositories.Item>>,
 )

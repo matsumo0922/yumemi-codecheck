@@ -5,9 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -57,10 +59,13 @@ internal fun HomeSearchTopAppBar(
         modifier = modifier,
         query = query,
         onQueryChange = onUpdateQuery,
-        onSearch = onClickSearch,
+        onSearch = {
+            setActive.invoke(false)
+            onClickSearch.invoke(it)
+        },
         active = isActive,
         onActiveChange = setActive,
-        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
         placeholder = { Text(stringResource(R.string.search_title)) },
         leadingIcon = {
             Icon(
@@ -98,7 +103,9 @@ internal fun HomeSearchTopAppBar(
         }
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxSize(),
         ) {
             items(
                 items = searchHistories,
@@ -113,7 +120,10 @@ internal fun HomeSearchTopAppBar(
                     SearchHistoryItem(
                         modifier = Modifier.fillMaxWidth(),
                         searchHistory = it,
-                        onClick = { onClickSearch.invoke(it.query) },
+                        onClick = {
+                            setActive.invoke(false)
+                            onClickSearch.invoke(it.query)
+                        },
                         onClickRemove = { onClickRemoveSearchHistory.invoke(it) },
                     )
                 }

@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.code_check.core.extensions
 
-import io.github.aakira.napier.Napier
+import android.util.Log
 import kotlin.coroutines.cancellation.CancellationException
 
 suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
@@ -8,6 +8,7 @@ suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
 } catch (cancellationException: CancellationException) {
     throw cancellationException
 } catch (exception: Exception) {
-    Napier.i(exception) { "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result" }
+    Log.i("suspendRunCatching", "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result")
+    Log.i("suspendRunCatching", exception.toString())
     Result.failure(exception)
 }

@@ -26,8 +26,6 @@ data class SearchUsersEntity(
         val gistsUrl: String,
         @SerialName("gravatar_id")
         val gravatarId: String,
-        @SerialName("html_url")
-        val htmlUrl: String,
         @SerialName("id")
         val id: Int,
         @SerialName("login")
@@ -41,7 +39,7 @@ data class SearchUsersEntity(
         @SerialName("repos_url")
         val reposUrl: String,
         @SerialName("score")
-        val score: Int,
+        val score: Float,
         @SerialName("site_admin")
         val siteAdmin: Boolean,
         @SerialName("starred_url")
