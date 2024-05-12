@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SearchRepositories(
+data class GhSearchRepositories(
     val isIncompleteResults: Boolean,
     val items: List<Item>,
     val totalCount: Int,
@@ -27,7 +27,7 @@ data class SearchRepositories(
         val createdAt: Instant,
         val defaultBranch: String,
         val deploymentsUrl: String,
-        val description: String,
+        val description: String?,
         val isDisabled: Boolean,
         val downloadsUrl: String,
         val eventsUrl: String,
@@ -45,22 +45,20 @@ data class SearchRepositories(
         val hasPages: Boolean,
         val hasProjects: Boolean,
         val hasWiki: Boolean,
-        val homepage: String,
+        val homepage: String?,
         val hooksUrl: String,
-        val htmlUrl: String,
         val id: Int,
         val issueCommentUrl: String,
         val issueEventsUrl: String,
         val issuesUrl: String,
         val keysUrl: String,
         val labelsUrl: String,
-        val language: String,
-        val languagesUrl: String,
-        val license: License,
-        val masterBranch: String,
+        val language: String?,
+        val languagesUrl: String?,
+        val license: License?,
         val mergesUrl: String,
         val milestonesUrl: String,
-        val mirrorUrl: String,
+        val mirrorUrl: String?,
         val name: String,
         val nodeId: String,
         val notificationsUrl: String,
@@ -71,7 +69,7 @@ data class SearchRepositories(
         val pullsUrl: String,
         val pushedAt: Instant,
         val releasesUrl: String,
-        val score: Int,
+        val score: Float,
         val size: Int,
         val sshUrl: String,
         val stargazersCount: Int,
@@ -82,21 +80,26 @@ data class SearchRepositories(
         val svnUrl: String,
         val tagsUrl: String,
         val teamsUrl: String,
+        val topics: List<String>,
         val treesUrl: String,
         val updatedAt: Instant,
-        val url: String,
+        val url: String?,
         val visibility: String,
         val watchers: Int,
         val watchersCount: Int,
     ) {
+        val repoName: GhRepositoryName = GhRepositoryName(
+            owner = this.owner.login,
+            name = this.name,
+        )
+
         @Serializable
         data class License(
-            val htmlUrl: String,
             val key: String,
             val name: String,
             val nodeId: String,
             val spdxId: String,
-            val url: String,
+            val url: String?,
         )
 
         @Serializable
@@ -107,7 +110,6 @@ data class SearchRepositories(
             val followingUrl: String,
             val gistsUrl: String,
             val gravatarId: String,
-            val htmlUrl: String,
             val id: Int,
             val login: String,
             val nodeId: String,
@@ -118,21 +120,21 @@ data class SearchRepositories(
             val starredUrl: String,
             val subscriptionsUrl: String,
             val type: String,
-            val url: String,
+            val url: String?,
         )
     }
 }
 
-fun SearchRepositoriesEntity.translate(): SearchRepositories {
-    return SearchRepositories(
+fun SearchRepositoriesEntity.translate(): GhSearchRepositories {
+    return GhSearchRepositories(
         isIncompleteResults = this.incompleteResults,
         totalCount = this.totalCount,
         items = this.items.map { it.translate() },
     )
 }
 
-fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
-    return SearchRepositories.Item(
+fun SearchRepositoriesEntity.Item.translate(): GhSearchRepositories.Item {
+    return GhSearchRepositories.Item(
         archiveUrl = this.archiveUrl,
         isArchived = this.archived,
         assigneesUrl = this.assigneesUrl,
@@ -168,7 +170,6 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         hasWiki = this.hasWiki,
         homepage = this.homepage,
         hooksUrl = this.hooksUrl,
-        htmlUrl = this.htmlUrl,
         id = this.id,
         issueCommentUrl = this.issueCommentUrl,
         issueEventsUrl = this.issueEventsUrl,
@@ -177,8 +178,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         labelsUrl = this.labelsUrl,
         language = this.language,
         languagesUrl = this.languagesUrl,
-        license = this.license.translate(),
-        masterBranch = this.masterBranch,
+        license = this.license?.translate(),
         mergesUrl = this.mergesUrl,
         milestonesUrl = this.milestonesUrl,
         mirrorUrl = this.mirrorUrl,
@@ -203,6 +203,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         svnUrl = this.svnUrl,
         tagsUrl = this.tagsUrl,
         teamsUrl = this.teamsUrl,
+        topics = this.topics,
         treesUrl = this.treesUrl,
         updatedAt = Instant.parse(this.updatedAt),
         url = this.url,
@@ -212,9 +213,8 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
     )
 }
 
-fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.License {
-    return SearchRepositories.Item.License(
-        htmlUrl = this.htmlUrl,
+fun SearchRepositoriesEntity.Item.License.translate(): GhSearchRepositories.Item.License {
+    return GhSearchRepositories.Item.License(
         key = this.key,
         name = this.name,
         nodeId = this.nodeId,
@@ -223,15 +223,14 @@ fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.L
     )
 }
 
-fun SearchRepositoriesEntity.Item.Owner.translate(): SearchRepositories.Item.Owner {
-    return SearchRepositories.Item.Owner(
+fun SearchRepositoriesEntity.Item.Owner.translate(): GhSearchRepositories.Item.Owner {
+    return GhSearchRepositories.Item.Owner(
         avatarUrl = this.avatarUrl,
         eventsUrl = this.eventsUrl,
         followersUrl = this.followersUrl,
         followingUrl = this.followingUrl,
         gistsUrl = this.gistsUrl,
         gravatarId = this.gravatarId,
-        htmlUrl = this.htmlUrl,
         id = this.id,
         login = this.login,
         nodeId = this.nodeId,

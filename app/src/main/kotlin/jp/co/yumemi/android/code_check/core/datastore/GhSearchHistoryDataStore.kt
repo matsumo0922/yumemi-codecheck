@@ -34,6 +34,10 @@ class GhSearchHistoryDataStore(
         preference.edit {
             val searchHistories = searchHistoriesData.first().toMutableList()
             val newSearchHistories = searchHistories.apply {
+                find { data -> data.query == searchHistory.query }?.let { data ->
+                    remove(data)
+                }
+
                 add(0, searchHistory)
 
                 if (size > MAX_HISTORY_SIZE) {

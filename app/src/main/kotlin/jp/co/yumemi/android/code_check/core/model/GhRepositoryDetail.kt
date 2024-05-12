@@ -28,7 +28,7 @@ data class GhRepositoryDetail(
     val defaultBranch: String,
     val isDeleteBranchOnMerge: Boolean,
     val deploymentsUrl: String,
-    val description: String,
+    val description: String?,
     val isDisabled: Boolean,
     val downloadsUrl: String,
     val eventsUrl: String,
@@ -47,9 +47,8 @@ data class GhRepositoryDetail(
     val hasPages: Boolean,
     val hasProjects: Boolean,
     val hasWiki: Boolean,
-    val homepage: String,
+    val homepage: String?,
     val hooksUrl: String,
-    val htmlUrl: String,
     val id: Int,
     val isTemplate: Boolean,
     val issueCommentUrl: String,
@@ -58,15 +57,15 @@ data class GhRepositoryDetail(
     val keysUrl: String,
     val labelsUrl: String,
     val languagesUrl: String,
-    val license: License,
+    val license: License?,
     val mergesUrl: String,
     val milestonesUrl: String,
-    val mirrorUrl: String,
+    val mirrorUrl: String?,
     val name: String,
     val networkCount: Int,
     val nodeId: String,
     val notificationsUrl: String,
-    val language: String,
+    val language: String?,
     val openIssues: Int,
     val openIssuesCount: Int,
     val organization: Organization?,
@@ -94,12 +93,12 @@ data class GhRepositoryDetail(
     val topics: List<String>,
     val treesUrl: String,
     val updatedAt: Instant,
-    val url: String,
+    val url: String?,
     val visibility: String,
     val watchers: Int,
     val watchersCount: Int,
 ) {
-    val repo: GhRepositoryName = GhRepositoryName(
+    val repoName: GhRepositoryName = GhRepositoryName(
         owner = this.owner.login,
         name = this.name,
     )
@@ -110,7 +109,7 @@ data class GhRepositoryDetail(
         val name: String,
         val nodeId: String,
         val spdxId: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -121,7 +120,6 @@ data class GhRepositoryDetail(
         val followingUrl: String,
         val gistsUrl: String,
         val gravatarId: String,
-        val htmlUrl: String,
         val id: Int,
         val login: String,
         val nodeId: String,
@@ -132,7 +130,7 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -143,7 +141,6 @@ data class GhRepositoryDetail(
         val followingUrl: String,
         val gistsUrl: String,
         val gravatarId: String,
-        val htmlUrl: String,
         val id: Int,
         val login: String,
         val nodeId: String,
@@ -154,7 +151,7 @@ data class GhRepositoryDetail(
         val starredUrl: String,
         val subscriptionsUrl: String,
         val type: String,
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -210,7 +207,6 @@ fun RepositoryDetailEntity.translate(): GhRepositoryDetail {
         hasWiki = this.hasWiki,
         homepage = this.homepage,
         hooksUrl = this.hooksUrl,
-        htmlUrl = this.htmlUrl,
         id = this.id,
         isTemplate = this.isTemplate,
         issueCommentUrl = this.issueCommentUrl,
@@ -219,7 +215,7 @@ fun RepositoryDetailEntity.translate(): GhRepositoryDetail {
         keysUrl = this.keysUrl,
         labelsUrl = this.labelsUrl,
         languagesUrl = this.languagesUrl,
-        license = this.license.translate(),
+        license = this.license?.translate(),
         mergesUrl = this.mergesUrl,
         milestonesUrl = this.milestonesUrl,
         mirrorUrl = this.mirrorUrl,
@@ -278,7 +274,6 @@ fun RepositoryDetailEntity.Organization.translate() = GhRepositoryDetail.Organiz
     followingUrl = this.followingUrl,
     gistsUrl = this.gistsUrl,
     gravatarId = this.gravatarId,
-    htmlUrl = this.htmlUrl,
     id = this.id,
     login = this.login,
     nodeId = this.nodeId,
@@ -299,7 +294,6 @@ fun RepositoryDetailEntity.Owner.translate() = GhRepositoryDetail.Owner(
     followingUrl = this.followingUrl,
     gistsUrl = this.gistsUrl,
     gravatarId = this.gravatarId,
-    htmlUrl = this.htmlUrl,
     id = this.id,
     login = this.login,
     nodeId = this.nodeId,

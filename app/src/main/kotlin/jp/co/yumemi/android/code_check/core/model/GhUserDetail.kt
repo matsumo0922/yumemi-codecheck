@@ -21,7 +21,6 @@ data class GhUserDetail(
     val gistsUrl: String,
     val gravatarId: String,
     val hireable: Boolean,
-    val htmlUrl: String,
     val id: Int,
     val location: String,
     val login: String,
@@ -38,7 +37,7 @@ data class GhUserDetail(
     val twitterUsername: String,
     val type: String,
     val updatedAt: Instant,
-    val url: String,
+    val url: String?,
 )
 
 // Extension function to translate DTO to Model
@@ -57,7 +56,6 @@ fun UserDetailEntity.translate() = GhUserDetail(
     gistsUrl = this.gistsUrl,
     gravatarId = this.gravatarId,
     hireable = this.hireable,
-    htmlUrl = this.htmlUrl,
     id = this.id,
     location = this.location,
     login = this.login,

@@ -46,7 +46,7 @@ class GhFavoriteRepositoryImpl(
             val cache = ghCacheDataStore.getRepositoryCache(repo)
             val repositoryDetail = cache ?: ghApiRepository.getRepositoryDetail(repo)
 
-            ghFavoriteDataStore.addFavoriteRepository(repositoryDetail.repo)
+            ghFavoriteDataStore.addFavoriteRepository(repositoryDetail.repoName)
         }
     }
 

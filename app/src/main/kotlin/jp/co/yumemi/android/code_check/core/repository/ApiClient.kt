@@ -3,6 +3,7 @@ package jp.co.yumemi.android.code_check.core.repository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.url
@@ -23,12 +24,11 @@ open class ApiClient(
     ): HttpResponse = withContext(ioDispatcher) {
         client.get {
             url(url.buildUrl())
+            header("Accept", " application/vnd.github.mercy-preview+json")
 
             for ((key, value) in params) {
                 value?.let { parameter(key, it) }
             }
-
-            parameter("per_page", PER_PAGE)
         }
     }
 
@@ -73,6 +73,6 @@ open class ApiClient(
 
     companion object {
         const val DEFAULT_API = "https://api.github.com"
-        const val PER_PAGE = 20
+        const val PER_PAGE = 30
     }
 }

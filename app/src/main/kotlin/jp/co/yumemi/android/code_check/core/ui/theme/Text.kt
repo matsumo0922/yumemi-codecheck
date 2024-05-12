@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 internal val LmsTypography = Typography(
@@ -109,3 +110,6 @@ fun TextStyle.end() = this.merge(TextStyle(textAlign = TextAlign.End))
 fun TextStyle.bold() = this.merge(TextStyle(fontWeight = FontWeight.Bold))
 fun TextStyle.extraBold() = this.merge(TextStyle(fontWeight = FontWeight.ExtraBold))
 fun TextStyle.italic() = this.merge(TextStyle(fontStyle = FontStyle.Italic))
+
+// Size
+fun TextStyle.size(size: TextUnit) = this.merge(TextStyle(fontSize = size))

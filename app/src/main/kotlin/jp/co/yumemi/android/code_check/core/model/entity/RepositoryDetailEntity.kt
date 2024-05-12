@@ -48,7 +48,7 @@ data class RepositoryDetailEntity(
     @SerialName("deployments_url")
     val deploymentsUrl: String,
     @SerialName("description")
-    val description: String,
+    val description: String?,
     @SerialName("disabled")
     val disabled: Boolean,
     @SerialName("downloads_url")
@@ -86,11 +86,9 @@ data class RepositoryDetailEntity(
     @SerialName("has_wiki")
     val hasWiki: Boolean,
     @SerialName("homepage")
-    val homepage: String,
+    val homepage: String?,
     @SerialName("hooks_url")
     val hooksUrl: String,
-    @SerialName("html_url")
-    val htmlUrl: String,
     @SerialName("id")
     val id: Int,
     @SerialName("is_template")
@@ -108,13 +106,13 @@ data class RepositoryDetailEntity(
     @SerialName("languages_url")
     val languagesUrl: String,
     @SerialName("license")
-    val license: License,
+    val license: License?,
     @SerialName("merges_url")
     val mergesUrl: String,
     @SerialName("milestones_url")
     val milestonesUrl: String,
     @SerialName("mirror_url")
-    val mirrorUrl: String,
+    val mirrorUrl: String?,
     @SerialName("name")
     val name: String,
     @SerialName("network_count")
@@ -178,7 +176,7 @@ data class RepositoryDetailEntity(
     @SerialName("updated_at")
     val updatedAt: String,
     @SerialName("url")
-    val url: String,
+    val url: String?,
     @SerialName("visibility")
     val visibility: String,
     @SerialName("watchers")
@@ -197,7 +195,7 @@ data class RepositoryDetailEntity(
         @SerialName("spdx_id")
         val spdxId: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -214,8 +212,6 @@ data class RepositoryDetailEntity(
         val gistsUrl: String,
         @SerialName("gravatar_id")
         val gravatarId: String,
-        @SerialName("html_url")
-        val htmlUrl: String,
         @SerialName("id")
         val id: Int,
         @SerialName("login")
@@ -237,7 +233,7 @@ data class RepositoryDetailEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable
@@ -254,8 +250,6 @@ data class RepositoryDetailEntity(
         val gistsUrl: String,
         @SerialName("gravatar_id")
         val gravatarId: String,
-        @SerialName("html_url")
-        val htmlUrl: String,
         @SerialName("id")
         val id: Int,
         @SerialName("login")
@@ -277,7 +271,7 @@ data class RepositoryDetailEntity(
         @SerialName("type")
         val type: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
     )
 
     @Serializable

@@ -39,14 +39,19 @@
     <string name="error_developing_feature">開発中の機能です</string>
 
     <!-- Common Unit -->
-    <string name="unit_day_before">%1$d日前</string>
-    <string name="unit_hour_before">%1$d時間前</string>
-    <string name="unit_minute_before">%1$d分前</string>
-    <string name="unit_second_before">%1$d秒前</string>
+    <string name="unit_day_before">%1$d days ago</string>
+    <string name="unit_hour_before">%1$d hours ago</string>
+    <string name="unit_minute_before">%1$d minutes ago</string>
+    <string name="unit_second_before">%1$d seconds ago</string>
 
     <!-- Navigation -->
     <string name="navigation_search">検索</string>
     <string name="navigation_favorite">お気に入り</string>
     <string name="navigation_settings">設定</string>
     <string name="navigation_about">アプリについて</string>
+
+    <!-- Search -->
+    <string name="search_title">GitHubのリポジトリを検索できるよ〜</string>
+    <string name="search_remove_history_title">履歴の削除</string>
+    <string name="search_remove_history_message">%1$sを検索履歴から削除しますか？</string>
 </resources>

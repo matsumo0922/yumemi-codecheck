@@ -3,17 +3,19 @@ package jp.co.yumemi.android.code_check.core.repository.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
-import jp.co.yumemi.android.code_check.core.model.SearchUsers
+import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhSearchUsers
+import jp.co.yumemi.android.code_check.core.model.GhUserSort
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 
 class GhSearchUsersPaging(
     private val query: String,
-    private val sort: GhApiRepository.UserSort?,
-    private val order: GhApiRepository.Order?,
+    private val sort: GhUserSort?,
+    private val order: GhOrder?,
     private val ghApiRepository: GhApiRepository,
-) : PagingSource<Int, SearchUsers.Item>() {
+) : PagingSource<Int, GhSearchUsers.Item>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchUsers.Item> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GhSearchUsers.Item> {
         return suspendRunCatching {
             ghApiRepository.searchUsers(query, sort, order, params.key ?: 1)
         }.fold(
@@ -30,5 +32,5 @@ class GhSearchUsersPaging(
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, SearchUsers.Item>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, GhSearchUsers.Item>): Int? = null
 }

@@ -33,8 +33,6 @@ data class UserDetailEntity(
     val gravatarId: String,
     @SerialName("hireable")
     val hireable: Boolean,
-    @SerialName("html_url")
-    val htmlUrl: String,
     @SerialName("id")
     val id: Int,
     @SerialName("location")
@@ -68,5 +66,5 @@ data class UserDetailEntity(
     @SerialName("updated_at")
     val updatedAt: String,
     @SerialName("url")
-    val url: String,
+    val url: String?,
 )

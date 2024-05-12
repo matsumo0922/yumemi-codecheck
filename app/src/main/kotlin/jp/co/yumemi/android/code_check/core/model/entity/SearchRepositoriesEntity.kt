@@ -45,7 +45,7 @@ data class SearchRepositoriesEntity(
         @SerialName("deployments_url")
         val deploymentsUrl: String,
         @SerialName("description")
-        val description: String,
+        val description: String?,
         @SerialName("disabled")
         val disabled: Boolean,
         @SerialName("downloads_url")
@@ -81,11 +81,9 @@ data class SearchRepositoriesEntity(
         @SerialName("has_wiki")
         val hasWiki: Boolean,
         @SerialName("homepage")
-        val homepage: String,
+        val homepage: String?,
         @SerialName("hooks_url")
         val hooksUrl: String,
-        @SerialName("html_url")
-        val htmlUrl: String,
         @SerialName("id")
         val id: Int,
         @SerialName("issue_comment_url")
@@ -99,19 +97,17 @@ data class SearchRepositoriesEntity(
         @SerialName("labels_url")
         val labelsUrl: String,
         @SerialName("language")
-        val language: String,
+        val language: String?,
         @SerialName("languages_url")
         val languagesUrl: String,
         @SerialName("license")
-        val license: License,
-        @SerialName("master_branch")
-        val masterBranch: String,
+        val license: License?,
         @SerialName("merges_url")
         val mergesUrl: String,
         @SerialName("milestones_url")
         val milestonesUrl: String,
         @SerialName("mirror_url")
-        val mirrorUrl: String,
+        val mirrorUrl: String?,
         @SerialName("name")
         val name: String,
         @SerialName("node_id")
@@ -133,7 +129,7 @@ data class SearchRepositoriesEntity(
         @SerialName("releases_url")
         val releasesUrl: String,
         @SerialName("score")
-        val score: Int,
+        val score: Float,
         @SerialName("size")
         val size: Int,
         @SerialName("ssh_url")
@@ -154,12 +150,14 @@ data class SearchRepositoriesEntity(
         val tagsUrl: String,
         @SerialName("teams_url")
         val teamsUrl: String,
+        @SerialName("topics")
+        val topics: List<String>,
         @SerialName("trees_url")
         val treesUrl: String,
         @SerialName("updated_at")
         val updatedAt: String,
         @SerialName("url")
-        val url: String,
+        val url: String?,
         @SerialName("visibility")
         val visibility: String,
         @SerialName("watchers")
@@ -169,8 +167,6 @@ data class SearchRepositoriesEntity(
     ) {
         @Serializable
         data class License(
-            @SerialName("html_url")
-            val htmlUrl: String,
             @SerialName("key")
             val key: String,
             @SerialName("name")
@@ -180,7 +176,7 @@ data class SearchRepositoriesEntity(
             @SerialName("spdx_id")
             val spdxId: String,
             @SerialName("url")
-            val url: String,
+            val url: String?,
         )
 
         @Serializable
@@ -197,8 +193,6 @@ data class SearchRepositoriesEntity(
             val gistsUrl: String,
             @SerialName("gravatar_id")
             val gravatarId: String,
-            @SerialName("html_url")
-            val htmlUrl: String,
             @SerialName("id")
             val id: Int,
             @SerialName("login")
@@ -220,7 +214,7 @@ data class SearchRepositoriesEntity(
             @SerialName("type")
             val type: String,
             @SerialName("url")
-            val url: String,
+            val url: String?,
         )
     }
 }
