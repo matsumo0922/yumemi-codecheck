@@ -7,121 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SearchRepositories(
     val isIncompleteResults: Boolean,
-    val items: List<Item>,
+    val items: List<GhRepositoryDetail>,
     val totalCount: Int,
-) {
-    @Serializable
-    data class Item(
-        val archiveUrl: String,
-        val isArchived: Boolean,
-        val assigneesUrl: String,
-        val blobsUrl: String,
-        val branchesUrl: String,
-        val cloneUrl: String,
-        val collaboratorsUrl: String,
-        val commentsUrl: String,
-        val commitsUrl: String,
-        val compareUrl: String,
-        val contentsUrl: String,
-        val contributorsUrl: String,
-        val createdAt: Instant,
-        val defaultBranch: String,
-        val deploymentsUrl: String,
-        val description: String,
-        val isDisabled: Boolean,
-        val downloadsUrl: String,
-        val eventsUrl: String,
-        val isFork: Boolean,
-        val forks: Int,
-        val forksCount: Int,
-        val forksUrl: String,
-        val fullName: String,
-        val gitCommitsUrl: String,
-        val gitRefsUrl: String,
-        val gitTagsUrl: String,
-        val gitUrl: String,
-        val hasDownloads: Boolean,
-        val hasIssues: Boolean,
-        val hasPages: Boolean,
-        val hasProjects: Boolean,
-        val hasWiki: Boolean,
-        val homepage: String,
-        val hooksUrl: String,
-        val htmlUrl: String,
-        val id: Int,
-        val issueCommentUrl: String,
-        val issueEventsUrl: String,
-        val issuesUrl: String,
-        val keysUrl: String,
-        val labelsUrl: String,
-        val language: String,
-        val languagesUrl: String,
-        val license: License,
-        val masterBranch: String,
-        val mergesUrl: String,
-        val milestonesUrl: String,
-        val mirrorUrl: String,
-        val name: String,
-        val nodeId: String,
-        val notificationsUrl: String,
-        val openIssues: Int,
-        val openIssuesCount: Int,
-        val owner: Owner,
-        val isPrivate: Boolean,
-        val pullsUrl: String,
-        val pushedAt: Instant,
-        val releasesUrl: String,
-        val score: Int,
-        val size: Int,
-        val sshUrl: String,
-        val stargazersCount: Int,
-        val stargazersUrl: String,
-        val statusesUrl: String,
-        val subscribersUrl: String,
-        val subscriptionUrl: String,
-        val svnUrl: String,
-        val tagsUrl: String,
-        val teamsUrl: String,
-        val treesUrl: String,
-        val updatedAt: Instant,
-        val url: String,
-        val visibility: String,
-        val watchers: Int,
-        val watchersCount: Int,
-    ) {
-        @Serializable
-        data class License(
-            val htmlUrl: String,
-            val key: String,
-            val name: String,
-            val nodeId: String,
-            val spdxId: String,
-            val url: String,
-        )
-
-        @Serializable
-        data class Owner(
-            val avatarUrl: String,
-            val eventsUrl: String,
-            val followersUrl: String,
-            val followingUrl: String,
-            val gistsUrl: String,
-            val gravatarId: String,
-            val htmlUrl: String,
-            val id: Int,
-            val login: String,
-            val nodeId: String,
-            val organizationsUrl: String,
-            val receivedEventsUrl: String,
-            val reposUrl: String,
-            val isSiteAdmin: Boolean,
-            val starredUrl: String,
-            val subscriptionsUrl: String,
-            val type: String,
-            val url: String,
-        )
-    }
-}
+)
 
 fun SearchRepositoriesEntity.translate(): SearchRepositories {
     return SearchRepositories(
@@ -131,8 +19,13 @@ fun SearchRepositoriesEntity.translate(): SearchRepositories {
     )
 }
 
-fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
-    return SearchRepositories.Item(
+fun SearchRepositoriesEntity.Item.translate(): GhRepositoryDetail {
+    return GhRepositoryDetail(
+        allowForking = false,
+        allowMergeCommit = false,
+        allowRebaseMerge = false,
+        allowSquashMerge = false,
+        allowAutoMerge = false,
         archiveUrl = this.archiveUrl,
         isArchived = this.archived,
         assigneesUrl = this.assigneesUrl,
@@ -149,6 +42,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         defaultBranch = this.defaultBranch,
         deploymentsUrl = this.deploymentsUrl,
         description = this.description,
+        isDeleteBranchOnMerge = false,
         isDisabled = this.disabled,
         downloadsUrl = this.downloadsUrl,
         eventsUrl = this.eventsUrl,
@@ -166,6 +60,7 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         hasPages = this.hasPages,
         hasProjects = this.hasProjects,
         hasWiki = this.hasWiki,
+        hasDiscussions = false,
         homepage = this.homepage,
         hooksUrl = this.hooksUrl,
         htmlUrl = this.htmlUrl,
@@ -173,12 +68,12 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         issueCommentUrl = this.issueCommentUrl,
         issueEventsUrl = this.issueEventsUrl,
         issuesUrl = this.issuesUrl,
+        isTemplate = false,
         keysUrl = this.keysUrl,
         labelsUrl = this.labelsUrl,
         language = this.language,
         languagesUrl = this.languagesUrl,
         license = this.license.translate(),
-        masterBranch = this.masterBranch,
         mergesUrl = this.mergesUrl,
         milestonesUrl = this.milestonesUrl,
         mirrorUrl = this.mirrorUrl,
@@ -192,7 +87,6 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         pullsUrl = this.pullsUrl,
         pushedAt = Instant.parse(this.pushedAt),
         releasesUrl = this.releasesUrl,
-        score = this.score,
         size = this.size,
         sshUrl = this.sshUrl,
         stargazersCount = this.stargazersCount,
@@ -209,12 +103,20 @@ fun SearchRepositoriesEntity.Item.translate(): SearchRepositories.Item {
         visibility = this.visibility,
         watchers = this.watchers,
         watchersCount = this.watchersCount,
+        networkCount = 0,
+        subscribersCount = 0,
+        organization = null,
+        parent = null,
+        source = null,
+        permissions = null,
+        templateRepository = null,
+        tempCloneToken = "",
+        topics = emptyList(),
     )
 }
 
-fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.License {
-    return SearchRepositories.Item.License(
-        htmlUrl = this.htmlUrl,
+fun SearchRepositoriesEntity.Item.License.translate(): GhRepositoryDetail.License {
+    return GhRepositoryDetail.License(
         key = this.key,
         name = this.name,
         nodeId = this.nodeId,
@@ -223,8 +125,8 @@ fun SearchRepositoriesEntity.Item.License.translate(): SearchRepositories.Item.L
     )
 }
 
-fun SearchRepositoriesEntity.Item.Owner.translate(): SearchRepositories.Item.Owner {
-    return SearchRepositories.Item.Owner(
+fun SearchRepositoriesEntity.Item.Owner.translate(): GhRepositoryDetail.Owner {
+    return GhRepositoryDetail.Owner(
         avatarUrl = this.avatarUrl,
         eventsUrl = this.eventsUrl,
         followersUrl = this.followersUrl,

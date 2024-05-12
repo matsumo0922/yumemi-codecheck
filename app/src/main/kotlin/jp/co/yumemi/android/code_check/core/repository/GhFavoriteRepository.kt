@@ -38,7 +38,6 @@ class GhFavoriteRepositoryImpl(
             val userDetail = cache ?: ghApiRepository.getUserDetail(userName)
 
             ghFavoriteDataStore.addFavoriteUser(userDetail.name)
-            ghCacheDataStore.addUserCache(userDetail)
         }
     }
 
@@ -48,7 +47,6 @@ class GhFavoriteRepositoryImpl(
             val repositoryDetail = cache ?: ghApiRepository.getRepositoryDetail(repo)
 
             ghFavoriteDataStore.addFavoriteRepository(repositoryDetail.repo)
-            ghCacheDataStore.addRepositoryCache(repositoryDetail)
         }
     }
 

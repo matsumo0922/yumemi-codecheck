@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import jp.co.yumemi.android.code_check.core.datastore.GhCacheDataStore
 import jp.co.yumemi.android.code_check.core.extensions.parse
 import jp.co.yumemi.android.code_check.core.extensions.parsePaging
 import jp.co.yumemi.android.code_check.core.model.GhPaging
@@ -61,6 +62,7 @@ interface GhApiRepository {
 }
 
 class GhApiRepositoryImpl(
+    private val ghCacheDataStore: GhCacheDataStore,
     private val client: ApiClient,
     private val ioDispatcher: CoroutineDispatcher,
 ) : GhApiRepository {
@@ -146,10 +148,14 @@ class GhApiRepositoryImpl(
     }
 
     override suspend fun getUserDetail(userName: String): GhUserDetail = withContext(ioDispatcher) {
-        client.get("users/$userName").parse<UserDetailEntity>()!!.translate()
+        client.get("users/$userName").parse<UserDetailEntity>()!!.translate().also {
+            ghCacheDataStore.addUserCache(it)
+        }
     }
 
     override suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail = withContext(ioDispatcher) {
-        client.get("repos/$repo").parse<RepositoryDetailEntity>()!!.translate()
+        client.get("repos/$repo").parse<RepositoryDetailEntity>()!!.translate().also {
+            ghCacheDataStore.addRepositoryCache(it)
+        }
     }
 }
