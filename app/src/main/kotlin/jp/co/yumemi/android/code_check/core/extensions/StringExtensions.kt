@@ -27,6 +27,14 @@ fun String.indexOfWordStartsWith(prefix: String): Int {
 
 fun String.isAnyWordStartsWith(prefix: String): Boolean = indexOfWordStartsWith(prefix) != -1
 
+fun colorToHexString(color: Color): String {
+    val red = (color.red * 255).toInt()
+    val green = (color.green * 255).toInt()
+    val blue = (color.blue * 255).toInt()
+
+    return String.format("#%02X%02X%02X", red, green, blue)
+}
+
 fun convertRelativeUrlsToAbsolute(html: String, baseUrl: String): String {
     val document = Ksoup.parse(html, baseUrl)
     val urlAttributes = mapOf(

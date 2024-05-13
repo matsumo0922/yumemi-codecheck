@@ -15,16 +15,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.fleeksoft.ksoup.Ksoup
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
+import jp.co.yumemi.android.code_check.core.extensions.colorToHexString
 
 @Composable
 internal fun RepositoryDetailReadMeSection(
     readMeHtml: String,
     modifier: Modifier = Modifier,
 ) {
-    val webViewState = rememberWebViewStateWithHTMLData(readMeHtml)
+    val webViewState = rememberWebViewStateWithHTMLData(changeHtmlTextColor(readMeHtml))
 
     webViewState.webSettings.apply {
         isJavaScriptEnabled = true
@@ -46,7 +49,7 @@ internal fun RepositoryDetailReadMeSection(
         )
 
         WebView(
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             state = webViewState,
         )
     }
@@ -74,4 +77,18 @@ private fun ReadMeItem(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
+}
+
+@Composable
+private fun changeHtmlTextColor(html: String): String {
+    val density = LocalDensity.current
+    val document = Ksoup.parse(html)
+
+    val paddingAttr = "padding: ${with(density) { 4.dp.toPx() }}px;"
+    val colorAttr = "color: ${colorToHexString(MaterialTheme.colorScheme.onSurface)};"
+
+    document.select("body").attr("style", "$colorAttr $paddingAttr")
+    document.select("a").attr("style", colorAttr)
+
+    return document.toString()
 }
