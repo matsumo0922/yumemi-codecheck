@@ -5,16 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RepositoryDetailEntity(
-    @SerialName("allow_auto_merge")
-    val allowAutoMerge: Boolean,
-    @SerialName("allow_forking")
-    val allowForking: Boolean,
-    @SerialName("allow_merge_commit")
-    val allowMergeCommit: Boolean,
-    @SerialName("allow_rebase_merge")
-    val allowRebaseMerge: Boolean,
-    @SerialName("allow_squash_merge")
-    val allowSquashMerge: Boolean,
     @SerialName("archive_url")
     val archiveUrl: String,
     @SerialName("archived")
@@ -43,8 +33,6 @@ data class RepositoryDetailEntity(
     val createdAt: String,
     @SerialName("default_branch")
     val defaultBranch: String,
-    @SerialName("delete_branch_on_merge")
-    val deleteBranchOnMerge: Boolean,
     @SerialName("deployments_url")
     val deploymentsUrl: String,
     @SerialName("description")
@@ -125,14 +113,10 @@ data class RepositoryDetailEntity(
     val openIssues: Int,
     @SerialName("open_issues_count")
     val openIssuesCount: Int,
-    @SerialName("organization")
-    val organization: Organization,
     @SerialName("owner")
     val owner: Owner,
     @SerialName("parent")
     val parent: RepositoryDetailEntity?,
-    @SerialName("permissions")
-    val permissions: Permissions,
     @SerialName("private")
     val `private`: Boolean,
     @SerialName("pulls_url")
@@ -166,7 +150,7 @@ data class RepositoryDetailEntity(
     @SerialName("teams_url")
     val teamsUrl: String,
     @SerialName("temp_clone_token")
-    val tempCloneToken: String,
+    val tempCloneToken: String?,
     @SerialName("template_repository")
     val templateRepository: RepositoryDetailEntity?,
     @SerialName("topics")
@@ -194,44 +178,6 @@ data class RepositoryDetailEntity(
         val nodeId: String,
         @SerialName("spdx_id")
         val spdxId: String,
-        @SerialName("url")
-        val url: String?,
-    )
-
-    @Serializable
-    data class Organization(
-        @SerialName("avatar_url")
-        val avatarUrl: String,
-        @SerialName("events_url")
-        val eventsUrl: String,
-        @SerialName("followers_url")
-        val followersUrl: String,
-        @SerialName("following_url")
-        val followingUrl: String,
-        @SerialName("gists_url")
-        val gistsUrl: String,
-        @SerialName("gravatar_id")
-        val gravatarId: String,
-        @SerialName("id")
-        val id: Int,
-        @SerialName("login")
-        val login: String,
-        @SerialName("node_id")
-        val nodeId: String,
-        @SerialName("organizations_url")
-        val organizationsUrl: String,
-        @SerialName("received_events_url")
-        val receivedEventsUrl: String,
-        @SerialName("repos_url")
-        val reposUrl: String,
-        @SerialName("site_admin")
-        val siteAdmin: Boolean,
-        @SerialName("starred_url")
-        val starredUrl: String,
-        @SerialName("subscriptions_url")
-        val subscriptionsUrl: String,
-        @SerialName("type")
-        val type: String,
         @SerialName("url")
         val url: String?,
     )
@@ -272,15 +218,5 @@ data class RepositoryDetailEntity(
         val type: String,
         @SerialName("url")
         val url: String?,
-    )
-
-    @Serializable
-    data class Permissions(
-        @SerialName("admin")
-        val admin: Boolean,
-        @SerialName("pull")
-        val pull: Boolean,
-        @SerialName("push")
-        val push: Boolean,
     )
 }
