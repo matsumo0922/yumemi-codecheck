@@ -181,7 +181,7 @@ fun RepositoryDetailEntity.translate(): GhRepositoryDetail {
         networkCount = this.networkCount,
         nodeId = this.nodeId,
         notificationsUrl = this.notificationsUrl,
-        language = "",
+        language = this.languages,
         openIssues = this.openIssues,
         openIssuesCount = this.openIssuesCount,
         owner = this.owner.translate(),

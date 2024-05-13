@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.feature.repo.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.outlined.ForkLeft
 import androidx.compose.material.icons.outlined.Link
@@ -18,12 +20,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
@@ -32,15 +36,17 @@ import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
 import jp.co.yumemi.android.code_check.core.ui.previews.GhRepositoryDetailPreviewParameter
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import jp.co.yumemi.android.code_check.core.ui.theme.bold
+import jp.co.yumemi.android.code_check.core.ui.theme.size
 
 @Composable
 internal fun RepositoryDetailTopSection(
     repositoryDetail: GhRepositoryDetail,
+    language: String?,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         UserNameItem(
             modifier = Modifier.fillMaxWidth(),
@@ -51,7 +57,7 @@ internal fun RepositoryDetailTopSection(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = repositoryDetail.name,
-            style = MaterialTheme.typography.titleLarge.bold(),
+            style = MaterialTheme.typography.titleLarge.bold().size(24.sp),
             color = MaterialTheme.colorScheme.onSurface,
         )
 
@@ -69,6 +75,13 @@ internal fun RepositoryDetailTopSection(
                 modifier = Modifier.fillMaxWidth(),
                 link = repositoryDetail.homepage,
                 onClickLink = {},
+            )
+        }
+
+        if (language != null) {
+            LanguageItem(
+                modifier = Modifier.fillMaxWidth(),
+                language = language,
             )
         }
 
@@ -108,7 +121,7 @@ private fun UserNameItem(
     ) {
         SubcomposeAsyncImage(
             modifier = Modifier
-                .size(16.dp)
+                .size(20.dp)
                 .clip(CircleShape),
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(avatarUrl)
@@ -117,8 +130,9 @@ private fun UserNameItem(
         )
 
         Text(
+            modifier = Modifier.weight(1f),
             text = userName,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
@@ -133,12 +147,16 @@ private fun LinkItem(
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .clickable { onClickLink.invoke() },
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClickLink,
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(20.dp),
             imageVector = Icons.Outlined.Link,
             contentDescription = "Link",
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -165,7 +183,7 @@ private fun CountInfoItem(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(20.dp),
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -190,6 +208,32 @@ private fun CountInfoItem(
     }
 }
 
+@Composable
+private fun LanguageItem(
+    language: String,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Icon(
+            modifier = Modifier.size(20.dp),
+            imageVector = Icons.Default.Language,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+
+        Text(
+            text = language,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}
+
 @ComponentPreviews
 @Composable
 private fun RepositoryDetailTopSectionPreview(
@@ -199,6 +243,7 @@ private fun RepositoryDetailTopSectionPreview(
         RepositoryDetailTopSection(
             modifier = Modifier.fillMaxWidth(),
             repositoryDetail = repositoryDetail,
+            language = "Kotlin",
         )
     }
 }

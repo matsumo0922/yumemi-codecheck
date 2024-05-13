@@ -1,4 +1,4 @@
-import com.android.build.api.variant.BuildConfigField
+
 import com.android.build.api.variant.ResValue
 import org.jetbrains.kotlin.konan.properties.Properties
 
@@ -67,6 +67,10 @@ android {
         implementation(libs.androidx.core.splashscreen)
         implementation(libs.androidx.activity)
         implementation(libs.androidx.activity.compose)
+
+        implementation(libs.uuid)
+        implementation(libs.ksoup)
+        implementation(libs.webview.compose)
 
         api(project.dependencies.platform(libs.kotlin.bom))
         api(project.dependencies.platform(libs.koin.bom))

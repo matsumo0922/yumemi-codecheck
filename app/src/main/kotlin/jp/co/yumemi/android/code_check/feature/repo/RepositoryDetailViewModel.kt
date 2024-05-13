@@ -1,7 +1,6 @@
 package jp.co.yumemi.android.code_check.feature.repo
 
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
@@ -28,10 +27,16 @@ class RepositoryDetailViewModel(
         viewModelScope.launch {
             _screenState.value = ScreenState.Loading
             _screenState.value = suspendRunCatching {
+                val isFavorite = ghFavoriteRepository.isFavoriteRepository(repositoryName)
+                val repositoryDetail = ghApiRepository.getRepositoryDetail(repositoryName)
+                val readMeHtml = ghApiRepository.getRepositoryReadMe(repositoryName, repositoryDetail.defaultBranch)
+                val languages = ghApiRepository.getRepositoryLanguages(repositoryName)
+
                 RepositoryDetailUiState(
-                    isFavorite = ghFavoriteRepository.isFavoriteRepository(repositoryName),
-                    repositoryDetail = ghApiRepository.getRepositoryDetail(repositoryName),
-                    languageColors = ghApiRepository.getLanguageColors(),
+                    isFavorite = isFavorite,
+                    repositoryDetail = repositoryDetail,
+                    readMeHtml = readMeHtml,
+                    mainLanguage = languages.maxByOrNull { it.value }?.key,
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -45,5 +50,6 @@ class RepositoryDetailViewModel(
 data class RepositoryDetailUiState(
     val isFavorite: Boolean,
     val repositoryDetail: GhRepositoryDetail,
-    val languageColors: Map<String, Color?>,
+    val mainLanguage: String?,
+    val readMeHtml: String,
 )

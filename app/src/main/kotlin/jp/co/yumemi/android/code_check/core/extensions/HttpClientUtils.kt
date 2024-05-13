@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.code_check.core.extensions
 
-import io.github.aakira.napier.Napier
+import co.touchlab.kermit.Logger
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -31,8 +31,8 @@ suspend inline fun <reified T> HttpResponse.parse(
     val isOK = this.status.value in allowRange
     val text = this.bodyAsText()
 
-    Napier.d("[${if (isOK) "SUCCESS" else "FAILED"}] Ktor Request: $requestUrl")
-    Napier.d("[RESPONSE] ${text.replace("\n", "")}")
+    Logger.d("[${if (isOK) "SUCCESS" else "FAILED"}] Ktor Request: $requestUrl")
+    Logger.d("[RESPONSE] ${text.replace("\n", "")}")
 
     return if (isOK) formatter.decodeFromString(text) else null
 }
@@ -45,8 +45,8 @@ suspend inline fun <reified T> HttpResponse.parseList(
     val requestUrl = request.url
     val isOK = this.status.value in allowRange
 
-    Napier.d("[${if (isOK) "SUCCESS" else "FAILED"}] Ktor Request: $requestUrl")
-    Napier.d("[RESPONSE] ${this.bodyAsText().replace("\n", "")}")
+    Logger.d("[${if (isOK) "SUCCESS" else "FAILED"}] Ktor Request: $requestUrl")
+    Logger.d("[RESPONSE] ${this.bodyAsText().replace("\n", "")}")
 
     if (!isOK) return null
 

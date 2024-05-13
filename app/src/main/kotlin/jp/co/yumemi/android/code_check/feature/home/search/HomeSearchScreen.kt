@@ -50,7 +50,7 @@ fun HomeSearchRoute(
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(screenState) {
+    LaunchedEffect(true) {
         if (screenState !is ScreenState.Idle) {
             viewModel.fetch()
         }

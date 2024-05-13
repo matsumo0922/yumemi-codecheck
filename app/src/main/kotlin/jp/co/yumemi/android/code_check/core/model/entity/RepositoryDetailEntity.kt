@@ -93,6 +93,8 @@ data class RepositoryDetailEntity(
     val labelsUrl: String,
     @SerialName("languages_url")
     val languagesUrl: String,
+    @SerialName("languages")
+    val languages: String?,
     @SerialName("license")
     val license: License?,
     @SerialName("merges_url")

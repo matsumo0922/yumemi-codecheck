@@ -21,10 +21,14 @@ open class ApiClient(
     suspend fun get(
         url: String,
         params: Map<String, String?> = emptyMap(),
+        headers: Map<String, String?> = mapOf("Accept" to "application/vnd.github.mercy-preview+json"),
     ): HttpResponse = withContext(ioDispatcher) {
         client.get {
             url(url.buildUrl())
-            header("Accept", " application/vnd.github.mercy-preview+json")
+
+            for ((key, value) in headers) {
+                value?.let { header(key, it) }
+            }
 
             for ((key, value) in params) {
                 value?.let { parameter(key, it) }
