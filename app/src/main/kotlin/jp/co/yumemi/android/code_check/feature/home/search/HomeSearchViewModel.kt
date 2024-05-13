@@ -9,6 +9,7 @@ import jp.co.yumemi.android.code_check.core.extensions.isAnyWordStartsWith
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
 import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
@@ -70,6 +71,18 @@ class HomeSearchViewModel(
     fun removeSearchHistory(searchHistory: GhSearchHistory) {
         viewModelScope.launch {
             ghSearchHistoryRepository.removeSearchHistory(searchHistory)
+        }
+    }
+
+    fun addFavorite(repositoryName: GhRepositoryName) {
+        viewModelScope.launch {
+            ghFavoriteRepository.setFavoriteRepository(repositoryName)
+        }
+    }
+
+    fun removeFavorite(repositoryName: GhRepositoryName) {
+        viewModelScope.launch {
+            ghFavoriteRepository.removeFavoriteRepository(repositoryName)
         }
     }
 

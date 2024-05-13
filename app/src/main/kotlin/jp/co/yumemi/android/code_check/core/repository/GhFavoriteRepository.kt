@@ -19,6 +19,9 @@ interface GhFavoriteRepository {
     fun removeFavoriteUser(userName: String)
     fun removeFavoriteRepository(repo: GhRepositoryName)
 
+    suspend fun isFavoriteUser(userName: String): Boolean
+    suspend fun isFavoriteRepository(repo: GhRepositoryName): Boolean
+
     suspend fun getFavoriteUsers(): List<GhUserDetail>
     suspend fun getFavoriteRepositories(): List<GhRepositoryDetail>
 }
@@ -60,6 +63,14 @@ class GhFavoriteRepositoryImpl(
         scope.launch {
             ghFavoriteDataStore.removeFavoriteRepository(repo)
         }
+    }
+
+    override suspend fun isFavoriteUser(userName: String): Boolean {
+        return ghFavoriteDataStore.favoriteData.first().userIds.contains(userName)
+    }
+
+    override suspend fun isFavoriteRepository(repo: GhRepositoryName): Boolean {
+        return ghFavoriteDataStore.favoriteData.first().repos.contains(repo)
     }
 
     override suspend fun getFavoriteUsers(): List<GhUserDetail> {

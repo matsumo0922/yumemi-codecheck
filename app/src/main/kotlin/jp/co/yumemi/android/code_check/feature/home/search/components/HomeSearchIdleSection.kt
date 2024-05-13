@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -12,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.ui.component.SearchRepositoryItem
 import jp.co.yumemi.android.code_check.core.ui.extensions.IntRangeSaver
@@ -23,10 +26,16 @@ internal fun HomeSearchIdleSection(
     languageColors: ImmutableMap<String, Color?>,
     pagingAdapter: LazyPagingItems<GhSearchRepositories.Item>,
     contentPadding: PaddingValues,
+    onClickRepository: (GhRepositoryName) -> Unit,
+    onClickAddFavorite: (GhRepositoryName) -> Unit,
+    onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val state = rememberLazyListState()
+
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.drawVerticalScrollbar(state),
+        state = state,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = contentPadding,
     ) {
@@ -45,9 +54,9 @@ internal fun HomeSearchIdleSection(
                     item = item,
                     markupRange = markupRange,
                     languageColor = languageColors[item.language],
-                    onClickRepository = {},
-                    onClickAddFavorite = {},
-                    onClickRemoveFavorite = {},
+                    onClickRepository = onClickRepository,
+                    onClickAddFavorite = onClickAddFavorite,
+                    onClickRemoveFavorite = onClickRemoveFavorite,
                 )
             }
         }

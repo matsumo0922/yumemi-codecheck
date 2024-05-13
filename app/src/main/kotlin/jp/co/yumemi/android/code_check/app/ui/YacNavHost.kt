@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import jp.co.yumemi.android.code_check.feature.home.HomeRoute
 import jp.co.yumemi.android.code_check.feature.home.homeScreen
+import jp.co.yumemi.android.code_check.feature.repo.navigateToRepositoryDetail
+import jp.co.yumemi.android.code_check.feature.repo.repositoryDetailScreen
 
 @Composable
 fun YacNavHost(
@@ -18,6 +20,10 @@ fun YacNavHost(
         navController = navController,
         startDestination = HomeRoute,
     ) {
-        homeScreen()
+        homeScreen(
+            navigateToRepositoryDetail = navController::navigateToRepositoryDetail,
+        )
+
+        repositoryDetailScreen()
     }
 }

@@ -24,6 +24,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import jp.co.yumemi.android.code_check.core.extensions.koinViewModel
 import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
@@ -43,6 +44,7 @@ import me.matsumo.yumemi.codecheck.R
 @Composable
 fun HomeSearchRoute(
     openDrawer: () -> Unit,
+    navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeSearchViewModel = koinViewModel(HomeSearchViewModel::class),
 ) {
@@ -69,6 +71,9 @@ fun HomeSearchRoute(
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
             onClickRemoveSearchHistory = viewModel::removeSearchHistory,
+            onClickRepository = navigateToRepositoryDetail,
+            onClickAddFavorite = viewModel::addFavorite,
+            onClickRemoveFavorite = viewModel::removeFavorite,
             onUpdateQuery = viewModel::updateQuery,
         )
     }
@@ -84,6 +89,9 @@ private fun HomeSearchScreen(
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
+    onClickRepository: (GhRepositoryName) -> Unit,
+    onClickAddFavorite: (GhRepositoryName) -> Unit,
+    onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     onUpdateQuery: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -127,6 +135,9 @@ private fun HomeSearchScreen(
                     end = 16.dp,
                     bottom = 16.dp,
                 ),
+                onClickRepository = onClickRepository,
+                onClickAddFavorite = onClickAddFavorite,
+                onClickRemoveFavorite = onClickRemoveFavorite,
             )
         }
     }
