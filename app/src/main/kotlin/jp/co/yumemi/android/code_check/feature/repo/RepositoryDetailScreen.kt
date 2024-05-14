@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import jp.co.yumemi.android.code_check.core.extensions.koinViewModel
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
@@ -21,12 +20,15 @@ import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailReadMeSection
 import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailTopAppBar
 import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailTopSection
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun RepositoryDetailRoute(
     repositoryName: GhRepositoryName,
+    navigateToWeb: (String) -> Unit,
+    terminate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RepositoryDetailViewModel = koinViewModel(RepositoryDetailViewModel::class, key = repositoryName.toString()),
+    viewModel: RepositoryDetailViewModel = koinViewModel(),
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
@@ -46,9 +48,11 @@ internal fun RepositoryDetailRoute(
             repositoryDetail = it.repositoryDetail,
             readMeHtml = it.readMeHtml,
             language = it.mainLanguage,
-            onClickBack = { /*TODO*/ },
-            onClickWeb = { /*TODO*/ },
-            onClickShare = { /*TODO*/ },
+            isFavorite = it.isFavorite,
+            onClickBack = terminate,
+            onClickWeb = navigateToWeb,
+            onClickAddFavorite = viewModel::addFavorite,
+            onClickRemoveFavorite = viewModel::removeFavorite,
         )
     }
 }
@@ -59,9 +63,11 @@ private fun RepositoryDetailScreen(
     repositoryDetail: GhRepositoryDetail,
     readMeHtml: String,
     language: String?,
+    isFavorite: Boolean,
     onClickBack: () -> Unit,
-    onClickWeb: () -> Unit,
-    onClickShare: () -> Unit,
+    onClickWeb: (String) -> Unit,
+    onClickAddFavorite: (GhRepositoryName) -> Unit,
+    onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state = rememberTopAppBarState()
@@ -72,10 +78,12 @@ private fun RepositoryDetailScreen(
         topBar = {
             RepositoryDetailTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
+                isFavorite = isFavorite,
                 scrollBehavior = behavior,
                 onClickBack = onClickBack,
-                onClickWeb = onClickWeb,
-                onClickShare = onClickShare,
+                onClickWeb =  { onClickWeb.invoke("https://github.com/${repositoryDetail.repoName}") },
+                onClickAddFavorite = { onClickAddFavorite.invoke(repositoryDetail.repoName) },
+                onClickRemoveFavorite = { onClickRemoveFavorite.invoke(repositoryDetail.repoName) },
             )
         }
     ) {

@@ -18,11 +18,13 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.ui.component.SearchRepositoryItem
 import jp.co.yumemi.android.code_check.core.ui.extensions.IntRangeSaver
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 
 @Composable
 internal fun HomeSearchIdleSection(
     query: String,
+    favoriteRepositories: ImmutableList<GhRepositoryName>,
     languageColors: ImmutableMap<String, Color?>,
     pagingAdapter: LazyPagingItems<GhSearchRepositories.Item>,
     contentPadding: PaddingValues,
@@ -45,12 +47,11 @@ internal fun HomeSearchIdleSection(
             contentType = pagingAdapter.itemContentType(),
         ) { index ->
             pagingAdapter[index]?.let { item ->
-                val markupRange =
-                    rememberSaveable(saver = IntRangeSaver) { getMatchRange(query, item.repoName.toString()) }
+                val markupRange = rememberSaveable(saver = IntRangeSaver) { getMatchRange(query, item.repoName.toString()) }
 
                 SearchRepositoryItem(
                     modifier = Modifier.fillMaxWidth(),
-                    isFavorite = false,
+                    isFavorite = favoriteRepositories.contains(item.repoName),
                     item = item,
                     markupRange = markupRange,
                     languageColor = languageColors[item.language],

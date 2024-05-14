@@ -29,7 +29,7 @@ class GhCacheDataStore(
 
     suspend fun addRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) = withContext(ioDispatcher) {
         preference.edit {
-            val key = createRepositoryCacheKey(ghRepositoryDetail.name)
+            val key = createRepositoryCacheKey(ghRepositoryDetail.repoName.toString())
             val json = formatter.encodeToString(GhRepositoryDetail.serializer(), ghRepositoryDetail)
 
             it[key] = json

@@ -1,5 +1,7 @@
 package jp.co.yumemi.android.code_check.feature.repo
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -15,7 +17,10 @@ fun NavController.navigateToRepositoryDetail(repositoryName: GhRepositoryName) {
     this.navigate("repositoryDetail/${repositoryName.owner}/${repositoryName.name}")
 }
 
-fun NavGraphBuilder.repositoryDetailScreen() {
+fun NavGraphBuilder.repositoryDetailScreen(
+    navigateToWeb: (String) -> Unit,
+    terminate: () -> Unit,
+) {
     composable(
         route = RepositoryDetailRoute,
         arguments = listOf(
@@ -24,10 +29,13 @@ fun NavGraphBuilder.repositoryDetailScreen() {
         ),
     ) {
         RepositoryDetailRoute(
+            modifier = Modifier.fillMaxSize(),
             repositoryName = GhRepositoryName(
                 owner = it.arguments?.getString(RepositoryOwner).orEmpty(),
                 name = it.arguments?.getString(RepositoryName).orEmpty(),
             ),
+            navigateToWeb = navigateToWeb,
+            terminate = terminate,
         )
     }
 }

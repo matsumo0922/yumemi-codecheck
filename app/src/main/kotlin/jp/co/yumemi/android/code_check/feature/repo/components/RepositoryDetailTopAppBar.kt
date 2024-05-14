@@ -2,24 +2,29 @@ package jp.co.yumemi.android.code_check.feature.repo.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.OpenInBrowser
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RepositoryDetailTopAppBar(
+    isFavorite: Boolean,
     scrollBehavior: TopAppBarScrollBehavior?,
     onClickWeb: () -> Unit,
-    onClickShare: () -> Unit,
+    onClickAddFavorite: () -> Unit,
+    onClickRemoveFavorite: () -> Unit,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -44,10 +49,11 @@ internal fun RepositoryDetailTopAppBar(
                 )
             }
 
-            IconButton(onClick = onClickShare) {
+            IconButton(onClick = if (isFavorite) onClickRemoveFavorite else onClickAddFavorite) {
                 Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "Share",
+                    imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    tint = if (isFavorite) Color.Red else LocalContentColor.current,
+                    contentDescription = "toggle favorite",
                 )
             }
         },
@@ -61,9 +67,11 @@ internal fun RepositoryDetailTopAppBar(
 fun RepositoryDetailTopAppBarPreview() {
     YacTheme {
         RepositoryDetailTopAppBar(
+            isFavorite = false,
             scrollBehavior = null,
             onClickWeb = {},
-            onClickShare = {},
+            onClickAddFavorite = {},
+            onClickRemoveFavorite = {},
             onClickBack = {},
         )
     }

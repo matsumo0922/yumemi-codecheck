@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import jp.co.yumemi.android.code_check.core.extensions.koinViewModel
 import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
@@ -40,13 +39,14 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.Flow
 import me.matsumo.yumemi.codecheck.R
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeSearchRoute(
     openDrawer: () -> Unit,
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeSearchViewModel = koinViewModel(HomeSearchViewModel::class),
+    viewModel: HomeSearchViewModel = koinViewModel(),
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
@@ -67,6 +67,7 @@ fun HomeSearchRoute(
             suggestions = it.suggestions.toImmutableList(),
             searchHistories = it.searchHistories.toImmutableList(),
             searchRepositoriesPaging = it.searchRepositoriesPaging,
+            favoriteRepositories = it.favoriteRepositories.toImmutableList(),
             languageColors = it.languageColors.toImmutableMap(),
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
@@ -85,6 +86,7 @@ private fun HomeSearchScreen(
     suggestions: ImmutableList<GhSearchHistory>,
     searchHistories: ImmutableList<GhSearchHistory>,
     searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
+    favoriteRepositories: ImmutableList<GhRepositoryName>,
     languageColors: ImmutableMap<String, Color?>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
@@ -112,8 +114,8 @@ private fun HomeSearchScreen(
                     if (topAppBarHeight == 0) topAppBarHeight = it.size.height
                 },
             query = query,
-            suggestions = suggestions.toImmutableList(),
-            searchHistories = searchHistories.toImmutableList(),
+            suggestions = suggestions,
+            searchHistories = searchHistories,
             onClickDrawerMenu = onClickDrawerMenu,
             onClickSearch = { onClickSearch.invoke(it, null, null) },
             onClickRemoveSearchHistory = { removeSearchHistoryItem = it },
@@ -127,7 +129,8 @@ private fun HomeSearchScreen(
             HomeSearchIdleSection(
                 modifier = Modifier.fillMaxSize(),
                 query = query,
-                languageColors = languageColors.toImmutableMap(),
+                favoriteRepositories = favoriteRepositories,
+                languageColors = languageColors,
                 pagingAdapter = repositoriesPager,
                 contentPadding = PaddingValues(
                     top = with(density) { topAppBarHeight.toDp() + 16.dp },

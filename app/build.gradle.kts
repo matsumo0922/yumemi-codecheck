@@ -21,10 +21,11 @@ android {
             storeFile = file("${project.rootDir}/gradle/keystore/debug.keystore")
         }
         create("release") {
+            // 本来は秘匿すべきファイルであることは承知しているが、リリースビルドでの動作確認のために commit している
             storeFile = file("${project.rootDir}/gradle/keystore/release.keystore")
-            storePassword = localProperties.getProperty("storePassword") ?: System.getenv("RELEASE_STORE_PASSWORD")
-            keyPassword = localProperties.getProperty("keyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD")
-            keyAlias = localProperties.getProperty("keyAlias") ?: System.getenv("RELEASE_KEY_ALIAS")
+            storePassword = localProperties.getProperty("storePassword") ?: System.getenv("RELEASE_STORE_PASSWORD") // yumemi
+            keyPassword = localProperties.getProperty("keyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD") // yumemi
+            keyAlias = localProperties.getProperty("keyAlias") ?: System.getenv("RELEASE_KEY_ALIAS") // key0
         }
     }
 
