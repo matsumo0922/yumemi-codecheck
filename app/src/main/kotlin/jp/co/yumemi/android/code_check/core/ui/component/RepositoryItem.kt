@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
-import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.ui.extensions.getAnnotatedString
 import jp.co.yumemi.android.code_check.core.ui.theme.size
 import kotlinx.collections.immutable.toImmutableList
@@ -48,9 +48,9 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-internal fun SearchRepositoryItem(
+internal fun RepositoryItem(
     isFavorite: Boolean,
-    item: GhSearchRepositories.Item,
+    item: GhRepositoryDetail,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
@@ -113,7 +113,7 @@ internal fun SearchRepositoryItem(
 @Composable
 private fun TitleSection(
     isFavorite: Boolean,
-    item: GhSearchRepositories.Item,
+    item: GhRepositoryDetail,
     markupRange: IntRange,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
@@ -163,7 +163,7 @@ private fun TitleSection(
 
 @Composable
 private fun InfoSection(
-    item: GhSearchRepositories.Item,
+    item: GhRepositoryDetail,
     languageColor: Color?,
     modifier: Modifier = Modifier,
 ) {

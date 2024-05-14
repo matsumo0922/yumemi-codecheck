@@ -53,6 +53,7 @@
 
     <!-- Search -->
     <string name="search_title">GitHubのリポジトリを検索できるよ〜</string>
+    <string name="search_empty_message">リポジトリを検索しましょう</string>
     <string name="search_remove_history_title">履歴の削除</string>
     <string name="search_remove_history_message">%1$sを検索履歴から削除しますか？</string>
 </resources>

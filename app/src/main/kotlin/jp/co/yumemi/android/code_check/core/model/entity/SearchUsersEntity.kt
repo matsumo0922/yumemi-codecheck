@@ -44,8 +44,6 @@ data class SearchUsersEntity(
         val siteAdmin: Boolean,
         @SerialName("starred_url")
         val starredUrl: String,
-        @SerialName("subscriptions_url")
-        val subscriptionsUrl: String,
         @SerialName("type")
         val type: String,
         @SerialName("url")
