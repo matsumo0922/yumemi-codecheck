@@ -9,6 +9,7 @@ import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
 import jp.co.yumemi.android.code_check.core.extensions.isAnyWordStartsWith
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
 import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
@@ -19,6 +20,7 @@ import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
 import jp.co.yumemi.android.code_check.core.repository.GhSearchHistoryRepository
 import jp.co.yumemi.android.code_check.core.ui.extensions.emptyPaging
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,8 +42,18 @@ class HomeSearchViewModel(
     init {
         viewModelScope.launch {
             ghFavoriteRepository.favoriteData.collectLatest { favorites ->
+                val favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories()
+                val favoriteRepoNames = favorites.repos
+
                 _screenState.value = screenState.updateWhenIdle {
-                    it.copy(favoriteRepositories = favorites.repos)
+                    it.copy(favoriteRepoNames = favoriteRepoNames)
+                }
+
+                // 1.5s 経ったら変更を反映する
+                delay(1500)
+
+                _screenState.value = screenState.updateWhenIdle {
+                    it.copy(favoriteRepositories = favoriteRepositories)
                 }
             }
         }
@@ -55,7 +67,8 @@ class HomeSearchViewModel(
                     query = "",
                     suggestions = ghSearchHistoryRepository.searchHistories.first(),
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
-                    favoriteRepositories = ghFavoriteRepository.favoriteData.first().repos,
+                    favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
+                    favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     searchRepositoriesPaging = emptyPaging(),
                     languageColors = ghApiRepository.getLanguageColors(),
                 )
@@ -103,6 +116,7 @@ class HomeSearchViewModel(
                 uiState.copy(
                     query = query,
                     suggestions = uiState.searchHistories.filter { it.query.isAnyWordStartsWith(query) },
+                    searchRepositoriesPaging = if (query.isEmpty()) emptyPaging() else uiState.searchRepositoriesPaging,
                 )
             }
         }
@@ -114,7 +128,8 @@ data class HomeSearchUiState(
     val query: String,
     val suggestions: List<GhSearchHistory>,
     val searchHistories: List<GhSearchHistory>,
-    val favoriteRepositories: List<GhRepositoryName>,
+    val favoriteRepoNames: List<GhRepositoryName>,
+    val favoriteRepositories: List<GhRepositoryDetail>,
     val searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
     val languageColors: Map<String, Color?>,
 )

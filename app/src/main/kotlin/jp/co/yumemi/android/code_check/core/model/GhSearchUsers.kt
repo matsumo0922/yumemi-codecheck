@@ -26,7 +26,6 @@ data class GhSearchUsers(
         val score: Float,
         val siteAdmin: Boolean,
         val starredUrl: String,
-        val subscriptionsUrl: String,
         val type: String,
         val url: String?,
     )
@@ -54,7 +53,6 @@ fun SearchUsersEntity.Item.translate() = GhSearchUsers.Item(
     score = this.score,
     siteAdmin = this.siteAdmin,
     starredUrl = this.starredUrl,
-    subscriptionsUrl = this.subscriptionsUrl,
     type = this.type,
     url = this.url,
 )

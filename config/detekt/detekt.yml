@@ -82,6 +82,8 @@ formatting:
     maxLineLength: 999
   ParameterListWrapping:
     maxLineLength: 999
+  PropertyWrapping:
+    maxLineLength: 999
   # ワイルドカードは使用しない
   NoWildcardImports:
     active: false

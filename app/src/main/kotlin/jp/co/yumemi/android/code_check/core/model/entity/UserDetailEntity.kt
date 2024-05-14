@@ -57,8 +57,6 @@ data class UserDetailEntity(
     val siteAdmin: Boolean,
     @SerialName("starred_url")
     val starredUrl: String,
-    @SerialName("subscriptions_url")
-    val subscriptionsUrl: String,
     @SerialName("twitter_username")
     val twitterUsername: String,
     @SerialName("type")
