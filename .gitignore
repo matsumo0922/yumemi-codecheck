@@ -47,8 +47,8 @@ captures/
 # MacOS thumbnail db
 .DS_Store
 
-# Keystore
-gradle/keystore/release.keystore
+# Keystore (本来は秘匿すべきであるが動作確認のためにコミット)
+# gradle/keystore/release.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild

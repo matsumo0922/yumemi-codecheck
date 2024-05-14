@@ -6,7 +6,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import io.ktor.client.statement.bodyAsText
 import jp.co.yumemi.android.code_check.core.datastore.GhCacheDataStore
+import jp.co.yumemi.android.code_check.core.extensions.convertRelativeUrlsToAbsolute
 import jp.co.yumemi.android.code_check.core.extensions.parse
 import jp.co.yumemi.android.code_check.core.extensions.parsePaging
 import jp.co.yumemi.android.code_check.core.extensions.toColor
@@ -51,6 +53,8 @@ interface GhApiRepository {
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
     suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
+    suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String
+    suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int>
 
     // others
     suspend fun getLanguageColors(): Map<String, Color?>
@@ -159,6 +163,19 @@ class GhApiRepositoryImpl(
         }
     }
 
+    override suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String = withContext(ioDispatcher) {
+        client.get(
+            url = "repos/$repo/readme",
+            headers = mapOf("Accept" to "application/vnd.github.html+json"),
+        )
+            .bodyAsText()
+            .translateReadMe(repo, defaultBranch)
+    }
+
+    override suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int> = withContext(ioDispatcher) {
+        client.get("repos/$repo/languages").parse<Map<String, Int>>()!!
+    }
+
     override suspend fun getLanguageColors(): Map<String, Color?> = withContext(ioDispatcher) {
         cachedLanguageColors ?: context.resources.openRawResource(R.raw.github_colors).use { inputStream ->
             val json = Json.decodeFromString(JsonObject.serializer(), inputStream.bufferedReader().readText())
@@ -168,5 +185,10 @@ class GhApiRepositoryImpl(
         }.also {
             cachedLanguageColors = it
         }
+    }
+
+    private fun String.translateReadMe(repo: GhRepositoryName, defaultBranch: String): String {
+        val baseUrl = "https://raw.githubusercontent.com/$repo/$defaultBranch/"
+        return convertRelativeUrlsToAbsolute(this, baseUrl)
     }
 }

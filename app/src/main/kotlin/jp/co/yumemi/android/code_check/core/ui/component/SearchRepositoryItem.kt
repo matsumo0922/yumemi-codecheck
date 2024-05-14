@@ -154,6 +154,7 @@ private fun TitleSection(
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant,
                 contentDescription = "Favorite",
             )
         }

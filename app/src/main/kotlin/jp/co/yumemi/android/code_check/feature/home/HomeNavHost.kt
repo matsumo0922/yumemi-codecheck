@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.feature.home.favorite.homeScreenFavorite
 import jp.co.yumemi.android.code_check.feature.home.search.HomeSearchRoute
 import jp.co.yumemi.android.code_check.feature.home.search.homeSearchScreen
@@ -12,6 +13,7 @@ import jp.co.yumemi.android.code_check.feature.home.search.homeSearchScreen
 @Composable
 fun HomeNavHost(
     openDrawer: () -> Unit,
+    navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -22,6 +24,7 @@ fun HomeNavHost(
     ) {
         homeSearchScreen(
             openDrawer = openDrawer,
+            navigateToRepositoryDetail = navigateToRepositoryDetail,
         )
 
         homeScreenFavorite(

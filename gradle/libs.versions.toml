@@ -54,11 +54,13 @@ ktor = "2.3.9"
 coil = "2.5.0"
 coil3 = "3.0.0-alpha06"
 uuid = "0.8.2"
+ksoup = "0.1.2"
 twitterComposeRule = "0.0.26"
+composeWebView = "1.9.7"
 
 # Debugs
 junit = "4.13.2"
-napier = "2.7.1"
+kermit = "2.0.3"
 detekt = "1.23.6"
 
 [plugins]
@@ -146,7 +148,7 @@ google-material = { module = "com.google.android.material:material", version.ref
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core"  }
 koin-android = { module = "io.insert-koin:koin-android" }
-koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
 
 # Ktor
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -163,11 +165,13 @@ coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3
 coil3-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
 coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3" }
 uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
+ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
+webview-compose = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebView" }
 twitter-compose-rule = { module = "com.twitter.compose.rules:detekt", version.ref = "twitterComposeRule" }
 
 # Debugs
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 desugar = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.4" }
 
 [bundles]
@@ -178,7 +182,7 @@ infra-api = [
     "kotlinx-serialization-json",
     "kotlinx-collections-immutable",
     "uuid",
-    "napier",
+    "kermit",
 ]
 
 ui-android-api = [

@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.code_check.core.extensions
 
-import android.util.Log
+import co.touchlab.kermit.Logger
 import kotlin.coroutines.cancellation.CancellationException
 
 suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
@@ -8,7 +8,6 @@ suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
 } catch (cancellationException: CancellationException) {
     throw cancellationException
 } catch (exception: Exception) {
-    Log.i("suspendRunCatching", "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result")
-    Log.i("suspendRunCatching", exception.toString())
+    Logger.i(exception) { "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result" }
     Result.failure(exception)
 }

@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.feature.home.components.HomeBottomBar
 import jp.co.yumemi.android.code_check.feature.home.components.HomeDestination
 import jp.co.yumemi.android.code_check.feature.home.components.HomeDrawer
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
+    navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
@@ -53,6 +55,7 @@ fun HomeScreen(
                         drawerState.open()
                     }
                 },
+                navigateToRepositoryDetail = navigateToRepositoryDetail,
             )
 
             HomeBottomBar(

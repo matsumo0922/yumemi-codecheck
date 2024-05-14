@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import io.github.aakira.napier.Napier
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -64,7 +64,7 @@ fun <T> Preferences.deserialize(
 
         formatter.decodeFromJsonElement(serializer, data)
     } catch (e: Exception) {
-        Napier.e("Failed to deserialize.", e)
+        Logger.e("Failed to deserialize.", e)
         defaultValue
     }
 }
