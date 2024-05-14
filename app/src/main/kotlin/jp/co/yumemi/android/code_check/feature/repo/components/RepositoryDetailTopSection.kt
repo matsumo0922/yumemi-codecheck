@@ -225,7 +225,6 @@ private fun LanguageItem(
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-
         Text(
             text = language,
             style = MaterialTheme.typography.bodyMedium,

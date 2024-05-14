@@ -166,7 +166,7 @@ class GhApiRepositoryImpl(
     override suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String = withContext(ioDispatcher) {
         client.get(
             url = "repos/$repo/readme",
-            headers = mapOf("Accept" to "application/vnd.github.html+json")
+            headers = mapOf("Accept" to "application/vnd.github.html+json"),
         )
             .bodyAsText()
             .translateReadMe(repo, defaultBranch)

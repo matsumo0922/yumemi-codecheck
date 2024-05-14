@@ -81,11 +81,11 @@ private fun RepositoryDetailScreen(
                 isFavorite = isFavorite,
                 scrollBehavior = behavior,
                 onClickBack = onClickBack,
-                onClickWeb =  { onClickWeb.invoke("https://github.com/${repositoryDetail.repoName}") },
+                onClickWeb = { onClickWeb.invoke("https://github.com/${repositoryDetail.repoName}") },
                 onClickAddFavorite = { onClickAddFavorite.invoke(repositoryDetail.repoName) },
                 onClickRemoveFavorite = { onClickRemoveFavorite.invoke(repositoryDetail.repoName) },
             )
-        }
+        },
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

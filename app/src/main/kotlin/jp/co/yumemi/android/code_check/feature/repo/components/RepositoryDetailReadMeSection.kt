@@ -40,7 +40,7 @@ internal fun RepositoryDetailReadMeSection(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         HorizontalDivider()
 

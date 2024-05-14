@@ -47,7 +47,8 @@ internal fun HomeSearchIdleSection(
             contentType = pagingAdapter.itemContentType(),
         ) { index ->
             pagingAdapter[index]?.let { item ->
-                val markupRange = rememberSaveable(saver = IntRangeSaver) { getMatchRange(query, item.repoName.toString()) }
+                val markupRange =
+                    rememberSaveable(saver = IntRangeSaver) { getMatchRange(query, item.repoName.toString()) }
 
                 SearchRepositoryItem(
                     modifier = Modifier.fillMaxWidth(),

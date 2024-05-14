@@ -20,7 +20,7 @@ import me.matsumo.yumemi.codecheck.R
 class RepositoryDetailViewModel(
     private val ghApiRepository: GhApiRepository,
     private val ghFavoriteRepository: GhFavoriteRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _screenState = MutableStateFlow<ScreenState<RepositoryDetailUiState>>(ScreenState.Loading)
 

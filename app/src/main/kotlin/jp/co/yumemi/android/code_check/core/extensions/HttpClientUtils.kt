@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package jp.co.yumemi.android.code_check.core.extensions
 
 import co.touchlab.kermit.Logger

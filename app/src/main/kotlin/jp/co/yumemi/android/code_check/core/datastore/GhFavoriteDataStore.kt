@@ -25,7 +25,9 @@ class GhFavoriteDataStore(
         val repoJson = preferences[stringPreferencesKey(FAVORITE_REPO_KEY)]
 
         val userIds = userIdsJson?.let { formatter.decodeFromString(ListSerializer(String.serializer()), it) } ?: emptyList()
-        val repos = repoJson?.let { formatter.decodeFromString(ListSerializer(GhRepositoryName.serializer()), it) } ?: emptyList()
+        val repos = repoJson?.let {
+            formatter.decodeFromString(ListSerializer(GhRepositoryName.serializer()), it)
+        } ?: emptyList()
 
         GhFavorites(userIds, repos)
     }

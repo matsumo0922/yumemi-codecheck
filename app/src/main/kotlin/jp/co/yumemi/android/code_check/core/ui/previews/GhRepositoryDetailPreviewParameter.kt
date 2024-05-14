@@ -59,7 +59,7 @@ class GhRepositoryDetailPreviewParameter : PreviewParameterProvider<GhRepository
             name = "MIT License",
             nodeId = "MDc6TGljZW5zZW1pdA==",
             spdxId = "MIT",
-            url = "https://api.github.com/licenses/mit"
+            url = "https://api.github.com/licenses/mit",
         ),
         mergesUrl = "https://api.github.com/repos/example/repo/merges",
         milestonesUrl = "https://api.github.com/repos/example/repo/milestones{/number}",
@@ -88,7 +88,7 @@ class GhRepositoryDetailPreviewParameter : PreviewParameterProvider<GhRepository
             starredUrl = "https://api.github.com/users/example/starred{/owner}{/repo}",
             subscriptionsUrl = "https://api.github.com/users/example/subscriptions",
             type = "User",
-            url = "https://api.github.com/users/example"
+            url = "https://api.github.com/users/example",
         ),
         parent = null,
         isPrivate = false,
@@ -115,6 +115,6 @@ class GhRepositoryDetailPreviewParameter : PreviewParameterProvider<GhRepository
         url = "https://github.com/example/repo",
         visibility = "public",
         watchers = 150,
-        watchersCount = 150
+        watchersCount = 150,
     )
 }
