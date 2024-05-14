@@ -1,16 +1,11 @@
 package primitive
 
 import me.matsumo.yumemi.codecheck.androidApplication
-import me.matsumo.yumemi.codecheck.bundle
-import me.matsumo.yumemi.codecheck.implementation
-import me.matsumo.yumemi.codecheck.library
 import me.matsumo.yumemi.codecheck.libs
 import me.matsumo.yumemi.codecheck.setupAndroid
 import me.matsumo.yumemi.codecheck.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.dependencies
 
 class KmpAndroidApplication : Plugin<Project> {
     override fun apply(target: Project) {
@@ -21,7 +16,6 @@ class KmpAndroidApplication : Plugin<Project> {
                 apply("kotlin-parcelize")
                 apply("kotlinx-serialization")
                 apply("project-report")
-                apply("androidx.navigation.safeargs.kotlin")
                 apply("com.google.devtools.ksp")
             }
 

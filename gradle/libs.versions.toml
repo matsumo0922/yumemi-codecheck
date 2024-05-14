@@ -69,7 +69,6 @@ android-library = { id = "com.android.library", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.0" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidxNavigation" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
@@ -118,8 +117,6 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPaging" }
 androidx-foundation-compose = { module = "androidx.compose.foundation:foundation-android", version = "1.6.0-alpha07" }
-androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "androidxNavigation" }
-androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "androidxNavigation" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 androidx-test-espresso-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-test-espresso-espresso-core" }
@@ -203,8 +200,6 @@ ui-android-api = [
     "androidx-foundation-compose",
     "androidx-cardview",
     "androidx-viewpager2",
-    "androidx-navigation-ui",
-    "androidx-navigation-fragment",
     "androidx-navigation-compose",
     "androidx-paging-runtime",
     "androidx-paging-compose",
