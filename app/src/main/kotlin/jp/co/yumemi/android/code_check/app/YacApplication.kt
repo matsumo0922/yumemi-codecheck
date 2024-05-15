@@ -7,6 +7,7 @@ import coil3.disk.DiskCache
 import coil3.memory.MemoryCache
 import coil3.request.crossfade
 import jp.co.yumemi.android.code_check.app.di.applyModules
+import kotlinx.coroutines.IO_PARALLELISM_PROPERTY_NAME
 import okio.Path.Companion.toOkioPath
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,6 +23,8 @@ class YacApplication : Application() {
             androidLogger()
             applyModules()
         }
+
+        System.setProperty(IO_PARALLELISM_PROPERTY_NAME, "10")
 
         setupAdMob()
         setupCoil()

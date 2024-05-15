@@ -15,6 +15,7 @@ import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.ui.component.RepositoryItem
+import jp.co.yumemi.android.code_check.core.ui.extensions.plus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 
@@ -27,6 +28,7 @@ internal fun HomeFavoriteIdleSection(
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
+    contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
     val state = rememberLazyListState()
@@ -35,11 +37,11 @@ internal fun HomeFavoriteIdleSection(
         modifier = modifier.drawVerticalScrollbar(state),
         state = state,
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = contentPadding + PaddingValues(16.dp),
     ) {
         items(
             items = favoriteRepositories,
-            key = { it.id },
+            key = { it.repoName.toString() },
         ) {
             RepositoryItem(
                 modifier = Modifier

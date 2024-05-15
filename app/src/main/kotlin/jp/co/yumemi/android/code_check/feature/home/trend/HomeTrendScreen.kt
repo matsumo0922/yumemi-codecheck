@@ -54,7 +54,10 @@ fun HomeTrendRoute(
             trendRepositories = it.trendingRepositories.toImmutableList(),
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
             onRequestRefresh = viewModel::fetch,
+            onRequestOgImageLink = viewModel::requestOgImageLink,
             onClickRepository = navigateToRepositoryDetail,
+            onClickAddFavorite = viewModel::addFavorite,
+            onClickRemoveFavorite = viewModel::removeFavorite,
             onClickDrawer = openDrawer,
         )
     }
@@ -66,7 +69,10 @@ private fun HomeTrendScreen(
     trendRepositories: ImmutableList<GhTrendRepository>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
     onRequestRefresh: () -> Unit,
+    onRequestOgImageLink: suspend (GhRepositoryName) -> String,
     onClickRepository: (GhRepositoryName) -> Unit,
+    onClickAddFavorite: (GhRepositoryName) -> Unit,
+    onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     onClickDrawer: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -93,20 +99,24 @@ private fun HomeTrendScreen(
         },
     ) {
         Box(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
         ) {
             if (trendRepositories.isNotEmpty()) {
                 HomeTrendIdleSection(
                     modifier = Modifier.fillMaxSize(),
                     trendRepositories = trendRepositories,
                     favoriteRepoNames = favoriteRepoNames,
+                    contentPadding = it,
+                    onRequestOgImageLink = onRequestOgImageLink,
                     onClickRepository = onClickRepository,
+                    onClickAddFavorite = onClickAddFavorite,
+                    onClickRemoveFavorite = onClickRemoveFavorite,
                 )
             } else {
                 EmptyView(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .padding(it)
+                        .fillMaxSize(),
                     titleRes = R.string.trending_empty_title,
                     messageRes = R.string.trending_empty_message,
                 )

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,7 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.icons.filled.ForkLeft
+import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -23,65 +25,80 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import co.touchlab.kermit.Logger
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
-import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
+import jp.co.yumemi.android.code_check.core.extensions.toColor
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
-import jp.co.yumemi.android.code_check.core.ui.extensions.getAnnotatedString
-import jp.co.yumemi.android.code_check.core.ui.theme.size
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.datetime.toJavaInstant
-import me.matsumo.yumemi.codecheck.R
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
+import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
+import jp.co.yumemi.android.code_check.core.ui.previews.GhTrendRepositoryPreviewParameter
+import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 
 @Composable
-internal fun RepositoryItem(
+fun TrendRepositoryItem(
+    trendRepository: GhTrendRepository,
     isFavorite: Boolean,
-    item: GhRepositoryDetail,
+    onRequestOgImageLink: suspend (GhRepositoryName) -> String,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
-    markupRange: IntRange = 0..0,
-    languageColor: Color? = null,
 ) {
-    var isFavoriteCache by remember { mutableStateOf(isFavorite) }
+    var isFavoriteCache by remember(isFavorite) { mutableStateOf(isFavorite) }
+    var ogImageLink by rememberSaveable(trendRepository) { mutableStateOf("") }
+
+    Logger.d("isFavorite: $isFavorite, isFavoriteCache: $isFavoriteCache")
+
+    if (ogImageLink.isBlank()) {
+        LaunchedEffect(trendRepository) {
+            ogImageLink = onRequestOgImageLink.invoke(trendRepository.repoName)
+        }
+    }
 
     Card(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .clickable { onClickRepository.invoke(item.repoName) },
+            .clickable { onClickRepository.invoke(trendRepository.repoName) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)),
     ) {
-        Column(
+        SubcomposeAsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .aspectRatio(2f),
+            model = ImageRequest.Builder(LocalPlatformContext.current)
+                .data(ogImageLink)
+                .build(),
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+        )
+
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
         ) {
-            TitleSection(
+            TitleItem(
                 modifier = Modifier.fillMaxWidth(),
+                trendRepository = trendRepository,
                 isFavorite = isFavoriteCache,
-                item = item,
-                markupRange = markupRange,
                 onClickAddFavorite = {
                     isFavoriteCache = true
                     onClickAddFavorite.invoke(it)
@@ -92,75 +109,78 @@ internal fun RepositoryItem(
                 },
             )
 
-            if (item.description != null) {
-                Text(
-                    modifier = Modifier
-                        .padding(bottom = 4.dp)
-                        .fillMaxWidth(),
-                    text = item.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            if (item.topics.isNotEmpty()) {
-                TopicItems(
-                    modifier = Modifier
-                        .padding(bottom = 4.dp)
-                        .fillMaxWidth(),
-                    topics = item.topics.take(5).toImmutableList(),
-                    onClickTag = {},
-                )
-            }
-
-            InfoSection(
+            Text(
                 modifier = Modifier.fillMaxWidth(),
-                item = item,
-                languageColor = languageColor,
+                text = trendRepository.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
             )
+
+            Row(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                LanguageCard(
+                    language = trendRepository.language,
+                    languageColor = trendRepository.languageColor.toColor(),
+                )
+
+                CountCard(
+                    count = trendRepository.stars,
+                    imageVector = Icons.Default.StarOutline,
+                )
+
+                CountCard(
+                    count = trendRepository.forks,
+                    imageVector = Icons.Default.ForkLeft,
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun TitleSection(
+private fun TitleItem(
+    trendRepository: GhTrendRepository,
     isFavorite: Boolean,
-    item: GhRepositoryDetail,
-    markupRange: IntRange,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         SubcomposeAsyncImage(
             modifier = Modifier
-                .size(32.dp)
+                .size(24.dp)
                 .clip(CircleShape),
             model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(item.owner.avatarUrl)
+                .data(trendRepository.avatar)
                 .build(),
+            contentScale = ContentScale.Crop,
             contentDescription = null,
         )
 
         Text(
             modifier = Modifier.weight(1f),
-            text = getAnnotatedString(item.repoName.toString(), markupRange),
-            style = MaterialTheme.typography.bodyMedium.size(18.sp),
+            text = trendRepository.repoName.toString(),
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
         )
 
         IconButton(
             onClick = {
                 if (isFavorite) {
-                    onClickRemoveFavorite.invoke(item.repoName)
+                    onClickRemoveFavorite.invoke(trendRepository.repoName)
                 } else {
-                    onClickAddFavorite.invoke(item.repoName)
+                    onClickAddFavorite.invoke(trendRepository.repoName)
                 }
             },
         ) {
@@ -170,36 +190,6 @@ private fun TitleSection(
                 contentDescription = "Favorite",
             )
         }
-    }
-}
-
-@Composable
-private fun InfoSection(
-    item: GhRepositoryDetail,
-    languageColor: Color?,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        if (item.language != null) {
-            LanguageCard(
-                language = item.language,
-                languageColor = languageColor,
-            )
-        }
-
-        StarCountCard(
-            count = item.stargazersCount,
-        )
-
-        Text(
-            text = "Updated on ${item.updatedAt.toRelativeTimeString()}",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
     }
 }
 
@@ -230,8 +220,9 @@ private fun LanguageCard(
 }
 
 @Composable
-private fun StarCountCard(
+private fun CountCard(
     count: Int,
+    imageVector: ImageVector,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -241,8 +232,8 @@ private fun StarCountCard(
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
-            imageVector = Icons.Outlined.StarOutline,
-            contentDescription = "Star",
+            imageVector = imageVector,
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
@@ -254,24 +245,20 @@ private fun StarCountCard(
     }
 }
 
+@ComponentPreviews
 @Composable
-private fun Instant.toRelativeTimeString(): String {
-    val now = Clock.System.now()
-    val duration = now - this
-
-    return when {
-        duration.inWholeDays > 0 -> {
-            if (duration.inWholeDays < 7) {
-                stringResource(R.string.unit_day_before, duration.inWholeDays)
-            } else {
-                LocalDateTime
-                    .ofInstant(this.toJavaInstant(), ZoneId.of("UTC"))
-                    .format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-            }
-        }
-
-        duration.inWholeHours > 0 -> stringResource(R.string.unit_hour_before, duration.inWholeHours)
-        duration.inWholeMinutes > 0 -> stringResource(R.string.unit_minute_before, duration.inWholeMinutes)
-        else -> stringResource(R.string.unit_second_before, duration.inWholeSeconds)
+private fun TrendRepositoryItemPreview(
+    @PreviewParameter(GhTrendRepositoryPreviewParameter::class) trendRepository: GhTrendRepository,
+) {
+    YacTheme {
+        TrendRepositoryItem(
+            modifier = Modifier.fillMaxWidth(),
+            trendRepository = trendRepository,
+            isFavorite = false,
+            onRequestOgImageLink = { "" },
+            onClickRepository = {},
+            onClickAddFavorite = {},
+            onClickRemoveFavorite = {},
+        )
     }
 }

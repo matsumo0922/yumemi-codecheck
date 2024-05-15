@@ -103,9 +103,7 @@ private fun HomeFavoriteScreen(
         },
     ) {
         Box(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
         ) {
             if (favoriteRepositories.isNotEmpty()) {
                 HomeFavoriteIdleSection(
@@ -113,13 +111,16 @@ private fun HomeFavoriteScreen(
                     favoriteRepositories = favoriteRepositories,
                     favoriteRepoNames = favoriteRepoNames,
                     languageColors = languageColors,
+                    contentPadding = it,
                     onClickRepository = onClickRepository,
                     onClickAddFavorite = onClickAddFavorite,
                     onClickRemoveFavorite = onClickRemoveFavorite,
                 )
             } else {
                 EmptyView(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .padding(it)
+                        .fillMaxSize(),
                     titleRes = R.string.favorite_empty_title,
                     messageRes = R.string.favorite_empty_message,
                 )

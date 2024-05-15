@@ -13,6 +13,7 @@ import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.matsumo.yumemi.codecheck.R
@@ -28,7 +29,7 @@ class HomeTrendViewModel(
 
     init {
         viewModelScope.launch {
-            ghFavoriteRepository.favoriteData.collect { favorites ->
+            ghFavoriteRepository.favoriteData.collectLatest { favorites ->
                 _screenState.value = screenState.updateWhenIdle {
                     it.copy(favoriteRepoNames = favorites.repos)
                 }
