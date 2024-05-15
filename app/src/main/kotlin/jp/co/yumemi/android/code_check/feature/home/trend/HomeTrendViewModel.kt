@@ -20,7 +20,7 @@ import me.matsumo.yumemi.codecheck.R
 
 class HomeTrendViewModel(
     private val ghApiRepository: GhApiRepository,
-    private val ghFavoriteRepository: GhFavoriteRepository
+    private val ghFavoriteRepository: GhFavoriteRepository,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow<ScreenState<HomeTrendUiState>>(ScreenState.Loading)

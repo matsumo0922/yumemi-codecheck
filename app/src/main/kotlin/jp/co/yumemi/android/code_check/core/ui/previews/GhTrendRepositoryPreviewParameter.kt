@@ -3,7 +3,7 @@ package jp.co.yumemi.android.code_check.core.ui.previews
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 
-class GhTrendRepositoryPreviewParameter: PreviewParameterProvider<GhTrendRepository> {
+class GhTrendRepositoryPreviewParameter : PreviewParameterProvider<GhTrendRepository> {
 
     override val values: Sequence<GhTrendRepository>
         get() = sequenceOf(dummy)
@@ -19,6 +19,6 @@ class GhTrendRepositoryPreviewParameter: PreviewParameterProvider<GhTrendReposit
         languageColor = "#A97BFF",
         name = "sample-repository",
         stars = 0,
-        url = "url"
+        url = "url",
     )
 }

@@ -15,7 +15,7 @@ data class GhTrendRepository(
     val languageColor: String,
     val name: String,
     val stars: Int,
-    val url: String
+    val url: String,
 ) {
     val repoName: GhRepositoryName = GhRepositoryName(
         owner = this.author,
@@ -26,7 +26,7 @@ data class GhTrendRepository(
     data class BuiltBy(
         val avatar: String,
         val href: String,
-        val username: String
+        val username: String,
     )
 }
 
@@ -39,7 +39,7 @@ fun List<GhTrendRepositoryEntity>.translate(): List<GhTrendRepository> {
                 GhTrendRepository.BuiltBy(
                     avatar = builtBy.avatar,
                     href = builtBy.href,
-                    username = builtBy.username
+                    username = builtBy.username,
                 )
             },
             currentPeriodStars = it.currentPeriodStars,
@@ -49,7 +49,7 @@ fun List<GhTrendRepositoryEntity>.translate(): List<GhTrendRepository> {
             languageColor = it.languageColor,
             name = it.name,
             stars = it.stars,
-            url = it.url
+            url = it.url,
         )
     }
 }

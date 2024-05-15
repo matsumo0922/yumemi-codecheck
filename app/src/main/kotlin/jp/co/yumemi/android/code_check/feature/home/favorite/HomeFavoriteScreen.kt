@@ -51,7 +51,7 @@ fun HomeFavoriteRoute(
     AsyncLoadContents(
         modifier = modifier,
         screenState = screenState,
-        retryAction = viewModel::fetch
+        retryAction = viewModel::fetch,
     ) {
         HomeFavoriteScreen(
             modifier = Modifier.fillMaxSize(),
