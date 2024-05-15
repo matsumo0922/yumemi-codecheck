@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.fleeksoft.ksoup.Ksoup
 import io.ktor.client.statement.bodyAsText
 import jp.co.yumemi.android.code_check.core.datastore.GhCacheDataStore
 import jp.co.yumemi.android.code_check.core.extensions.convertRelativeUrlsToAbsolute
@@ -19,8 +20,10 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.GhSearchUsers
+import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
 import jp.co.yumemi.android.code_check.core.model.GhUserSort
+import jp.co.yumemi.android.code_check.core.model.entity.GhTrendRepositoryEntity
 import jp.co.yumemi.android.code_check.core.model.entity.RepositoryDetailEntity
 import jp.co.yumemi.android.code_check.core.model.entity.SearchRepositoriesEntity
 import jp.co.yumemi.android.code_check.core.model.entity.SearchUsersEntity
@@ -49,12 +52,14 @@ interface GhApiRepository {
     // search
     suspend fun searchUsers(query: String, sort: GhUserSort?, order: GhOrder?, page: Int): GhPaging<GhSearchUsers>
     suspend fun searchRepositories(query: String, sort: GhRepositorySort?, order: GhOrder?, page: Int): GhPaging<GhSearchRepositories>
+    suspend fun searchTrendRepositories(): List<GhTrendRepository>
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
     suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
     suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String
     suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int>
+    suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String
 
     // others
     suspend fun getLanguageColors(): Map<String, Color?>
@@ -151,6 +156,10 @@ class GhApiRepositoryImpl(
         }
     }
 
+    override suspend fun searchTrendRepositories(): List<GhTrendRepository> = withContext(ioDispatcher) {
+        client.get("https://api.gitterapp.com/repositories", mapOf("since" to "weekly")).parse<List<GhTrendRepositoryEntity>>()!!.translate()
+    }
+
     override suspend fun getUserDetail(userName: String): GhUserDetail = withContext(ioDispatcher) {
         client.get("users/$userName").parse<UserDetailEntity>()!!.translate().also {
             ghCacheDataStore.addUserCache(it)
@@ -174,6 +183,13 @@ class GhApiRepositoryImpl(
 
     override suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int> = withContext(ioDispatcher) {
         client.get("repos/$repo/languages").parse<Map<String, Int>>()!!
+    }
+
+    override suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String = withContext(ioDispatcher) {
+        val html = client.get("https://github.com/$repo").bodyAsText()
+        val document = Ksoup.parse(html)
+
+        document.select("meta[property=og:image]").first()?.attr("content")!!
     }
 
     override suspend fun getLanguageColors(): Map<String, Color?> = withContext(ioDispatcher) {

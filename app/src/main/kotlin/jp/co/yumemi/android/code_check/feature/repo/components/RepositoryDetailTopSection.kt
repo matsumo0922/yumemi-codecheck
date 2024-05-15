@@ -42,6 +42,7 @@ import jp.co.yumemi.android.code_check.core.ui.theme.size
 internal fun RepositoryDetailTopSection(
     repositoryDetail: GhRepositoryDetail,
     language: String?,
+    onClickLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -74,7 +75,7 @@ internal fun RepositoryDetailTopSection(
             LinkItem(
                 modifier = Modifier.fillMaxWidth(),
                 link = repositoryDetail.homepage,
-                onClickLink = {},
+                onClickLink = { onClickLink(repositoryDetail.homepage) },
             )
         }
 
@@ -243,6 +244,7 @@ private fun RepositoryDetailTopSectionPreview(
             modifier = Modifier.fillMaxWidth(),
             repositoryDetail = repositoryDetail,
             language = "Kotlin",
+            onClickLink = {},
         )
     }
 }

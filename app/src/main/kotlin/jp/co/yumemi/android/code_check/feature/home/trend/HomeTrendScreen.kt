@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.feature.home.favorite
+package jp.co.yumemi.android.code_check.feature.home.trend
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,34 +15,30 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
+import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.component.EmptyView
-import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteIdleSection
-import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteTopAppBar
+import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendIdleSection
+import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendTopAppBar
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableMap
 import me.matsumo.yumemi.codecheck.R
 import org.koin.androidx.compose.koinViewModel
 
-@Suppress("detekt.all")
 @Composable
-fun HomeFavoriteRoute(
+fun HomeTrendRoute(
     openDrawer: () -> Unit,
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeFavoriteViewModel = koinViewModel(),
+    viewModel: HomeTrendViewModel = koinViewModel(),
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         if (screenState !is ScreenState.Idle) {
             viewModel.fetch()
         }
@@ -51,33 +47,27 @@ fun HomeFavoriteRoute(
     AsyncLoadContents(
         modifier = modifier,
         screenState = screenState,
-        retryAction = viewModel::fetch
+        retryAction = viewModel::fetch,
     ) {
-        HomeFavoriteScreen(
+        HomeTrendScreen(
             modifier = Modifier.fillMaxSize(),
-            favoriteRepositories = it.favoriteRepositories.toImmutableList(),
+            trendRepositories = it.trendingRepositories.toImmutableList(),
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
-            languageColors = it.languageColors.toImmutableMap(),
             onRequestRefresh = viewModel::fetch,
-            onClickDrawer = openDrawer,
             onClickRepository = navigateToRepositoryDetail,
-            onClickAddFavorite = viewModel::addFavorite,
-            onClickRemoveFavorite = viewModel::removeFavorite,
+            onClickDrawer = openDrawer,
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HomeFavoriteScreen(
-    favoriteRepositories: ImmutableList<GhRepositoryDetail>,
+private fun HomeTrendScreen(
+    trendRepositories: ImmutableList<GhTrendRepository>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
-    languageColors: ImmutableMap<String, Color?>,
     onRequestRefresh: () -> Unit,
-    onClickDrawer: () -> Unit,
     onClickRepository: (GhRepositoryName) -> Unit,
-    onClickAddFavorite: (GhRepositoryName) -> Unit,
-    onClickRemoveFavorite: (GhRepositoryName) -> Unit,
+    onClickDrawer: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -95,7 +85,7 @@ private fun HomeFavoriteScreen(
             .nestedScroll(refreshState.nestedScrollConnection)
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            HomeFavoriteTopAppBar(
+            HomeTrendTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 scrollBehavior = scrollBehavior,
                 onClickDrawer = onClickDrawer,
@@ -107,21 +97,18 @@ private fun HomeFavoriteScreen(
                 .padding(it)
                 .fillMaxSize(),
         ) {
-            if (favoriteRepositories.isNotEmpty()) {
-                HomeFavoriteIdleSection(
+            if (trendRepositories.isNotEmpty()) {
+                HomeTrendIdleSection(
                     modifier = Modifier.fillMaxSize(),
-                    favoriteRepositories = favoriteRepositories,
+                    trendRepositories = trendRepositories,
                     favoriteRepoNames = favoriteRepoNames,
-                    languageColors = languageColors,
                     onClickRepository = onClickRepository,
-                    onClickAddFavorite = onClickAddFavorite,
-                    onClickRemoveFavorite = onClickRemoveFavorite,
                 )
             } else {
                 EmptyView(
                     modifier = Modifier.fillMaxSize(),
-                    titleRes = R.string.favorite_empty_title,
-                    messageRes = R.string.favorite_empty_message,
+                    titleRes = R.string.trending_empty_title,
+                    messageRes = R.string.trending_empty_message,
                 )
             }
 

@@ -23,7 +23,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import jp.co.yumemi.android.code_check.core.model.GhOrder
-import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
@@ -32,7 +31,6 @@ import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
 import jp.co.yumemi.android.code_check.core.ui.component.SimpleAlertDialog
-import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchFavoriteSection
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchIdleSection
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchTopAppBar
 import kotlinx.collections.immutable.ImmutableList
@@ -70,7 +68,6 @@ fun HomeSearchRoute(
             searchHistories = it.searchHistories.toImmutableList(),
             searchRepositoriesPaging = it.searchRepositoriesPaging,
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
-            favoriteRepositories = it.favoriteRepositories.toImmutableList(),
             languageColors = it.languageColors.toImmutableMap(),
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
@@ -90,7 +87,6 @@ private fun HomeSearchScreen(
     searchHistories: ImmutableList<GhSearchHistory>,
     searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
-    favoriteRepositories: ImmutableList<GhRepositoryDetail>,
     languageColors: ImmutableMap<String, Color?>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
@@ -126,35 +122,17 @@ private fun HomeSearchScreen(
             onUpdateQuery = onUpdateQuery,
         )
 
-        if (query.isNotEmpty() || favoriteRepositories.isEmpty()) {
-            LazyPagingItemsLoadContents(
+        LazyPagingItemsLoadContents(
+            modifier = Modifier.fillMaxSize(),
+            lazyPagingItems = repositoriesPager,
+            emptyMessageRes = R.string.search_empty_message,
+        ) {
+            HomeSearchIdleSection(
                 modifier = Modifier.fillMaxSize(),
-                lazyPagingItems = repositoriesPager,
-                emptyMessageRes = R.string.search_empty_message,
-            ) {
-                HomeSearchIdleSection(
-                    modifier = Modifier.fillMaxSize(),
-                    query = query,
-                    favoriteRepoNames = favoriteRepoNames,
-                    languageColors = languageColors,
-                    pagingAdapter = repositoriesPager,
-                    contentPadding = PaddingValues(
-                        top = with(density) { topAppBarHeight.toDp() + 16.dp },
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp,
-                    ),
-                    onClickRepository = onClickRepository,
-                    onClickAddFavorite = onClickAddFavorite,
-                    onClickRemoveFavorite = onClickRemoveFavorite,
-                )
-            }
-        } else {
-            HomeSearchFavoriteSection(
-                modifier = Modifier.fillMaxSize(),
+                query = query,
                 favoriteRepoNames = favoriteRepoNames,
-                favoriteRepositories = favoriteRepositories,
                 languageColors = languageColors,
+                pagingAdapter = repositoriesPager,
                 contentPadding = PaddingValues(
                     top = with(density) { topAppBarHeight.toDp() + 16.dp },
                     start = 16.dp,

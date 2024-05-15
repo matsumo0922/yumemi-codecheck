@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.feature.home.favorite
+package jp.co.yumemi.android.code_check.feature.home.trend
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
@@ -8,18 +8,18 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 
-const val HomeFavoriteRoute = "homeFavorite"
+const val HomeTrendRoute = "homeTrending"
 
-fun NavController.navigateToHomeFavorite(navOptions: NavOptions? = null) {
-    this.navigate(HomeFavoriteRoute, navOptions)
+fun NavController.navigateToHomeTrend(navOptions: NavOptions? = null) {
+    this.navigate(HomeTrendRoute, navOptions)
 }
 
-fun NavGraphBuilder.homeScreenFavorite(
+fun NavGraphBuilder.homeTrendScreen(
     openDrawer: () -> Unit,
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
 ) {
-    composable(HomeFavoriteRoute) {
-        HomeFavoriteRoute(
+    composable(HomeTrendRoute) {
+        HomeTrendRoute(
             modifier = Modifier.fillMaxSize(),
             openDrawer = openDrawer,
             navigateToRepositoryDetail = navigateToRepositoryDetail,

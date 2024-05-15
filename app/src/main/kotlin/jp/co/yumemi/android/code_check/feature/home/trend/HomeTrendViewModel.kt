@@ -1,37 +1,34 @@
-package jp.co.yumemi.android.code_check.feature.home.favorite
+package jp.co.yumemi.android.code_check.feature.home.trend
 
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
 import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
-import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
+import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.updateWhenIdle
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.matsumo.yumemi.codecheck.R
 
-@Suppress("detekt.all")
-class HomeFavoriteViewModel(
+class HomeTrendViewModel(
     private val ghApiRepository: GhApiRepository,
-    private val ghFavoriteRepository: GhFavoriteRepository,
+    private val ghFavoriteRepository: GhFavoriteRepository
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<ScreenState<HomeFavoriteUiState>>(ScreenState.Loading)
+    private val _screenState = MutableStateFlow<ScreenState<HomeTrendUiState>>(ScreenState.Loading)
 
     val screenState = _screenState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            ghFavoriteRepository.favoriteData.collectLatest { favorites ->
+            ghFavoriteRepository.favoriteData.collect { favorites ->
                 _screenState.value = screenState.updateWhenIdle {
                     it.copy(favoriteRepoNames = favorites.repos)
                 }
@@ -43,10 +40,9 @@ class HomeFavoriteViewModel(
         viewModelScope.launch {
             _screenState.value = ScreenState.Loading
             _screenState.value = suspendRunCatching {
-                HomeFavoriteUiState(
-                    favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
+                HomeTrendUiState(
+                    trendingRepositories = ghApiRepository.searchTrendRepositories(),
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
-                    languageColors = ghApiRepository.getLanguageColors(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -66,11 +62,14 @@ class HomeFavoriteViewModel(
             ghFavoriteRepository.removeFavoriteRepository(repositoryName)
         }
     }
+
+    suspend fun requestOgImageLink(repositoryName: GhRepositoryName): String {
+        return ghApiRepository.getRepositoryOgImageLink(repositoryName)
+    }
 }
 
 @Stable
-data class HomeFavoriteUiState(
-    val favoriteRepositories: List<GhRepositoryDetail>,
+data class HomeTrendUiState(
+    val trendingRepositories: List<GhTrendRepository>,
     val favoriteRepoNames: List<GhRepositoryName>,
-    val languageColors: Map<String, Color?>,
 )

@@ -47,6 +47,7 @@
 
     <!-- Navigation -->
     <string name="navigation_search">検索</string>
+    <string name="navigation_trending">トレンド</string>
     <string name="navigation_favorite">お気に入り</string>
     <string name="navigation_settings">設定</string>
     <string name="navigation_about">アプリについて</string>
@@ -56,4 +57,14 @@
     <string name="search_empty_message">リポジトリを検索しましょう</string>
     <string name="search_remove_history_title">履歴の削除</string>
     <string name="search_remove_history_message">%1$sを検索履歴から削除しますか？</string>
+
+    <!-- Favorite -->
+    <string name="favorite_title">お気に入り</string>
+    <string name="favorite_empty_title">お気に入りがありません</string>
+    <string name="favorite_empty_message">リポジトリを検索してお気に入りに追加しましょう</string>
+
+    <!-- Trending -->
+    <string name="trending_title">トレンド</string>
+    <string name="trending_empty_title">トレンドがありません</string>
+    <string name="trending_empty_message">次回更新までしばらくお待ちください</string>
 </resources>

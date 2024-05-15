@@ -20,6 +20,7 @@ import jp.co.yumemi.android.code_check.feature.home.components.HomeDestination
 import jp.co.yumemi.android.code_check.feature.home.components.HomeDrawer
 import jp.co.yumemi.android.code_check.feature.home.favorite.navigateToHomeFavorite
 import jp.co.yumemi.android.code_check.feature.home.search.navigateToHomeSearch
+import jp.co.yumemi.android.code_check.feature.home.trend.navigateToHomeTrend
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
@@ -79,6 +80,7 @@ fun NavHostController.navigateToHomeDestination(destination: HomeDestination) {
 
     when (destination) {
         HomeDestination.SEARCH -> navigateToHomeSearch(navOption)
+        HomeDestination.TRENDING -> navigateToHomeTrend(navOption)
         HomeDestination.FAVORITE -> navigateToHomeFavorite(navOption)
     }
 }
