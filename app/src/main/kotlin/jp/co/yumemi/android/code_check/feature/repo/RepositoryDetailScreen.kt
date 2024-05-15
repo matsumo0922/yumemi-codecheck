@@ -96,6 +96,7 @@ private fun RepositoryDetailScreen(
                     modifier = Modifier.fillMaxWidth(),
                     repositoryDetail = repositoryDetail,
                     language = language,
+                    onClickLink = onClickWeb,
                 )
             }
 

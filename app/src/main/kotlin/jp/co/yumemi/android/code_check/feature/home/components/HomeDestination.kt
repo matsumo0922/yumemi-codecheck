@@ -1,6 +1,8 @@
 package jp.co.yumemi.android.code_check.feature.home.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
+import androidx.compose.material.icons.automirrored.outlined.TrendingUp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Favorite
@@ -19,6 +21,11 @@ enum class HomeDestination(
         selectedIcon = Icons.Default.Search,
         deselectedIcon = Icons.Outlined.Search,
         title = R.string.navigation_search,
+    ),
+    TRENDING(
+        selectedIcon = Icons.AutoMirrored.Filled.TrendingUp,
+        deselectedIcon = Icons.AutoMirrored.Outlined.TrendingUp,
+        title = R.string.navigation_trending,
     ),
     FAVORITE(
         selectedIcon = Icons.Default.Favorite,

@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -62,6 +63,15 @@ fun HomeDrawerContent(
             icon = Icons.Outlined.Home,
             selectedIcon = Icons.Default.Search,
             onClick = { navigateToLibraryScreen.invoke(HomeDestination.SEARCH) },
+        )
+
+        NavigationDrawerItem(
+            state = state,
+            isSelected = currentDestination.isHomeDestinationInHierarchy(HomeDestination.TRENDING),
+            label = stringResource(R.string.navigation_trending),
+            icon = Icons.Outlined.Search,
+            selectedIcon = Icons.AutoMirrored.Filled.TrendingUp,
+            onClick = { navigateToLibraryScreen.invoke(HomeDestination.TRENDING) },
         )
 
         NavigationDrawerItem(

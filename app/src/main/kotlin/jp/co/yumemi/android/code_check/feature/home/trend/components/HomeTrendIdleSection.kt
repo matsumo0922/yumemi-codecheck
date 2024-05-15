@@ -1,6 +1,5 @@
-package jp.co.yumemi.android.code_check.feature.home.search.components
+package jp.co.yumemi.android.code_check.feature.home.trend.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,22 +8,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
-import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
-import jp.co.yumemi.android.code_check.core.ui.component.RepositoryItem
+import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
+import jp.co.yumemi.android.code_check.core.ui.component.TrendRepositoryItem
+import jp.co.yumemi.android.code_check.core.ui.extensions.plus
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun HomeSearchFavoriteSection(
-    favoriteRepositories: ImmutableList<GhRepositoryDetail>,
+internal fun HomeTrendIdleSection(
+    trendRepositories: ImmutableList<GhTrendRepository>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
-    languageColors: ImmutableMap<String, Color?>,
     contentPadding: PaddingValues,
+    onRequestOgImageLink: suspend (GhRepositoryName) -> String,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
@@ -36,19 +33,17 @@ internal fun HomeSearchFavoriteSection(
         modifier = modifier.drawVerticalScrollbar(state),
         state = state,
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = contentPadding,
+        contentPadding = contentPadding + PaddingValues(16.dp),
     ) {
         items(
-            items = favoriteRepositories,
-            key = { it.id },
+            items = trendRepositories,
+            key = { it.repoName.toString() },
         ) {
-            RepositoryItem(
-                modifier = Modifier
-                    .animateItemPlacement()
-                    .fillMaxWidth(),
+            TrendRepositoryItem(
+                modifier = Modifier.fillMaxWidth(),
+                trendRepository = it,
                 isFavorite = favoriteRepoNames.contains(it.repoName),
-                item = it,
-                languageColor = languageColors[it.language],
+                onRequestOgImageLink = onRequestOgImageLink,
                 onClickRepository = onClickRepository,
                 onClickAddFavorite = onClickAddFavorite,
                 onClickRemoveFavorite = onClickRemoveFavorite,
