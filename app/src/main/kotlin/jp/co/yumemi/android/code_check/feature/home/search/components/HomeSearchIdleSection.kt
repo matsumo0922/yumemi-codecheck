@@ -17,7 +17,7 @@ import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.asRepositoryDetail
-import jp.co.yumemi.android.code_check.core.ui.component.RepositoryItem
+import jp.co.yumemi.android.code_check.core.ui.components.RepositoryItem
 import jp.co.yumemi.android.code_check.core.ui.extensions.IntRangeSaver
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap

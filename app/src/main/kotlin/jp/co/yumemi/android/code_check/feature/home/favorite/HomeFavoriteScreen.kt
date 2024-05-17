@@ -22,7 +22,7 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
-import jp.co.yumemi.android.code_check.core.ui.component.EmptyView
+import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteIdleSection
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteTopAppBar
 import kotlinx.collections.immutable.ImmutableList

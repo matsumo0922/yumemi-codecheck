@@ -35,6 +35,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -44,6 +45,8 @@ import kotlinx.serialization.json.jsonPrimitive
 import me.matsumo.yumemi.codecheck.R
 
 interface GhApiRepository {
+
+    fun clearCache()
 
     // paging
     fun getSearchUsersPaging(query: String, sort: GhUserSort?, order: GhOrder?): Flow<PagingData<GhSearchUsers.Item>>
@@ -75,6 +78,12 @@ class GhApiRepositoryImpl(
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     private var cachedLanguageColors: Map<String, Color?>? = null
+
+    override fun clearCache() {
+        scope.launch {
+            ghCacheDataStore.clear()
+        }
+    }
 
     override fun getSearchUsersPaging(
         query: String,

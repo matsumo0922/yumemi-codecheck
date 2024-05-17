@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.model.ScreenState
-import jp.co.yumemi.android.code_check.core.ui.component.ErrorView
-import jp.co.yumemi.android.code_check.core.ui.component.LoadingView
+import jp.co.yumemi.android.code_check.core.ui.components.ErrorView
+import jp.co.yumemi.android.code_check.core.ui.components.LoadingView
 
 @Composable
 fun <T> AsyncLoadContents(

@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination
-import jp.co.yumemi.android.code_check.core.ui.component.YacNavigationBar
-import jp.co.yumemi.android.code_check.core.ui.component.YacNavigationBarItem
-import jp.co.yumemi.android.code_check.core.ui.component.YacNavigationDefaults
+import jp.co.yumemi.android.code_check.core.ui.components.YacNavigationBar
+import jp.co.yumemi.android.code_check.core.ui.components.YacNavigationBarItem
+import jp.co.yumemi.android.code_check.core.ui.components.YacNavigationDefaults
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

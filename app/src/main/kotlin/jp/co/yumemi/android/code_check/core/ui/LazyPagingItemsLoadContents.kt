@@ -20,9 +20,9 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import jp.co.yumemi.android.code_check.core.model.ScreenState
-import jp.co.yumemi.android.code_check.core.ui.component.EmptyView
-import jp.co.yumemi.android.code_check.core.ui.component.ErrorView
-import jp.co.yumemi.android.code_check.core.ui.component.LoadingView
+import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
+import jp.co.yumemi.android.code_check.core.ui.components.ErrorView
+import jp.co.yumemi.android.code_check.core.ui.components.LoadingView
 import jp.co.yumemi.android.code_check.core.ui.extensions.isEmpty
 import me.matsumo.yumemi.codecheck.R
 

@@ -1,6 +1,6 @@
 @file:Suppress("MatchingDeclarationName")
 
-package jp.co.yumemi.android.code_check.core.ui.component
+package jp.co.yumemi.android.code_check.core.ui.components
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope

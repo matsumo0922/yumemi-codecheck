@@ -30,7 +30,7 @@ import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
-import jp.co.yumemi.android.code_check.core.ui.component.SimpleAlertDialog
+import jp.co.yumemi.android.code_check.core.ui.components.SimpleAlertDialog
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchIdleSection
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchTopAppBar
 import kotlinx.collections.immutable.ImmutableList

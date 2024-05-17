@@ -18,6 +18,12 @@ class GhCacheDataStore(
 ) {
     private val preference = preferenceHelper.create(PreferenceName.GH_CACHE)
 
+    suspend fun clear() {
+        preference.edit {
+            it.clear()
+        }
+    }
+
     suspend fun addUserCache(ghUserDetail: GhUserDetail) = withContext(ioDispatcher) {
         preference.edit {
             val key = createUserCacheKey(ghUserDetail.name)

@@ -67,4 +67,19 @@
     <string name="trending_title">トレンド</string>
     <string name="trending_empty_title">トレンドがありません</string>
     <string name="trending_empty_message">次回更新までしばらくお待ちください</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="setting_top_general">一般</string>
+    <string name="setting_top_general"
+    <string name="settings_top_theme">テーマ</string>
+    <string name="settings_top_theme_app">アプリのテーマ</string>
+    <string name="settings_top_theme_app_description">アプリのテーマを変更します。</string>
+    <string name="settings_top_theme_app_light">ライトテーマ</string>
+    <string name="settings_top_theme_app_dark">ダークテーマ</string>
+    <string name="settings_top_theme_app_system">システムのテーマ</string>
+    <string name="settings_top_information">情報</string>
+    <string name="settings_top_information_version">アプリバージョン</string>
+    <string name="settings_top_information_open_source_license">オープンソースライセンス</string>
+    <string name="settings_top_information_open_source_license_description">OSSライブラリのライセンスを表示します。</string>
 </resources>

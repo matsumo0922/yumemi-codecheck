@@ -21,7 +21,7 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
-import jp.co.yumemi.android.code_check.core.ui.component.EmptyView
+import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendIdleSection
 import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendTopAppBar
 import kotlinx.collections.immutable.ImmutableList
