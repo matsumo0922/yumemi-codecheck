@@ -86,5 +86,6 @@ android {
         api(libs.bundles.ktor)
 
         testImplementation(libs.bundles.kotest)
+        testImplementation(libs.bundles.mockk)
     }
 }

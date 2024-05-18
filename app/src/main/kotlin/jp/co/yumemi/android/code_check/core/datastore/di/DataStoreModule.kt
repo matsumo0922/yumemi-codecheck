@@ -5,6 +5,7 @@ import jp.co.yumemi.android.code_check.core.datastore.GhFavoriteDataStore
 import jp.co.yumemi.android.code_check.core.datastore.GhSearchHistoryDataStore
 import jp.co.yumemi.android.code_check.core.datastore.PreferenceHelper
 import jp.co.yumemi.android.code_check.core.datastore.PreferenceHelperImpl
+import jp.co.yumemi.android.code_check.core.datastore.PreferenceName
 import jp.co.yumemi.android.code_check.core.datastore.UserDataStore
 import org.koin.dsl.module
 
@@ -18,33 +19,29 @@ val dataStoreModule = module {
 
     single {
         UserDataStore(
-            preferenceHelper = get(),
+            preference = get<PreferenceHelper>().create(PreferenceName.USER_DATA),
             formatter = get(),
-            ioDispatcher = get(),
         )
     }
 
     single {
         GhCacheDataStore(
-            preferenceHelper = get(),
+            preference = get<PreferenceHelper>().create(PreferenceName.GH_CACHE),
             formatter = get(),
-            ioDispatcher = get(),
         )
     }
 
     single {
         GhFavoriteDataStore(
-            preferenceHelper = get(),
+            preference = get<PreferenceHelper>().create(PreferenceName.GH_FAVORITE),
             formatter = get(),
-            ioDispatcher = get(),
         )
     }
 
     single {
         GhSearchHistoryDataStore(
-            preferenceHelper = get(),
+            preference = get<PreferenceHelper>().create(PreferenceName.GH_SEARCH_HISTORY),
             formatter = get(),
-            ioDispatcher = get(),
         )
     }
 }

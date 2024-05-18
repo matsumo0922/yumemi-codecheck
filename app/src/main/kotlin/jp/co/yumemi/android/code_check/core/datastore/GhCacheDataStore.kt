@@ -1,23 +1,19 @@
 package jp.co.yumemi.android.code_check.core.datastore
 
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class GhCacheDataStore(
-    private val preferenceHelper: PreferenceHelper,
+    private val preference: DataStore<Preferences>,
     private val formatter: Json,
-    private val ioDispatcher: CoroutineDispatcher,
 ) {
-    private val preference = preferenceHelper.create(PreferenceName.GH_CACHE)
-
     private val memoryUserCache = mutableMapOf<String, GhUserDetail>()
     private val memoryRepositoryCache = mutableMapOf<GhRepositoryName, GhRepositoryDetail>()
 
@@ -27,7 +23,7 @@ class GhCacheDataStore(
         }
     }
 
-    suspend fun addUserCache(ghUserDetail: GhUserDetail) = withContext(ioDispatcher) {
+    suspend fun addUserCache(ghUserDetail: GhUserDetail) {
         memoryUserCache[ghUserDetail.name] = ghUserDetail
 
         preference.edit {
@@ -38,7 +34,7 @@ class GhCacheDataStore(
         }
     }
 
-    suspend fun addRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) = withContext(ioDispatcher) {
+    suspend fun addRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) {
         memoryRepositoryCache[ghRepositoryDetail.repoName] = ghRepositoryDetail
 
         preference.edit {
