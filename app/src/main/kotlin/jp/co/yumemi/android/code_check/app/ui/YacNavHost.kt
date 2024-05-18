@@ -50,15 +50,15 @@ fun YacNavHost(
         settingTopScreen(
             navigateToSettingTheme = navController::navigateToSettingTheme,
             navigateToSettingOss = navController::navigateToSettingOss,
-            terminate = navController::popBackStack
+            terminate = navController::popBackStack,
         )
 
         settingThemeScreen(
-            terminate = navController::popBackStack
+            terminate = navController::popBackStack,
         )
 
         settingOssScreen(
-            terminate = navController::popBackStack
+            terminate = navController::popBackStack,
         )
     }
 }

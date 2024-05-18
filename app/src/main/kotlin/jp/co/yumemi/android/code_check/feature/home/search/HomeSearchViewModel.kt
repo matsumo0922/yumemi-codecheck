@@ -43,7 +43,7 @@ class HomeSearchViewModel(
                 _screenState.value = screenState.updateWhenIdle { uiState ->
                     uiState.copy(
                         suggestions = it.filter { it.query.isAnyWordStartsWith(uiState.query) },
-                        searchHistories = it
+                        searchHistories = it,
                     )
                 }
             }

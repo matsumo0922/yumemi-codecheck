@@ -15,11 +15,11 @@ import kotlinx.coroutines.launch
 
 class SettingThemeViewModel(
     private val userDataRepository: UserDataRepository,
-) : ViewModel(){
+) : ViewModel() {
 
     val screenState = userDataRepository.userData.map {
         ScreenState.Idle(
-            SettingThemeUiState(it)
+            SettingThemeUiState(it),
         )
     }.stateIn(
         scope = viewModelScope,
