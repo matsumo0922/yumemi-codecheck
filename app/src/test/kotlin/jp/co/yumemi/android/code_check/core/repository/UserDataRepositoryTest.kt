@@ -15,7 +15,7 @@ import jp.co.yumemi.android.code_check.core.model.UserData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 
-class UserDataRepositoryImplTest : FunSpec({
+class UserDataRepositoryTest : FunSpec({
 
     // Mocks
     val mockDataStore = mockk<UserDataStore>()

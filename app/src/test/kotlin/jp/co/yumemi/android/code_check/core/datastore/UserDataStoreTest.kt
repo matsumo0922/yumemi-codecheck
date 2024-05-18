@@ -20,6 +20,7 @@ import jp.co.yumemi.android.code_check.core.model.UserData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.json.Json
 
+@Suppress("UnusedPrivateProperty")
 class UserDataStoreTest : FunSpec({
 
     // Mocks

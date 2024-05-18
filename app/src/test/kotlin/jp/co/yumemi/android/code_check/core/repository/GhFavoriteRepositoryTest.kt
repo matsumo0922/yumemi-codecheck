@@ -18,7 +18,7 @@ import jp.co.yumemi.android.code_check.core.ui.previews.GhUserDetailPreviewParam
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 
-class GhFavoriteRepositoryImplTest : FunSpec({
+class GhFavoriteRepositoryTest : FunSpec({
 
     // Mocks
     val mockFavoriteDataStore = mockk<GhFavoriteDataStore>()
@@ -70,7 +70,9 @@ class GhFavoriteRepositoryImplTest : FunSpec({
         val repositoryDetail = GhRepositoryDetailPreviewParameter.dummy
 
         coEvery { mockCacheDataStore.getRepositoryCache(repositoryDetail.repoName) } returns null
-        coEvery { mockApiRepository.getRepositoryDetail(repositoryDetail.repoName) } returns GhRepositoryDetailPreviewParameter.dummy
+        coEvery {
+            mockApiRepository.getRepositoryDetail(repositoryDetail.repoName)
+        } returns GhRepositoryDetailPreviewParameter.dummy
         coEvery { mockFavoriteDataStore.addFavoriteRepository(repositoryDetail.repoName) } just Runs
 
         // Act

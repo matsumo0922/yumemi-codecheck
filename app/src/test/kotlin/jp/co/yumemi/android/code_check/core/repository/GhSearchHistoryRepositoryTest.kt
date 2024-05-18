@@ -17,7 +17,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-class GhSearchHistoryRepositoryImplTest : FunSpec({
+class GhSearchHistoryRepositoryTest : FunSpec({
 
     // Mocks
     val mockDataStore = mockk<GhSearchHistoryDataStore>()

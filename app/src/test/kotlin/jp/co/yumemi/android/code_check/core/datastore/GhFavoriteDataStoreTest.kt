@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 
+@Suppress("UnusedPrivateProperty")
 class GhFavoriteDataStoreTest : FunSpec({
 
     // Mocks
@@ -125,7 +126,7 @@ class GhFavoriteDataStoreTest : FunSpec({
         coEvery { ghFavoriteDataStore.favoriteData.first() } returns GhFavorites(listOf(userId), emptyList())
 
         // Act
-       ghFavoriteDataStore.removeFavoriteUser(userId)
+        ghFavoriteDataStore.removeFavoriteUser(userId)
 
         // Assert
         coVerify {

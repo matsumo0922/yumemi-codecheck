@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 
+@Suppress("UnusedPrivateProperty")
 class GhSearchHistoryDataStoreTest : FunSpec({
 
     // Mocks

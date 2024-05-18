@@ -10,7 +10,7 @@ class GhUserDetailPreviewParameter : PreviewParameterProvider<GhUserDetail> {
         get() = sequenceOf(dummy)
 
     companion object {
-        val dummy =  GhUserDetail(
+        val dummy = GhUserDetail(
             avatarUrl = "https://example.com/avatar.png",
             bio = "Software Developer with a passion for open-source.",
             blog = "https://example.com/blog",
@@ -40,8 +40,7 @@ class GhUserDetailPreviewParameter : PreviewParameterProvider<GhUserDetail> {
             twitterUsername = "johndoe",
             type = "User",
             updatedAt = Instant.parse("2024-01-01T00:00:00Z"),
-            url = "https://api.example.com/users/user"
+            url = "https://api.example.com/users/user",
         )
-
     }
 }
