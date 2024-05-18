@@ -70,16 +70,18 @@
     
     <!-- Settings -->
     <string name="settings_title">設定</string>
-    <string name="setting_top_general">一般</string>
-    <string name="setting_top_general"
-    <string name="settings_top_theme">テーマ</string>
-    <string name="settings_top_theme_app">アプリのテーマ</string>
-    <string name="settings_top_theme_app_description">アプリのテーマを変更します。</string>
-    <string name="settings_top_theme_app_light">ライトテーマ</string>
-    <string name="settings_top_theme_app_dark">ダークテーマ</string>
-    <string name="settings_top_theme_app_system">システムのテーマ</string>
+    <string name="settings_top_general">一般</string>
+    <string name="settings_top_general_clear_favorite">お気に入りをクリア</string>
+    <string name="settings_top_general_clear_favorite_description">お気に入りを全て削除します。</string>
+    <string name="settings_top_general_theme_app">アプリのテーマ</string>
+    <string name="settings_top_general_theme_app_description">アプリのテーマを変更します。</string>
     <string name="settings_top_information">情報</string>
     <string name="settings_top_information_version">アプリバージョン</string>
     <string name="settings_top_information_open_source_license">オープンソースライセンス</string>
     <string name="settings_top_information_open_source_license_description">OSSライブラリのライセンスを表示します。</string>
+    <string name="settings_theme_title">テーマ</string>
+    <string name="settings_theme_theme_dynamic_color">Dynamic Color</string>
+    <string name="settings_theme_theme_dynamic_color_description">ホームに設定している壁紙などから色を自動抽出する Dynamic Color を使用します。</string>
+    <string name="settings_theme_color">テーマカラー</string>
+    <string name="settings_theme_color_description">アプリのテーマカラーを設定します。Dynamic Color と同時使用はできません。</string>
 </resources>

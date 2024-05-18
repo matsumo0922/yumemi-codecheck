@@ -12,6 +12,7 @@ import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.updateWhenIdle
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -34,6 +35,13 @@ class HomeFavoriteViewModel(
             ghFavoriteRepository.favoriteData.collectLatest { favorites ->
                 _screenState.value = screenState.updateWhenIdle {
                     it.copy(favoriteRepoNames = favorites.repos)
+                }
+
+                // 1秒後に更新
+                delay(1000)
+
+                _screenState.value = screenState.updateWhenIdle {
+                    it.copy(favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories())
                 }
             }
         }

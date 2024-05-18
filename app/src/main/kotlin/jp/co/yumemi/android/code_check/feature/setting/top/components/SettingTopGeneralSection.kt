@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.feature.setting.components
+package jp.co.yumemi.android.code_check.feature.setting.top.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,21 +9,28 @@ import me.matsumo.yumemi.codecheck.R
 
 @Composable
 internal fun SettingTopGeneralSection(
+    onClickSettingTheme: () -> Unit,
     onClickClearFavorites: () -> Unit,
-    onCLickCache: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         SettingTopTitleItem(
             modifier = Modifier.fillMaxWidth(),
-            text = R.string.setting_top_general,
+            text = R.string.settings_top_general,
         )
 
         SettingTextItem(
             modifier = Modifier.fillMaxWidth(),
-            title = R.string.setting_top_theme_app,
-            description = R.string.setting_top_theme_app_description,
-            onClick = onClickAppTheme,
+            title = R.string.settings_top_general_theme_app,
+            description = R.string.settings_top_general_theme_app_description,
+            onClick = onClickSettingTheme,
+        )
+
+        SettingTextItem(
+            modifier = Modifier.fillMaxWidth(),
+            title = R.string.settings_top_general_clear_favorite,
+            description = R.string.settings_top_general_clear_favorite_description,
+            onClick = onClickClearFavorites,
         )
     }
 }

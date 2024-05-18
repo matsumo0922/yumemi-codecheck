@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.feature.setting.components
+package jp.co.yumemi.android.code_check.feature.setting.top.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
