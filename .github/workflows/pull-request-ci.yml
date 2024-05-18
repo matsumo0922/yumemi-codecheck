@@ -21,7 +21,7 @@ jobs:
     secrets:
       CI_TOKEN: ${{ secrets.CI_TOKEN }}
 
-  Build:
-    uses: ./.github/workflows/call-build.yml
+  Test:
+    uses: ./.github/workflows/call-test.yml
     secrets:
       CI_TOKEN: ${{ secrets.CI_TOKEN }}
