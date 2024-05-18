@@ -45,6 +45,12 @@ fun Project.setupAndroid() {
             isCoreLibraryDesugaringEnabled = true
         }
 
+        testOptions {
+            unitTests.all {
+                it.useJUnitPlatform()
+            }
+        }
+
         dependencies {
             testImplementation(libs.library("junit"))
             androidTestImplementation(libs.library("androidx-test-ext-junit"))

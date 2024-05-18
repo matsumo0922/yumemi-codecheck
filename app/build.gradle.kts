@@ -1,5 +1,6 @@
 
 import com.android.build.api.variant.ResValue
+import me.matsumo.yumemi.codecheck.testImplementation
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
@@ -83,5 +84,8 @@ android {
         api(libs.bundles.ui.android.api)
         api(libs.bundles.koin)
         api(libs.bundles.ktor)
+
+        testImplementation(libs.bundles.kotest)
+        testImplementation(libs.bundles.mockk)
     }
 }

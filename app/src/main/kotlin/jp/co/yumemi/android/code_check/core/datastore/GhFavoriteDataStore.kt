@@ -1,25 +1,22 @@
 package jp.co.yumemi.android.code_check.core.datastore
 
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import jp.co.yumemi.android.code_check.core.model.GhFavorites
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 
 class GhFavoriteDataStore(
-    private val preferenceHelper: PreferenceHelper,
+    private val preference: DataStore<Preferences>,
     private val formatter: Json,
-    private val ioDispatcher: CoroutineDispatcher,
 ) {
-    private val preference = preferenceHelper.create(PreferenceName.GH_FAVORITE)
-
     val favoriteData = preference.data.map { preferences ->
         val userIdsJson = preferences[stringPreferencesKey(FAVORITE_USER_KEY)]
         val repoJson = preferences[stringPreferencesKey(FAVORITE_REPO_KEY)]
@@ -33,13 +30,13 @@ class GhFavoriteDataStore(
         )
     }
 
-    suspend fun clear() = withContext(ioDispatcher) {
+    suspend fun clear() {
         preference.edit {
             it.clear()
         }
     }
 
-    suspend fun addFavoriteUser(userId: String) = withContext(ioDispatcher) {
+    suspend fun addFavoriteUser(userId: String) {
         preference.edit {
             val favoriteUserIds = favoriteData.first().userIds
             val newFavoriteUserIds = favoriteUserIds.toMutableSet().apply { add(userId) }
@@ -48,7 +45,7 @@ class GhFavoriteDataStore(
         }
     }
 
-    suspend fun addFavoriteRepository(repo: GhRepositoryName) = withContext(ioDispatcher) {
+    suspend fun addFavoriteRepository(repo: GhRepositoryName) {
         preference.edit {
             val favoriteRepos = favoriteData.first().repos
             val newFavoriteRepos = favoriteRepos.toMutableSet().apply { add(repo) }
@@ -57,7 +54,7 @@ class GhFavoriteDataStore(
         }
     }
 
-    suspend fun removeFavoriteUser(userId: String) = withContext(ioDispatcher) {
+    suspend fun removeFavoriteUser(userId: String) {
         preference.edit {
             val favoriteUserIds = favoriteData.first().userIds
             val newFavoriteUserIds = favoriteUserIds.toMutableSet().apply { remove(userId) }
@@ -66,7 +63,7 @@ class GhFavoriteDataStore(
         }
     }
 
-    suspend fun removeFavoriteRepository(repo: GhRepositoryName) = withContext(ioDispatcher) {
+    suspend fun removeFavoriteRepository(repo: GhRepositoryName) {
         preference.edit {
             val favoriteRepos = favoriteData.first().repos
             val newFavoriteRepos = favoriteRepos.toMutableSet().apply { remove(repo) }
@@ -90,7 +87,7 @@ class GhFavoriteDataStore(
     }
 
     companion object {
-        private const val FAVORITE_USER_KEY = "favorite_user"
-        private const val FAVORITE_REPO_KEY = "favorite_repo"
+        const val FAVORITE_USER_KEY = "favorite_user"
+        const val FAVORITE_REPO_KEY = "favorite_repo"
     }
 }
