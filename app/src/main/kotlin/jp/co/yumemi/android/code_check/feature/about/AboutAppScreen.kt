@@ -2,6 +2,7 @@ package jp.co.yumemi.android.code_check.feature.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -37,16 +38,17 @@ internal fun AboutAppScreen(
                 scrollBehavior = scrollBehavior,
                 onClickDrawer = terminate,
             )
-        }
+        },
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(it)
+                .fillMaxSize()
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
-                alignment = Alignment.CenterVertically
+                alignment = Alignment.CenterVertically,
             ),
         ) {
             Text(
