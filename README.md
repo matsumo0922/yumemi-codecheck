@@ -20,7 +20,7 @@ yumemi-codecheck は 株式会社ゆめみ様の Android エンジニア用コ�
 <hr>
 
 <p align="center">
-    <img src="media/screenshots.png" width="2048" alt="screenshots">
+    <img src="docs/screenshots.png" width="2048" alt="screenshots">
 </p>
 
 
