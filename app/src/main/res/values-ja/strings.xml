@@ -1,0 +1,93 @@
+<resources>
+    <!-- Common -->
+    <string name="common_ok">Android Engineer CodeCheck</string>
+    <string name="common_cancel">キャンセル</string>
+    <string name="common_allow">許可</string>
+    <string name="common_denied">拒否</string>
+    <string name="common_retry">再試行</string>
+    <string name="common_reload">再読み込み</string>
+    <string name="common_back">戻る</string>
+    <string name="common_close">閉じる</string>
+    <string name="common_next">次へ</string>
+    <string name="common_finish">完了</string>
+    <string name="common_skip">スキップ</string>
+    <string name="common_loading">処理中…</string>
+    <string name="common_caution">注意</string>
+    <string name="common_error">エラー</string>
+    <string name="common_warning">警告</string>
+    <string name="common_save">保存</string>
+    <string name="common_unknown">不明</string>
+    <string name="common_details">詳細</string>
+    <string name="common_delete">削除</string>
+    <string name="common_completed">完了</string>
+    <string name="common_download">ダウンロード</string>
+    <string name="common_downloaded">ダウンロードしました</string>
+    <string name="common_see_more">もっと見る</string>
+    <string name="common_block">ブロック</string>
+    <string name="common_unblock">解除</string>
+
+    <!-- Common Error -->
+    <string name="error_executed">エラーが発生しました</string>
+    <string name="error_unknown">不明なエラーが発生しました</string>
+    <string name="error_download">ダウンロードに失敗しました</string>
+    <string name="error_no_data">データがありません</string>
+    <string name="error_network">通信エラーが発生しました</string>
+    <string name="error_rate_limit">APIのレート制限中です</string>
+    <string name="error_paging">ページネーションを継続できません</string>
+    <string name="error_developing_feature">開発中の機能です</string>
+
+    <!-- Common Unit -->
+    <string name="unit_day_before">%1$d days ago</string>
+    <string name="unit_hour_before">%1$d hours ago</string>
+    <string name="unit_minute_before">%1$d minutes ago</string>
+    <string name="unit_second_before">%1$d seconds ago</string>
+
+    <!-- Navigation -->
+    <string name="navigation_search">検索</string>
+    <string name="navigation_trending">トレンド</string>
+    <string name="navigation_favorite">お気に入り</string>
+    <string name="navigation_settings">設定</string>
+    <string name="navigation_about">アプリについて</string>
+
+    <!-- Search -->
+    <string name="search_title">GitHubのリポジトリを検索できるよ〜</string>
+    <string name="search_empty_message">リポジトリを検索しましょう</string>
+    <string name="search_remove_history_title">履歴の削除</string>
+    <string name="search_remove_history_message">%1$sを検索履歴から削除しますか？</string>
+
+    <!-- Favorite -->
+    <string name="favorite_title">お気に入り</string>
+    <string name="favorite_empty_title">お気に入りがありません</string>
+    <string name="favorite_empty_message">リポジトリを検索してお気に入りに追加しましょう</string>
+
+    <!-- Trending -->
+    <string name="trending_title">トレンド</string>
+    <string name="trending_empty_title">トレンドがありません</string>
+    <string name="trending_empty_message">次回更新までしばらくお待ちください</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="settings_top_general">一般</string>
+    <string name="settings_top_general_clear_favorite">お気に入りを削除</string>
+    <string name="settings_top_general_clear_favorite_description">お気に入りを全て削除します。</string>
+    <string name="settings_top_general_clear_favorite_toast">お気に入りを削除しました</string>
+    <string name="settings_top_general_clear_search_history">検索履歴を削除</string>
+    <string name="settings_top_general_clear_search_history_description">検索履歴を全て削除します。</string>
+    <string name="settings_top_general_clear_search_history_toast">検索履歴を削除しました</string>
+    <string name="settings_top_general_theme_app">アプリのテーマ</string>
+    <string name="settings_top_general_theme_app_description">アプリのテーマを変更します。</string>
+    <string name="settings_top_information">情報</string>
+    <string name="settings_top_information_version">アプリバージョン</string>
+    <string name="settings_top_information_open_source_license">オープンソースライセンス</string>
+    <string name="settings_top_information_open_source_license_description">OSSライブラリのライセンスを表示します。</string>
+    <string name="settings_theme_title">テーマ</string>
+    <string name="settings_theme_theme_dynamic_color">Dynamic Color</string>
+    <string name="settings_theme_theme_dynamic_color_description">ホームに設定している壁紙などから色を自動抽出する Dynamic Color を使用します。</string>
+    <string name="settings_theme_color">テーマカラー</string>
+    <string name="settings_theme_color_description">アプリのテーマカラーを設定します。Dynamic Color と同時使用はできません。</string>
+    <string name="settings_oss_title">オープンソースライセンス</string>
+
+    <!-- About -->
+    <string name="about_app_title">アプリについて</string>
+    <string name="about_app_description">株式会社ゆめみ様のAndroidエンジニアコードチェック用アプリです</string>
+</resources>
