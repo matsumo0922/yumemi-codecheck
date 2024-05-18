@@ -37,12 +37,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
+import jp.co.yumemi.android.code_check.core.model.YacBuildConfig
 import kotlinx.coroutines.launch
 import me.matsumo.yumemi.codecheck.R
 
 @Composable
 fun HomeDrawerContent(
     state: DrawerState?,
+    buildConfig: YacBuildConfig,
     currentDestination: NavDestination?,
     navigateToLibraryScreen: (HomeDestination) -> Unit,
     navigateToSetting: () -> Unit,
@@ -55,8 +57,14 @@ fun HomeDrawerContent(
             .fillMaxHeight()
             .verticalScroll(rememberScrollState()),
     ) {
+        HeaderItem(
+            modifier = Modifier
+                .statusBarsPadding()
+                .fillMaxWidth(),
+            buildConfig = buildConfig,
+        )
+
         NavigationDrawerItem(
-            modifier = Modifier.statusBarsPadding(),
             state = state,
             isSelected = currentDestination.isHomeDestinationInHierarchy(HomeDestination.SEARCH),
             label = stringResource(R.string.navigation_search),
@@ -101,6 +109,29 @@ fun HomeDrawerContent(
             label = stringResource(R.string.navigation_about),
             icon = Icons.Outlined.Info,
             onClick = navigateToAbout,
+        )
+    }
+}
+
+@Composable
+private fun HeaderItem(
+    buildConfig: YacBuildConfig,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.padding(24.dp, 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(
+            text = "Yumemi Android Engineer Code Check",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
+        Text(
+            text = "Version ${buildConfig.versionName}:${buildConfig.versionCode}",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

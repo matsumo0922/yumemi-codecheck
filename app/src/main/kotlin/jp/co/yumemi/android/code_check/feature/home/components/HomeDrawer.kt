@@ -7,10 +7,12 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
+import jp.co.yumemi.android.code_check.core.model.YacBuildConfig
 
 @Composable
 fun HomeDrawer(
     state: DrawerState,
+    buildConfig: YacBuildConfig,
     currentDestination: NavDestination?,
     navigateToLibraryScreen: (HomeDestination) -> Unit,
     navigateToSetting: () -> Unit,
@@ -24,6 +26,7 @@ fun HomeDrawer(
         HomeDrawerContent(
             modifier = modifier,
             state = state,
+            buildConfig = buildConfig,
             currentDestination = currentDestination,
             navigateToLibraryScreen = navigateToLibraryScreen,
             navigateToSetting = navigateToSetting,

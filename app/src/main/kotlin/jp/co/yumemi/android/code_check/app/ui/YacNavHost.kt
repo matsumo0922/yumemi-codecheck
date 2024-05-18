@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import jp.co.yumemi.android.code_check.core.ui.animation.NavigateAnimation
+import jp.co.yumemi.android.code_check.feature.about.aboutAppScreen
+import jp.co.yumemi.android.code_check.feature.about.navigateToAboutApp
 import jp.co.yumemi.android.code_check.feature.home.HomeRoute
 import jp.co.yumemi.android.code_check.feature.home.homeScreen
 import jp.co.yumemi.android.code_check.feature.repo.navigateToRepositoryDetail
@@ -39,10 +41,16 @@ fun YacNavHost(
     ) {
         homeScreen(
             navigateToRepositoryDetail = navController::navigateToRepositoryDetail,
-            navigateToSettingTheme = navController::navigateToSettingTop,
+            navigateToSettingTop = navController::navigateToSettingTop,
+            navigateToAboutApp = navController::navigateToAboutApp,
         )
 
         repositoryDetailScreen(
+            navigateToWeb = { navigateToWeb(context, it) },
+            terminate = navController::popBackStack,
+        )
+
+        aboutAppScreen(
             navigateToWeb = { navigateToWeb(context, it) },
             terminate = navController::popBackStack,
         )
