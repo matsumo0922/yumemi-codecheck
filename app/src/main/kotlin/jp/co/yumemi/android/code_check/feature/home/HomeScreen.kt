@@ -23,11 +23,13 @@ import jp.co.yumemi.android.code_check.feature.home.search.navigateToHomeSearch
 import jp.co.yumemi.android.code_check.feature.home.trend.navigateToHomeTrend
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 fun HomeScreen(
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
-    navigateToSettingTheme: () -> Unit,
+    navigateToSettingTop: () -> Unit,
+    navigateToAboutApp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
@@ -41,10 +43,11 @@ fun HomeScreen(
             HomeDrawer(
                 modifier = Modifier.fillMaxHeight(),
                 state = drawerState,
+                buildConfig = koinInject(),
                 currentDestination = navController.currentBackStackEntryAsState().value?.destination,
                 navigateToLibraryScreen = navController::navigateToHomeDestination,
-                navigateToSetting = navigateToSettingTheme,
-                navigateToAbout = {},
+                navigateToSetting = navigateToSettingTop,
+                navigateToAbout = navigateToAboutApp,
             )
         },
     ) {

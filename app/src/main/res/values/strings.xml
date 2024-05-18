@@ -89,4 +89,8 @@
     <string name="settings_theme_color">テーマカラー</string>
     <string name="settings_theme_color_description">アプリのテーマカラーを設定します。Dynamic Color と同時使用はできません。</string>
     <string name="settings_oss_title">オープンソースライセンス</string>
+
+    <!-- About -->
+    <string name="about_app_title">アプリについて</string>
+    <string name="about_app_description">株式会社ゆめみ様のAndroidエンジニアコードチェック用アプリです</string>
 </resources>

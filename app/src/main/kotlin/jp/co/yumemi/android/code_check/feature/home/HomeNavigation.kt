@@ -15,13 +15,15 @@ fun NavController.navigateToHome() {
 
 fun NavGraphBuilder.homeScreen(
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
-    navigateToSettingTheme: () -> Unit,
+    navigateToSettingTop: () -> Unit,
+    navigateToAboutApp: () -> Unit,
 ) {
     composable(HomeRoute) {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             navigateToRepositoryDetail = navigateToRepositoryDetail,
-            navigateToSettingTheme = navigateToSettingTheme,
+            navigateToSettingTop = navigateToSettingTop,
+            navigateToAboutApp = navigateToAboutApp,
         )
     }
 }
