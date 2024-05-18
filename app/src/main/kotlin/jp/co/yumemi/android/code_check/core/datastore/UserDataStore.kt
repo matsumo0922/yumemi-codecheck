@@ -43,7 +43,7 @@ class UserDataStore(
 
     suspend fun setThemeConfig(themeConfig: ThemeConfig) {
         preference.edit {
-            it[stringPreferencesKey(UserData::themeConfig.name)] = themeConfig.name
+            it[stringPreferencesKey(UserData::themeConfig.name)] = ThemeConfig.Dark.name
         }
     }
 
