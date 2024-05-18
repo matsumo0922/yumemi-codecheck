@@ -63,6 +63,7 @@ libraries = "11.1.4"
 junit = "4.13.2"
 kermit = "2.0.3"
 detekt = "1.23.6"
+kotest = "5.9.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
@@ -174,6 +175,9 @@ libraries-ui = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 desugar = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.4" }
+kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 
 [bundles]
 infra-api = [
@@ -238,4 +242,10 @@ koin = [
     "koin-core",
     "koin-compose",
     "koin-android",
+]
+
+kotest = [
+    "kotest-junit",
+    "kotest-property",
+    "kotest-assertions-core",
 ]
