@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.core.ui.components.ErrorView
@@ -57,7 +58,7 @@ fun <T : Any> LazyPagingItemsLoadContents(
 
                         is LoadState.Error -> {
                             ErrorView(
-                                errorState = ScreenState.Error(R.string.error_no_data),
+                                errorState = ScreenState.Error(if (it.error is RateLimitException) R.string.error_rate_limit else R.string.error_network),
                                 retryAction = { lazyPagingItems.refresh() },
                             )
                         }

@@ -123,7 +123,9 @@ internal fun HomeSearchTopAppBar(
                             onUpdateQuery.invoke(it.query)
                             onClickSearch.invoke(it.query)
                         },
-                        onClickRemove = { onClickRemoveSearchHistory.invoke(it) },
+                        onClickRemove = {
+                            onClickRemoveSearchHistory.invoke(it)
+                        },
                     )
                 }
             }

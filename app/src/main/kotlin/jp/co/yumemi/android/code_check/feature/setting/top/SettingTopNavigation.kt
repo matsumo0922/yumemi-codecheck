@@ -14,12 +14,14 @@ fun NavController.navigateToSettingTop() {
 
 fun NavGraphBuilder.settingTopScreen(
     navigateToSettingTheme: () -> Unit,
+    navigateToSettingOss: () -> Unit,
     terminate: () -> Unit,
 ) {
     composable(SettingTopRoute) {
         SettingTopRoute(
             modifier = Modifier.fillMaxSize(),
             navigateToSettingTheme = navigateToSettingTheme,
+            navigateToSettingOss = navigateToSettingOss,
             terminate = terminate,
         )
     }

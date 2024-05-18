@@ -11,6 +11,7 @@ import me.matsumo.yumemi.codecheck.R
 internal fun SettingTopGeneralSection(
     onClickSettingTheme: () -> Unit,
     onClickClearFavorites: () -> Unit,
+    onClickClearSearchHistory: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
@@ -31,6 +32,13 @@ internal fun SettingTopGeneralSection(
             title = R.string.settings_top_general_clear_favorite,
             description = R.string.settings_top_general_clear_favorite_description,
             onClick = onClickClearFavorites,
+        )
+
+        SettingTextItem(
+            modifier = Modifier.fillMaxWidth(),
+            title = R.string.settings_top_general_clear_search_history,
+            description = R.string.settings_top_general_clear_search_history_description,
+            onClick = onClickClearSearchHistory,
         )
     }
 }

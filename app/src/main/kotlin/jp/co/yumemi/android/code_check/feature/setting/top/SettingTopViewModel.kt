@@ -7,6 +7,7 @@ import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.model.UserData
 import jp.co.yumemi.android.code_check.core.model.YacBuildConfig
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
+import jp.co.yumemi.android.code_check.core.repository.GhSearchHistoryRepository
 import jp.co.yumemi.android.code_check.core.repository.UserDataRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 class SettingTopViewModel(
     private val userDataRepository: UserDataRepository,
     private val ghFavoriteRepository: GhFavoriteRepository,
+    private val ghSearchHistoryRepository: GhSearchHistoryRepository,
     private val buildConfig: YacBuildConfig,
 ) : ViewModel() {
 
@@ -33,6 +35,10 @@ class SettingTopViewModel(
 
     fun clearFavorites() {
         ghFavoriteRepository.clear()
+    }
+
+    fun clearSearchHistory() {
+        ghSearchHistoryRepository.clear()
     }
 }
 

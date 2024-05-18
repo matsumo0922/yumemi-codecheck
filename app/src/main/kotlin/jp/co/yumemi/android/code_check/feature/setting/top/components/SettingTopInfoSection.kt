@@ -29,7 +29,7 @@ internal fun SettingTopInfoSection(
             modifier = Modifier.fillMaxWidth(),
             title = stringResource(R.string.settings_top_information_version),
             description = "${buildConfig.versionName}:${buildConfig.versionCode}",
-            onLongClick = { clipboard.setText(AnnotatedString("${buildConfig.versionName}:${buildConfig.versionName}")) },
+            onLongClick = { clipboard.setText(AnnotatedString("${buildConfig.versionName}:${buildConfig.versionCode}")) },
         )
 
         SettingTextItem(

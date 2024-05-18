@@ -14,6 +14,8 @@ import jp.co.yumemi.android.code_check.feature.home.HomeRoute
 import jp.co.yumemi.android.code_check.feature.home.homeScreen
 import jp.co.yumemi.android.code_check.feature.repo.navigateToRepositoryDetail
 import jp.co.yumemi.android.code_check.feature.repo.repositoryDetailScreen
+import jp.co.yumemi.android.code_check.feature.setting.oss.navigateToSettingOss
+import jp.co.yumemi.android.code_check.feature.setting.oss.settingOssScreen
 import jp.co.yumemi.android.code_check.feature.setting.theme.navigateToSettingTheme
 import jp.co.yumemi.android.code_check.feature.setting.theme.settingThemeScreen
 import jp.co.yumemi.android.code_check.feature.setting.top.navigateToSettingTop
@@ -47,10 +49,15 @@ fun YacNavHost(
 
         settingTopScreen(
             navigateToSettingTheme = navController::navigateToSettingTheme,
+            navigateToSettingOss = navController::navigateToSettingOss,
             terminate = navController::popBackStack
         )
 
         settingThemeScreen(
+            terminate = navController::popBackStack
+        )
+
+        settingOssScreen(
             terminate = navController::popBackStack
         )
     }

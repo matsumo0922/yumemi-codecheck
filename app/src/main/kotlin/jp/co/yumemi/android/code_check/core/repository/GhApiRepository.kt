@@ -59,7 +59,7 @@ interface GhApiRepository {
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
-    suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
+    suspend fun getRepositoryDetail(repo: GhRepositoryName, isUseMemoryCache: Boolean = false): GhRepositoryDetail
     suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String
     suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int>
     suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String
@@ -175,7 +175,11 @@ class GhApiRepositoryImpl(
         }
     }
 
-    override suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail = withContext(ioDispatcher) {
+    override suspend fun getRepositoryDetail(repo: GhRepositoryName, isUseMemoryCache: Boolean): GhRepositoryDetail = withContext(ioDispatcher) {
+        if (isUseMemoryCache) {
+            ghCacheDataStore.getRepositoryMemoryCache(repo)?.let { return@withContext it }
+        }
+
         client.get("repos/$repo").parse<RepositoryDetailEntity>()!!.translate().also {
             ghCacheDataStore.addRepositoryCache(it)
         }

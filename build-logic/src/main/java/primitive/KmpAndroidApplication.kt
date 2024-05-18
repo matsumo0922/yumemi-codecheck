@@ -17,6 +17,7 @@ class KmpAndroidApplication : Plugin<Project> {
                 apply("kotlinx-serialization")
                 apply("project-report")
                 apply("com.google.devtools.ksp")
+                apply("com.mikepenz.aboutlibraries.plugin")
             }
 
             androidApplication {

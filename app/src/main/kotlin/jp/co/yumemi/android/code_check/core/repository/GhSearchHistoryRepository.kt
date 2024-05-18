@@ -12,6 +12,7 @@ import kotlinx.datetime.Clock
 interface GhSearchHistoryRepository {
     val searchHistories: Flow<List<GhSearchHistory>>
 
+    fun clear()
     fun addSearchHistory(query: String)
     fun removeSearchHistory(searchHistory: GhSearchHistory)
 }
@@ -24,6 +25,12 @@ class GhSearchHistoryRepositoryImpl(
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     override val searchHistories = ghSearchHistoryDataStore.searchHistoriesData
+
+    override fun clear() {
+        scope.launch {
+            ghSearchHistoryDataStore.clear()
+        }
+    }
 
     override fun addSearchHistory(query: String) {
         scope.launch {

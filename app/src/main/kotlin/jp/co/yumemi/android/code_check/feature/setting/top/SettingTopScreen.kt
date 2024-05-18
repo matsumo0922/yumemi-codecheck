@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jp.co.yumemi.android.code_check.core.extensions.ToastUtils
 import jp.co.yumemi.android.code_check.core.model.YacBuildConfig
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.feature.setting.SettingTopAppBar
@@ -26,10 +28,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun SettingTopRoute(
     navigateToSettingTheme: () -> Unit,
+    navigateToSettingOss: () -> Unit,
     terminate: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingTopViewModel = koinViewModel(),
 ) {
+    val context = LocalContext.current
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     AsyncLoadContents(
@@ -40,7 +44,15 @@ internal fun SettingTopRoute(
             modifier = Modifier.fillMaxSize(),
             buildConfig = it.buildConfig,
             onClickSettingTheme = navigateToSettingTheme,
-            onClickClearFavorites = viewModel::clearFavorites,
+            onClickOpenSourceLicense = navigateToSettingOss,
+            onClickClearFavorites = {
+                viewModel.clearFavorites()
+                ToastUtils.show(context, R.string.settings_top_general_clear_favorite_toast)
+            },
+            onClickClearSearchHistory = {
+                viewModel.clearSearchHistory()
+                ToastUtils.show(context, R.string.settings_top_general_clear_search_history_toast)
+            },
             onClickBack = terminate,
         )
     }
@@ -51,7 +63,9 @@ internal fun SettingTopRoute(
 private fun SettingTopScreen(
     buildConfig: YacBuildConfig,
     onClickSettingTheme: () -> Unit,
+    onClickOpenSourceLicense: () -> Unit,
     onClickClearFavorites: () -> Unit,
+    onClickClearSearchHistory: () -> Unit,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -79,13 +93,14 @@ private fun SettingTopScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClickSettingTheme = onClickSettingTheme,
                     onClickClearFavorites = onClickClearFavorites,
+                    onClickClearSearchHistory = onClickClearSearchHistory,
                 )
             }
 
             item {
                 SettingTopInfoSection(
                     buildConfig = buildConfig,
-                    onClickOpenSourceLicense = {},
+                    onClickOpenSourceLicense = onClickOpenSourceLicense,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

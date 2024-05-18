@@ -72,6 +72,8 @@ android {
         implementation(libs.uuid)
         implementation(libs.ksoup)
         implementation(libs.webview.compose)
+        implementation(libs.libraries.ui)
+        implementation(libs.libraries.core)
 
         api(project.dependencies.platform(libs.kotlin.bom))
         api(project.dependencies.platform(libs.koin.bom))

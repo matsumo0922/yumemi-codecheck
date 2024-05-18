@@ -68,7 +68,7 @@ private fun SettingThemeScreen(
         modifier = modifier.nestedScroll(behavior.nestedScrollConnection),
         topBar = {
             SettingTopAppBar(
-                title = stringResource(R.string.settings_title),
+                title = stringResource(R.string.settings_theme_title),
                 onClickBack = onClickBack,
                 scrollBehavior = behavior,
             )

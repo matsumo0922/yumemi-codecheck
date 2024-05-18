@@ -41,7 +41,7 @@ class RepositoryDetailViewModel(
             _screenState.value = ScreenState.Loading
             _screenState.value = suspendRunCatching {
                 val isFavorite = ghFavoriteRepository.isFavoriteRepository(repositoryName)
-                val repositoryDetail = ghApiRepository.getRepositoryDetail(repositoryName)
+                val repositoryDetail = ghApiRepository.getRepositoryDetail(repositoryName, true)
                 val readMeHtml = ghApiRepository.getRepositoryReadMe(repositoryName, repositoryDetail.defaultBranch)
                 val languages = ghApiRepository.getRepositoryLanguages(repositoryName)
 
