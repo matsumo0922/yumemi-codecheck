@@ -35,6 +35,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -44,6 +45,8 @@ import kotlinx.serialization.json.jsonPrimitive
 import me.matsumo.yumemi.codecheck.R
 
 interface GhApiRepository {
+
+    fun clearCache()
 
     // paging
     fun getSearchUsersPaging(query: String, sort: GhUserSort?, order: GhOrder?): Flow<PagingData<GhSearchUsers.Item>>
@@ -56,7 +59,7 @@ interface GhApiRepository {
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
-    suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail
+    suspend fun getRepositoryDetail(repo: GhRepositoryName, isUseMemoryCache: Boolean = false): GhRepositoryDetail
     suspend fun getRepositoryReadMe(repo: GhRepositoryName, defaultBranch: String): String
     suspend fun getRepositoryLanguages(repo: GhRepositoryName): Map<String, Int>
     suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String
@@ -75,6 +78,12 @@ class GhApiRepositoryImpl(
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     private var cachedLanguageColors: Map<String, Color?>? = null
+
+    override fun clearCache() {
+        scope.launch {
+            ghCacheDataStore.clear()
+        }
+    }
 
     override fun getSearchUsersPaging(
         query: String,
@@ -166,7 +175,11 @@ class GhApiRepositoryImpl(
         }
     }
 
-    override suspend fun getRepositoryDetail(repo: GhRepositoryName): GhRepositoryDetail = withContext(ioDispatcher) {
+    override suspend fun getRepositoryDetail(repo: GhRepositoryName, isUseMemoryCache: Boolean): GhRepositoryDetail = withContext(ioDispatcher) {
+        if (isUseMemoryCache) {
+            ghCacheDataStore.getRepositoryMemoryCache(repo)?.let { return@withContext it }
+        }
+
         client.get("repos/$repo").parse<RepositoryDetailEntity>()!!.translate().also {
             ghCacheDataStore.addRepositoryCache(it)
         }

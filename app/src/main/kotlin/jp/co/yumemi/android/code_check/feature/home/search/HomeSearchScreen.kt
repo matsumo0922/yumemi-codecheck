@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,7 +31,7 @@ import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
-import jp.co.yumemi.android.code_check.core.ui.component.SimpleAlertDialog
+import jp.co.yumemi.android.code_check.core.ui.components.SimpleAlertDialog
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchIdleSection
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchTopAppBar
 import kotlinx.collections.immutable.ImmutableList
@@ -100,7 +101,7 @@ private fun HomeSearchScreen(
     val density = LocalDensity.current
     val repositoriesPager = searchRepositoriesPaging.collectAsLazyPagingItems()
 
-    var removeSearchHistoryItem = remember<GhSearchHistory?> { null }
+    var removeSearchHistoryItem by remember { mutableStateOf<GhSearchHistory?>(null) }
     var topAppBarHeight by remember { mutableIntStateOf(0) }
 
     Box(
@@ -156,7 +157,9 @@ private fun HomeSearchScreen(
                 onClickRemoveSearchHistory.invoke(removeSearchHistoryItem!!)
                 removeSearchHistoryItem = null
             },
-            onClickNegative = { removeSearchHistoryItem = null },
+            onClickNegative = {
+                removeSearchHistoryItem = null
+            },
             isCaution = true,
         )
     }

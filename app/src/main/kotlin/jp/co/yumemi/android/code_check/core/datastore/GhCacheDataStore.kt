@@ -18,7 +18,18 @@ class GhCacheDataStore(
 ) {
     private val preference = preferenceHelper.create(PreferenceName.GH_CACHE)
 
+    private val memoryUserCache = mutableMapOf<String, GhUserDetail>()
+    private val memoryRepositoryCache = mutableMapOf<GhRepositoryName, GhRepositoryDetail>()
+
+    suspend fun clear() {
+        preference.edit {
+            it.clear()
+        }
+    }
+
     suspend fun addUserCache(ghUserDetail: GhUserDetail) = withContext(ioDispatcher) {
+        memoryUserCache[ghUserDetail.name] = ghUserDetail
+
         preference.edit {
             val key = createUserCacheKey(ghUserDetail.name)
             val json = formatter.encodeToString(GhUserDetail.serializer(), ghUserDetail)
@@ -28,6 +39,8 @@ class GhCacheDataStore(
     }
 
     suspend fun addRepositoryCache(ghRepositoryDetail: GhRepositoryDetail) = withContext(ioDispatcher) {
+        memoryRepositoryCache[ghRepositoryDetail.repoName] = ghRepositoryDetail
+
         preference.edit {
             val key = createRepositoryCacheKey(ghRepositoryDetail.repoName.toString())
             val json = formatter.encodeToString(GhRepositoryDetail.serializer(), ghRepositoryDetail)
@@ -48,6 +61,14 @@ class GhCacheDataStore(
         val json = preference.data.firstOrNull()?.get(key)
 
         return json?.let { formatter.decodeFromString(GhRepositoryDetail.serializer(), it) }
+    }
+
+    fun getUserMemoryCache(userName: String): GhUserDetail? {
+        return memoryUserCache[userName]
+    }
+
+    fun getRepositoryMemoryCache(repo: GhRepositoryName): GhRepositoryDetail? {
+        return memoryRepositoryCache[repo]
     }
 
     private fun createUserCacheKey(userName: String): Preferences.Key<String> {

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
-import jp.co.yumemi.android.code_check.core.ui.component.TrendRepositoryItem
+import jp.co.yumemi.android.code_check.core.ui.components.TrendRepositoryItem
 import jp.co.yumemi.android.code_check.core.ui.extensions.plus
 import kotlinx.collections.immutable.ImmutableList
 

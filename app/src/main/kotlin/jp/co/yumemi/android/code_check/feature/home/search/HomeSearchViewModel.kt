@@ -22,6 +22,7 @@ import jp.co.yumemi.android.code_check.core.ui.extensions.emptyPaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.matsumo.yumemi.codecheck.R
@@ -35,6 +36,27 @@ class HomeSearchViewModel(
     private val _screenState = MutableStateFlow<ScreenState<HomeSearchUiState>>(ScreenState.Loading)
 
     val screenState = _screenState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            ghSearchHistoryRepository.searchHistories.collectLatest {
+                _screenState.value = screenState.updateWhenIdle { uiState ->
+                    uiState.copy(
+                        suggestions = it.filter { it.query.isAnyWordStartsWith(uiState.query) },
+                        searchHistories = it,
+                    )
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            ghFavoriteRepository.favoriteData.collectLatest { favorites ->
+                _screenState.value = screenState.updateWhenIdle {
+                    it.copy(favoriteRepoNames = favorites.repos)
+                }
+            }
+        }
+    }
 
     fun fetch() {
         viewModelScope.launch {
@@ -62,8 +84,11 @@ class HomeSearchViewModel(
     ) {
         viewModelScope.launch {
             ghSearchHistoryRepository.addSearchHistory(query)
+
             _screenState.value = screenState.updateWhenIdle {
-                it.copy(searchRepositoriesPaging = ghApiRepository.getSearchRepositoriesPaging(query, sort, order))
+                it.copy(
+                    searchRepositoriesPaging = ghApiRepository.getSearchRepositoriesPaging(query, sort, order),
+                )
             }
         }
     }

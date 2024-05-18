@@ -17,6 +17,8 @@ interface GhFavoriteRepository {
 
     val favoriteData: Flow<GhFavorites>
 
+    fun clear()
+
     fun addFavoriteUser(userName: String)
     fun addFavoriteRepository(repo: GhRepositoryName)
 
@@ -40,6 +42,12 @@ class GhFavoriteRepositoryImpl(
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     override val favoriteData = ghFavoriteDataStore.favoriteData
+
+    override fun clear() {
+        scope.launch {
+            ghFavoriteDataStore.clear()
+        }
+    }
 
     override fun addFavoriteUser(userName: String) {
         scope.launch {

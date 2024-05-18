@@ -3,7 +3,6 @@ package jp.co.yumemi.android.code_check.feature.home.favorite
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,7 +21,7 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
-import jp.co.yumemi.android.code_check.core.ui.component.EmptyView
+import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteIdleSection
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteTopAppBar
 import kotlinx.collections.immutable.ImmutableList
@@ -118,9 +117,7 @@ private fun HomeFavoriteScreen(
                 )
             } else {
                 EmptyView(
-                    modifier = Modifier
-                        .padding(it)
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     titleRes = R.string.favorite_empty_title,
                     messageRes = R.string.favorite_empty_message,
                 )

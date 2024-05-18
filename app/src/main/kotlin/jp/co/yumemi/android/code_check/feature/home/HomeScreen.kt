@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
+    navigateToSettingTheme: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
@@ -42,7 +43,7 @@ fun HomeScreen(
                 state = drawerState,
                 currentDestination = navController.currentBackStackEntryAsState().value?.destination,
                 navigateToLibraryScreen = navController::navigateToHomeDestination,
-                navigateToSetting = {},
+                navigateToSetting = navigateToSettingTheme,
                 navigateToAbout = {},
             )
         },

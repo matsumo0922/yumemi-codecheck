@@ -5,6 +5,7 @@ import jp.co.yumemi.android.code_check.core.extensions.di.extensionsModule
 import jp.co.yumemi.android.code_check.core.repository.di.repositoryModule
 import jp.co.yumemi.android.code_check.feature.home.di.homeModule
 import jp.co.yumemi.android.code_check.feature.repo.di.repoModule
+import jp.co.yumemi.android.code_check.feature.setting.di.settingModule
 import org.koin.core.KoinApplication
 
 fun KoinApplication.applyModules() {
@@ -19,4 +20,5 @@ fun KoinApplication.applyModules() {
     // feature
     modules(homeModule)
     modules(repoModule)
+    modules(settingModule)
 }

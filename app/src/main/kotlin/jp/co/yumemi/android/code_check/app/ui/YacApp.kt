@@ -18,6 +18,8 @@ fun YacApp(
     KoinContext {
         YacTheme(
             themeConfig = userData.themeConfig,
+            themeColorConfig = userData.themeColorConfig,
+            enableDynamicTheme = userData.isUseDynamicColor,
             windowWidthSize = windowWidthSize,
         ) {
             YacNavHost(

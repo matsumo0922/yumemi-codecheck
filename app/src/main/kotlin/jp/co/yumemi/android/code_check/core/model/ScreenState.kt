@@ -17,10 +17,10 @@ sealed interface ScreenState<out T> {
     ) : ScreenState<T>
 }
 
-fun <T> ScreenState<T>.updateWhenIdle(action: (T) -> T): ScreenState<T> {
+suspend fun <T> ScreenState<T>.updateWhenIdle(action: suspend (T) -> T): ScreenState<T> {
     return if (this is ScreenState.Idle) ScreenState.Idle(action(data)) else this
 }
 
-fun <T> StateFlow<ScreenState<T>>.updateWhenIdle(action: (T) -> T): ScreenState<T> {
+suspend fun <T> StateFlow<ScreenState<T>>.updateWhenIdle(action: suspend (T) -> T): ScreenState<T> {
     return this.value.updateWhenIdle(action)
 }
