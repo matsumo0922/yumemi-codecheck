@@ -85,12 +85,12 @@ GitHub リリースにて最新のコードおよび APK を配布していま�
 ## Screenshots
 #### Medium screen
 <p align="center">
-    <img src="docs/screenshots_medium.png" width="2048" alt="screenshots">
+    <img src="docs/screenshots_medium.png" width="4096" alt="medium screen screenshots">
 </p>
 
 #### Expanded screen
 <p align="center">
-    <img src="docs/screenshots_expanded.png" width="2048" alt="screenshots">
+    <img src="docs/screenshots_expanded.png" width="4096" alt="expanded screen screenshots">
 </p>
 
 ## Architecture
