@@ -81,12 +81,6 @@ keyAlias=key0
 
 #### Not Ready...
 
-- リポジトリ
-  - 詳細検索
-  - 検索結果のソートおよびフィルター
-  - issue の表示
-  - PR の表示
-  - ReadMe の適切な表示
 - KMP
   - compose-multiplatform を用いた iOS および Desktop への展開
 
