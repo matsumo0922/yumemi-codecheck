@@ -53,6 +53,14 @@ GitHub リリースにて最新のコードおよび APK を配布していま�
 - targetSdk: 34
 - compileSdk: 34
 
+※ リリースビルドでの動作確認を行う場合は、local.properties に 以下のように変数を設定してください。
+
+```properties
+storePassword=yumemi
+keyPassword=yumemi
+keyAlias=key0
+```
+
 ## Feature
 #### Ready!!
 
@@ -73,12 +81,6 @@ GitHub リリースにて最新のコードおよび APK を配布していま�
 
 #### Not Ready...
 
-- リポジトリ
-  - 詳細検索
-  - 検索結果のソートおよびフィルター
-  - issue の表示
-  - PR の表示
-  - ReadMe の適切な表示
 - KMP
   - compose-multiplatform を用いた iOS および Desktop への展開
 
@@ -193,6 +195,7 @@ Public License instead of this License.  But first, please read
 
 <details>
 <summary>オリジナル ReadMe (yumemi-android-engineer-code-check)</summary>
+
 # 株式会社ゆめみ Android エンジニアコードチェック課題
 
 ## 概要

@@ -21,7 +21,6 @@ import jp.co.yumemi.android.code_check.core.ui.components.LoadingView
 fun <T> AsyncLoadContents(
     screenState: ScreenState<T>,
     modifier: Modifier = Modifier,
-    otherModifier: Modifier = modifier,
     containerColor: Color = MaterialTheme.colorScheme.surface,
     cornerShape: RoundedCornerShape = RoundedCornerShape(0.dp),
     retryAction: () -> Unit = {},
@@ -42,12 +41,12 @@ fun <T> AsyncLoadContents(
             }
             is ScreenState.Loading -> {
                 LoadingView(
-                    modifier = otherModifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
             is ScreenState.Error -> {
                 ErrorView(
-                    modifier = otherModifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     errorState = state,
                     retryAction = retryAction,
                 )

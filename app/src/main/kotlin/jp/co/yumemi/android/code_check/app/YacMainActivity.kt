@@ -27,9 +27,9 @@ class YacMainActivity : ComponentActivity(), KoinComponent {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         val splashScreen = installSplashScreen()
+
+        super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
 
@@ -42,6 +42,9 @@ class YacMainActivity : ComponentActivity(), KoinComponent {
             ) { uiState ->
                 val windowSize = calculateWindowSizeClass(this)
                 val isDarkTheme = shouldUseDarkTheme(uiState.userData.themeConfig)
+
+                val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
+                val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)
 
                 DisposableEffect(isDarkTheme) {
                     enableEdgeToEdge(
@@ -62,6 +65,3 @@ class YacMainActivity : ComponentActivity(), KoinComponent {
         }
     }
 }
-
-private val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
-private val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)

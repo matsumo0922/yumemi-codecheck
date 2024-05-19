@@ -4,6 +4,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,18 +19,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -35,14 +36,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
-import jp.co.yumemi.android.code_check.core.ui.theme.LocalWindowWidthSize
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import me.matsumo.yumemi.codecheck.R
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalAnimationGraphicsApi::class)
 @Composable
 internal fun HomeSearchTopAppBar(
     query: String,
@@ -54,8 +54,14 @@ internal fun HomeSearchTopAppBar(
     onUpdateQuery: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val windowWidthSize = LocalWindowWidthSize.current
+    val image = AnimatedImageVector.animatedVectorResource(R.drawable.av_drawer_to_arrow)
+
+    val (isEnd, setEnd) = remember { mutableStateOf(false) }
     val (isActive, setActive) = remember { mutableStateOf(false) }
+
+    LaunchedEffect(isActive) {
+        setEnd.invoke(isActive)
+    }
 
     SearchBar(
         modifier = modifier,
@@ -82,11 +88,7 @@ internal fun HomeSearchTopAppBar(
                             onClickDrawerMenu.invoke()
                         }
                     },
-                imageVector = if (isActive) {
-                    Icons.AutoMirrored.Filled.ArrowBack
-                } else {
-                    if (windowWidthSize != WindowWidthSizeClass.Expanded) Icons.Default.Menu else Icons.Default.Search
-                },
+                painter = rememberAnimatedVectorPainter(image, isEnd),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
