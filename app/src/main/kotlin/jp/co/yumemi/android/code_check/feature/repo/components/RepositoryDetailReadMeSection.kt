@@ -17,16 +17,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.fleeksoft.ksoup.Ksoup
+import com.multiplatform.webview.request.RequestInterceptor
+import com.multiplatform.webview.request.WebRequest
+import com.multiplatform.webview.request.WebRequestInterceptResult
 import com.multiplatform.webview.web.WebView
+import com.multiplatform.webview.web.WebViewNavigator
+import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
 import jp.co.yumemi.android.code_check.core.extensions.colorToHexString
 
 @Composable
 internal fun RepositoryDetailReadMeSection(
     readMeHtml: String,
+    onClickWeb: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val webViewState = rememberWebViewStateWithHTMLData(changeHtmlTextColor(readMeHtml))
+    val webViewNavigator = rememberWebViewNavigator(
+        requestInterceptor = object : RequestInterceptor {
+            override fun onInterceptUrlRequest(request: WebRequest, navigator: WebViewNavigator): WebRequestInterceptResult {
+                onClickWeb.invoke(request.url)
+                return WebRequestInterceptResult.Reject
+            }
+        }
+    )
 
     webViewState.webSettings.apply {
         isJavaScriptEnabled = true
@@ -50,6 +64,7 @@ internal fun RepositoryDetailReadMeSection(
         WebView(
             modifier = Modifier.fillMaxWidth(),
             state = webViewState,
+            navigator = webViewNavigator,
         )
     }
 }

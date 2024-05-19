@@ -38,6 +38,7 @@ internal fun RepositoryDetailDefaultScreen(
             RepositoryDetailReadMeSection(
                 modifier = Modifier.fillMaxWidth(),
                 readMeHtml = readMeHtml,
+                onClickWeb = onClickWeb,
             )
         }
     }

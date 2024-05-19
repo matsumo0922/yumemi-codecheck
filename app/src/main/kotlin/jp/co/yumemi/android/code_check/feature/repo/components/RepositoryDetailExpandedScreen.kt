@@ -39,6 +39,7 @@ internal fun RepositoryDetailExpandedScreen(
                 .weight(2f)
                 .fillMaxHeight(),
             readMeHtml = readMeHtml,
+            onClickWeb = onClickWeb,
         )
     }
 }

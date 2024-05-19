@@ -55,7 +55,7 @@ coil3 = "3.0.0-alpha06"
 uuid = "0.8.2"
 ksoup = "0.1.2"
 twitterComposeRule = "0.0.26"
-composeWebView = "1.9.7"
+composeWebView = "1.9.8"
 libraries = "11.1.4"
 
 # Debugs
