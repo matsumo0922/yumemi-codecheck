@@ -20,7 +20,7 @@ yumemi-codecheck は 株式会社ゆめみ様の Android エンジニア用コ�
 <hr>
 
 <p align="center">
-    <img src="docs/screenshots.png" width="2048" alt="screenshots">
+    <img src="docs/screenshots_compact.png" width="2048" alt="screenshots">
 </p>
 
 
@@ -69,6 +69,7 @@ GitHub リリースにて最新のコードおよび APK を配布していま�
   - ローカライズ（日本語 / 英語）
   - テーマカラーの変更
   - ダイナミックカラーの対応 (Android 12 以上)
+  - Foldable, タブレット, デスクトップなどの大画面デバイスへの対応
 
 #### Not Ready...
 
@@ -80,6 +81,17 @@ GitHub リリースにて最新のコードおよび APK を配布していま�
   - ReadMe の適切な表示
 - KMP
   - compose-multiplatform を用いた iOS および Desktop への展開
+
+## Screenshots
+#### Medium screen
+<p align="center">
+    <img src="docs/screenshots_medium.png" width="2048" alt="screenshots">
+</p>
+
+#### Expanded screen
+<p align="center">
+    <img src="docs/screenshots_expanded.png" width="2048" alt="screenshots">
+</p>
 
 ## Architecture
 
