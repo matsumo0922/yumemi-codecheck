@@ -14,7 +14,7 @@ fun NavController.navigateToHomeFavorite(navOptions: NavOptions? = null) {
     this.navigate(HomeFavoriteRoute, navOptions)
 }
 
-fun NavGraphBuilder.homeScreenFavorite(
+fun NavGraphBuilder.homeFavoriteScreen(
     openDrawer: () -> Unit,
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
 ) {

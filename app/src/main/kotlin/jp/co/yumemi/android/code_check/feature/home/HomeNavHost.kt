@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.ui.animation.NavigateAnimation
-import jp.co.yumemi.android.code_check.feature.home.favorite.homeScreenFavorite
+import jp.co.yumemi.android.code_check.feature.home.favorite.homeFavoriteScreen
 import jp.co.yumemi.android.code_check.feature.home.search.HomeSearchRoute
 import jp.co.yumemi.android.code_check.feature.home.search.homeSearchScreen
 import jp.co.yumemi.android.code_check.feature.home.trend.homeTrendScreen
@@ -36,7 +36,7 @@ fun HomeNavHost(
             navigateToRepositoryDetail = navigateToRepositoryDetail,
         )
 
-        homeScreenFavorite(
+        homeFavoriteScreen(
             openDrawer = openDrawer,
             navigateToRepositoryDetail = navigateToRepositoryDetail,
         )

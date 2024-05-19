@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
@@ -40,7 +41,10 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
+import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
 import jp.co.yumemi.android.code_check.core.ui.extensions.getAnnotatedString
+import jp.co.yumemi.android.code_check.core.ui.previews.GhRepositoryDetailPreviewParameter
+import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import jp.co.yumemi.android.code_check.core.ui.theme.size
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
@@ -275,5 +279,21 @@ private fun Instant.toRelativeTimeString(): String {
         duration.inWholeHours > 0 -> stringResource(R.string.unit_hour_before, duration.inWholeHours)
         duration.inWholeMinutes > 0 -> stringResource(R.string.unit_minute_before, duration.inWholeMinutes)
         else -> stringResource(R.string.unit_second_before, duration.inWholeSeconds)
+    }
+}
+
+@ComponentPreviews
+@Composable
+private fun RepositoryItemPreview(
+    @PreviewParameter(GhRepositoryDetailPreviewParameter::class) repositoryDetail: GhRepositoryDetail,
+) {
+    YacTheme {
+        RepositoryItem(
+            isFavorite = false,
+            item = repositoryDetail,
+            onClickRepository = {},
+            onClickAddFavorite = {},
+            onClickRemoveFavorite = {},
+        )
     }
 }
