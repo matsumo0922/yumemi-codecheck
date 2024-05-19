@@ -18,12 +18,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.core.model.GhSearchHistory
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
+import jp.co.yumemi.android.code_check.core.ui.theme.LocalWindowWidthSize
 import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -51,6 +54,7 @@ internal fun HomeSearchTopAppBar(
     onUpdateQuery: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val windowWidthSize = LocalWindowWidthSize.current
     val (isActive, setActive) = remember { mutableStateOf(false) }
 
     SearchBar(
@@ -78,7 +82,11 @@ internal fun HomeSearchTopAppBar(
                             onClickDrawerMenu.invoke()
                         }
                     },
-                imageVector = if (isActive) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+                imageVector = if (isActive) {
+                    Icons.AutoMirrored.Filled.ArrowBack
+                } else {
+                    if (windowWidthSize != WindowWidthSizeClass.Expanded) Icons.Default.Menu else Icons.Default.Search
+                },
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )

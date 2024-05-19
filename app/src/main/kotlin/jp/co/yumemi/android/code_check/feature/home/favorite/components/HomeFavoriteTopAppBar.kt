@@ -9,9 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import jp.co.yumemi.android.code_check.core.ui.theme.LocalWindowWidthSize
 import me.matsumo.yumemi.codecheck.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,11 +33,13 @@ internal fun HomeFavoriteTopAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onClickDrawer) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Drawer",
-                )
+            if (LocalWindowWidthSize.current != WindowWidthSizeClass.Expanded) {
+                IconButton(onClick = onClickDrawer) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Drawer",
+                    )
+                }
             }
         },
         scrollBehavior = scrollBehavior,

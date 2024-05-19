@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,10 +41,10 @@ internal fun RepositoryDetailReadMeSection(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        HorizontalDivider()
-
         ReadMeItem(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth(),
         )
 
         WebView(

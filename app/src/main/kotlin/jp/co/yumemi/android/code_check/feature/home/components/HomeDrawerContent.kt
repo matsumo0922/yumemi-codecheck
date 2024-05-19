@@ -16,12 +16,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
+import androidx.compose.material.icons.automirrored.outlined.TrendingUp
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -69,7 +70,7 @@ fun HomeDrawerContent(
             isSelected = currentDestination.isHomeDestinationInHierarchy(HomeDestination.SEARCH),
             label = stringResource(R.string.navigation_search),
             icon = Icons.Outlined.Home,
-            selectedIcon = Icons.Default.Search,
+            selectedIcon = Icons.Default.Home,
             onClick = { navigateToLibraryScreen.invoke(HomeDestination.SEARCH) },
         )
 
@@ -77,7 +78,7 @@ fun HomeDrawerContent(
             state = state,
             isSelected = currentDestination.isHomeDestinationInHierarchy(HomeDestination.TRENDING),
             label = stringResource(R.string.navigation_trending),
-            icon = Icons.Outlined.Search,
+            icon = Icons.AutoMirrored.Outlined.TrendingUp,
             selectedIcon = Icons.AutoMirrored.Filled.TrendingUp,
             onClick = { navigateToLibraryScreen.invoke(HomeDestination.TRENDING) },
         )
@@ -86,7 +87,7 @@ fun HomeDrawerContent(
             state = state,
             isSelected = currentDestination.isHomeDestinationInHierarchy(HomeDestination.FAVORITE),
             label = stringResource(R.string.navigation_favorite),
-            icon = Icons.Outlined.Search,
+            icon = Icons.Outlined.FavoriteBorder,
             selectedIcon = Icons.Default.Favorite,
             onClick = { navigateToLibraryScreen.invoke(HomeDestination.FAVORITE) },
         )
