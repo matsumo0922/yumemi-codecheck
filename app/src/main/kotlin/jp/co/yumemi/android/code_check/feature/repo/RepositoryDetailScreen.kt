@@ -2,11 +2,11 @@ package jp.co.yumemi.android.code_check.feature.repo
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,9 +17,10 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
-import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailReadMeSection
+import jp.co.yumemi.android.code_check.core.ui.theme.LocalWindowWidthSize
+import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailDefaultScreen
+import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailExpandedScreen
 import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailTopAppBar
-import jp.co.yumemi.android.code_check.feature.repo.components.RepositoryDetailTopSection
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -87,25 +88,24 @@ private fun RepositoryDetailScreen(
             )
         },
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = it,
-        ) {
-            item {
-                RepositoryDetailTopSection(
-                    modifier = Modifier.fillMaxWidth(),
-                    repositoryDetail = repositoryDetail,
-                    language = language,
-                    onClickLink = onClickWeb,
-                )
-            }
-
-            item {
-                RepositoryDetailReadMeSection(
-                    modifier = Modifier.fillMaxWidth(),
-                    readMeHtml = readMeHtml,
-                )
-            }
+        if (LocalWindowWidthSize.current == WindowWidthSizeClass.Expanded) {
+            RepositoryDetailExpandedScreen(
+                modifier = Modifier.fillMaxSize(),
+                repositoryDetail = repositoryDetail,
+                readMeHtml = readMeHtml,
+                language = language,
+                contentPadding = it,
+                onClickWeb = onClickWeb,
+            )
+        } else {
+            RepositoryDetailDefaultScreen(
+                modifier = Modifier.fillMaxSize(),
+                repositoryDetail = repositoryDetail,
+                readMeHtml = readMeHtml,
+                language = language,
+                contentPadding = it,
+                onClickWeb = onClickWeb,
+            )
         }
     }
 }
