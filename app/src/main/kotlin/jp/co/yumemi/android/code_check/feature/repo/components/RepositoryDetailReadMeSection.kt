@@ -39,7 +39,7 @@ internal fun RepositoryDetailReadMeSection(
                 onClickWeb.invoke(request.url)
                 return WebRequestInterceptResult.Reject
             }
-        }
+        },
     )
 
     webViewState.webSettings.apply {
