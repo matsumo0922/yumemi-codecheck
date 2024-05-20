@@ -51,6 +51,8 @@
     <string name="search_empty_message">Let\'s search for repositories</string>
     <string name="search_remove_history_title">Remove history</string>
     <string name="search_remove_history_message">Remove %1$s from search history?</string>
+    <string name="search_order">Order</string>
+    <string name="search_sort">Sort</string>
 
     <!-- Favorite -->
     <string name="favorite_title">Favorites</string>
