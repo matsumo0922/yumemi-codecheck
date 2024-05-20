@@ -28,6 +28,8 @@ class UserDataStore(
             setUseDynamicColor(data.isUseDynamicColor)
             setTrendSince(data.trendSince)
             setTrendLanguage(data.trendLanguage)
+            setSearchOrder(data.searchOrder)
+            setSearchSort(data.searchSort)
         }
     }
 
@@ -70,6 +72,18 @@ class UserDataStore(
     suspend fun setTrendLanguage(trendLanguage: String) {
         preference.edit {
             it[stringPreferencesKey(UserData::trendLanguage.name)] = trendLanguage
+        }
+    }
+
+    suspend fun setSearchOrder(searchOrder: String) {
+        preference.edit {
+            it[stringPreferencesKey(UserData::searchOrder.name)] = searchOrder
+        }
+    }
+
+    suspend fun setSearchSort(searchSort: String) {
+        preference.edit {
+            it[stringPreferencesKey(UserData::searchSort.name)] = searchSort
         }
     }
 }

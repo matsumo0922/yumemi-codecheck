@@ -1,7 +1,7 @@
 [versions]
 # Application
-versionName = "1.0.4"
-versionCode = "5"
+versionName = "1.0.5"
+versionCode = "6"
 
 # SDK
 minSdk = "23"
@@ -131,7 +131,7 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-compose-ui-binding = { module = "androidx.compose.ui:ui-viewbinding" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" } # https://issuetracker.google.com/issues/326278117?pli=1
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "1.7.0-beta01" } # https://issuetracker.google.com/issues/326278117?pli=1
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics" }
 androidx-compose-material = { module = "androidx.compose.material:material" }

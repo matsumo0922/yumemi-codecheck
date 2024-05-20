@@ -51,6 +51,9 @@
     <string name="search_empty_message">リポジトリを検索しましょう</string>
     <string name="search_remove_history_title">履歴の削除</string>
     <string name="search_remove_history_message">%1$sを検索履歴から削除しますか？</string>
+    <string name="search_order">順序</string>
+    <string name="search_sort">並び替え</string>
+
 
     <!-- Favorite -->
     <string name="favorite_title">お気に入り</string>

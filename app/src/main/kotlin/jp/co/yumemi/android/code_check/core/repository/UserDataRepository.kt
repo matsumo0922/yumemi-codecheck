@@ -2,6 +2,8 @@ package jp.co.yumemi.android.code_check.core.repository
 
 import jp.co.yumemi.android.code_check.core.datastore.UserDataStore
 import jp.co.yumemi.android.code_check.core.model.GhLanguage
+import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.ThemeColorConfig
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
@@ -19,6 +21,8 @@ interface UserDataRepository {
     suspend fun setUseDynamicColor(useDynamicColor: Boolean)
     suspend fun setTrendLanguage(language: GhLanguage?)
     suspend fun setTrendSince(since: GhTrendSince)
+    suspend fun setSearchOrder(order: GhOrder?)
+    suspend fun setSearchSort(sort: GhRepositorySort?)
 }
 
 class UserDataRepositoryImpl(
@@ -57,5 +61,13 @@ class UserDataRepositoryImpl(
 
     override suspend fun setTrendSince(since: GhTrendSince) {
         userDataStore.setTrendSince(since.value)
+    }
+
+    override suspend fun setSearchOrder(order: GhOrder?) {
+        userDataStore.setSearchOrder(order?.value.orEmpty())
+    }
+
+    override suspend fun setSearchSort(sort: GhRepositorySort?) {
+        userDataStore.setSearchSort(sort?.value.orEmpty())
     }
 }

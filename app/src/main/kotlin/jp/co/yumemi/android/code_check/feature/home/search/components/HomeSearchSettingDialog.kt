@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.feature.home.trend.components
+package jp.co.yumemi.android.code_check.feature.home.search.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,24 +12,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,38 +33,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import jp.co.yumemi.android.code_check.core.common.extensions.toColor
-import jp.co.yumemi.android.code_check.core.model.GhLanguage
-import jp.co.yumemi.android.code_check.core.model.GhTrendSince
-import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews
-import jp.co.yumemi.android.code_check.core.ui.theme.YacTheme
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
+import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import me.matsumo.yumemi.codecheck.R
 
 @Composable
-internal fun HomeTrendSettingDialog(
-    selectedSince: GhTrendSince,
-    selectedLanguage: GhLanguage?,
-    allLanguages: ImmutableList<GhLanguage>,
-    onClickUpdate: (GhTrendSince, GhLanguage?) -> Unit,
+internal fun HomeSearchSettingDialog(
+    selectedOrder: GhOrder?,
+    selectedSort: GhRepositorySort?,
+    onClickUpdateSetting: (GhOrder?, GhRepositorySort?) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val (since, setSince) = remember { mutableStateOf(selectedSince) }
-    val (language, setLanguage) = remember { mutableStateOf(selectedLanguage) }
-    val (searchQuery, onUpdateSearchQuery) = remember { mutableStateOf(selectedLanguage?.title.orEmpty()) }
-    val filteredLanguages = remember { mutableStateListOf<GhLanguage>() }
-
-    LaunchedEffect(searchQuery) {
-        filteredLanguages.clear()
-
-        if (searchQuery.isNotBlank()) {
-            filteredLanguages.addAll(
-                allLanguages.filter { it.title.contains(searchQuery, ignoreCase = true) }.take(10),
-            )
-        }
-    }
+    val (order, setOrder) = remember { mutableStateOf(selectedOrder) }
+    val (sort, setSort) = remember { mutableStateOf(selectedSort) }
 
     Dialog(onDismissRequest = onDismiss) {
         Column(
@@ -81,22 +57,19 @@ internal fun HomeTrendSettingDialog(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            SinceSection(
-                selectedSince = since,
-                onClickSince = setSince,
+            OrderSection(
+                modifier = Modifier.fillMaxWidth(),
+                selectedOrder = order,
+                onClickOrder = {
+                    setOrder.invoke(if (it == order) null else it)
+                },
             )
 
-            LanguagesSection(
-                searchQuery = searchQuery,
-                languages = filteredLanguages.toImmutableList(),
-                selectedLanguage = language,
-                onUpdateSearchQuery = onUpdateSearchQuery,
-                onClickLanguage = {
-                    if (language == it) {
-                        setLanguage.invoke(null)
-                    } else {
-                        setLanguage.invoke(it)
-                    }
+            SortSection(
+                modifier = Modifier.fillMaxWidth(),
+                selectedSort = sort,
+                onClickSort = {
+                    setSort.invoke(if (it == sort) null else it)
                 },
             )
 
@@ -120,7 +93,7 @@ internal fun HomeTrendSettingDialog(
                     shape = RoundedCornerShape(4.dp),
                     colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                     onClick = {
-                        onClickUpdate.invoke(since, language)
+                        onClickUpdateSetting.invoke(order, sort)
                         onDismiss.invoke()
                     },
                 ) {
@@ -133,9 +106,9 @@ internal fun HomeTrendSettingDialog(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SinceSection(
-    selectedSince: GhTrendSince,
-    onClickSince: (GhTrendSince) -> Unit,
+private fun OrderSection(
+    selectedOrder: GhOrder?,
+    onClickOrder: (GhOrder) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -149,13 +122,13 @@ private fun SinceSection(
         ) {
             Icon(
                 modifier = Modifier.size(24.dp),
-                imageVector = Icons.Default.CalendarMonth,
+                imageVector = Icons.Default.SwapVert,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )
 
             Text(
-                text = stringResource(R.string.trending_since),
+                text = stringResource(R.string.search_order),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -166,17 +139,16 @@ private fun SinceSection(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            for (since in GhTrendSince.entries) {
+            for (order in GhOrder.entries) {
                 FilterChip(
-                    selected = (selectedSince == since),
-                    onClick = { onClickSince.invoke(since) },
+                    selected = (selectedOrder == order),
+                    onClick = { onClickOrder.invoke(order) },
                     label = {
-                        Text(since.value)
+                        Text(order.value)
                     },
                     leadingIcon = {
-                        if (selectedSince == since) {
+                        if (selectedOrder == order) {
                             Icon(
                                 modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 imageVector = Icons.Default.Done,
@@ -192,12 +164,9 @@ private fun SinceSection(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun LanguagesSection(
-    searchQuery: String,
-    languages: ImmutableList<GhLanguage>,
-    selectedLanguage: GhLanguage?,
-    onUpdateSearchQuery: (String) -> Unit,
-    onClickLanguage: (GhLanguage) -> Unit,
+private fun SortSection(
+    selectedSort: GhRepositorySort?,
+    onClickSort: (GhRepositorySort) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -211,14 +180,13 @@ private fun LanguagesSection(
         ) {
             Icon(
                 modifier = Modifier.size(24.dp),
-                imageVector = Icons.Default.Language,
+                imageVector = Icons.AutoMirrored.Filled.Sort,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )
 
             Text(
-                modifier = Modifier.weight(1f),
-                text = stringResource(R.string.trending_language),
+                text = stringResource(R.string.search_sort),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -226,38 +194,19 @@ private fun LanguagesSection(
 
         HorizontalDivider()
 
-        TextField(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .fillMaxWidth(),
-            value = searchQuery,
-            onValueChange = onUpdateSearchQuery,
-            placeholder = { Text(stringResource(R.string.common_search)) },
-            trailingIcon = {
-                if (searchQuery.isNotEmpty()) {
-                    IconButton(onClick = { onUpdateSearchQuery.invoke("") }) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = null,
-                        )
-                    }
-                }
-            },
-        )
-
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            for (language in languages) {
+            for (order in GhRepositorySort.entries) {
                 FilterChip(
-                    selected = (selectedLanguage == language),
-                    onClick = { onClickLanguage.invoke(language) },
+                    selected = (selectedSort == order),
+                    onClick = { onClickSort.invoke(order) },
                     label = {
-                        Text(language.title)
+                        Text(order.value)
                     },
                     leadingIcon = {
-                        if (selectedLanguage == language) {
+                        if (selectedSort == order) {
                             Icon(
                                 modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 imageVector = Icons.Default.Done,
@@ -268,34 +217,5 @@ private fun LanguagesSection(
                 )
             }
         }
-    }
-}
-
-@ComponentPreviews
-@Composable
-private fun HomeTrendSettingDialogPreview() {
-    val languages = persistentListOf(
-        GhLanguage("#A97BFF".toColor(), "kotlin", "Kotlin", ""),
-        GhLanguage("#FFA07A".toColor(), "java", "Java", ""),
-        GhLanguage("#F05138".toColor(), "swift", "Swift", ""),
-        GhLanguage("#FFD700".toColor(), "javascript", "JavaScript", ""),
-        GhLanguage("#FF69B4".toColor(), "ruby", "Ruby", ""),
-        GhLanguage("#FF6347".toColor(), "python", "Python", ""),
-        GhLanguage("#FF4500".toColor(), "c++", "C++", ""),
-        GhLanguage("#FF1493".toColor(), "c#", "C#", ""),
-        GhLanguage("#FF0000".toColor(), "c", "C", ""),
-        GhLanguage("#D3D3D3".toColor(), "go", "Go", ""),
-        GhLanguage("#808080".toColor(), "shell", "Shell", ""),
-        GhLanguage("#000000".toColor(), "other", "Other", ""),
-    )
-
-    YacTheme {
-        HomeTrendSettingDialog(
-            selectedSince = GhTrendSince.DAILY,
-            selectedLanguage = languages.first(),
-            allLanguages = languages,
-            onClickUpdate = { _, _ -> },
-            onDismiss = {},
-        )
     }
 }

@@ -11,4 +11,17 @@ enum class GhRepositorySort(val value: String) {
     FORKS("forks"),
     HELP_WANTED_ISSUES("help-wanted-issues"),
     UPDATED("updated"),
+    ;
+
+    companion object {
+        fun fromValue(value: String): GhRepositorySort? {
+            return when (value.lowercase()) {
+                "stars" -> STARS
+                "forks" -> FORKS
+                "help-wanted-issues" -> HELP_WANTED_ISSUES
+                "updated" -> UPDATED
+                else -> null
+            }
+        }
+    }
 }
