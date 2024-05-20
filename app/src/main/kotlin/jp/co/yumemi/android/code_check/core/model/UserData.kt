@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 data class UserData(
     val themeConfig: ThemeConfig,
     val themeColorConfig: ThemeColorConfig,
+    val trendSince: String,
+    val trendLanguage: String,
     val isAgreedPrivacyPolicy: Boolean,
     val isAgreedTermsOfService: Boolean,
     val isUseDynamicColor: Boolean,
@@ -15,6 +17,8 @@ data class UserData(
             return UserData(
                 themeConfig = ThemeConfig.System,
                 themeColorConfig = ThemeColorConfig.Blue,
+                trendSince = GhTrendSince.DAILY.value,
+                trendLanguage = "",
                 isAgreedPrivacyPolicy = false,
                 isAgreedTermsOfService = false,
                 isUseDynamicColor = false,

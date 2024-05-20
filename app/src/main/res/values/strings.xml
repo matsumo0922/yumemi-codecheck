@@ -20,11 +20,8 @@
     <string name="common_details">Details</string>
     <string name="common_delete">Delete</string>
     <string name="common_completed">Completed</string>
-    <string name="common_download">Download</string>
-    <string name="common_downloaded">Downloaded</string>
     <string name="common_see_more">See more</string>
-    <string name="common_block">Block</string>
-    <string name="common_unblock">Unblock</string>
+    <string name="common_search">Search</string>
 
     <!-- Common Error -->
     <string name="error_executed">An error has occurred</string>
@@ -64,6 +61,8 @@
     <string name="trending_title">Trending</string>
     <string name="trending_empty_title">No trending repositories</string>
     <string name="trending_empty_message">Please wait for the next update</string>
+    <string name="trending_language">Language</string>
+    <string name="trending_since">Since</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

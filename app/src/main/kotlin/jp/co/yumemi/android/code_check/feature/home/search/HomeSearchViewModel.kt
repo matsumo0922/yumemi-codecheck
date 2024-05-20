@@ -68,7 +68,7 @@ class HomeSearchViewModel(
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
                     searchRepositoriesPaging = emptyPaging(),
-                    languages = ghApiRepository.getLanguageColors(),
+                    languages = ghApiRepository.getLanguages(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },

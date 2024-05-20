@@ -54,7 +54,7 @@ class HomeFavoriteViewModel(
                 HomeFavoriteUiState(
                     favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
-                    languages = ghApiRepository.getLanguageColors(),
+                    languages = ghApiRepository.getLanguages(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },

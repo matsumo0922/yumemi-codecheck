@@ -20,6 +20,7 @@ import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.GhSearchUsers
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
+import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
 import jp.co.yumemi.android.code_check.core.model.GhUserSort
 import jp.co.yumemi.android.code_check.core.model.entity.GhLanguageEntity
@@ -52,7 +53,7 @@ interface GhApiRepository {
     // search
     suspend fun searchUsers(query: String, sort: GhUserSort?, order: GhOrder?, page: Int): GhPaging<GhSearchUsers>
     suspend fun searchRepositories(query: String, sort: GhRepositorySort?, order: GhOrder?, page: Int): GhPaging<GhSearchRepositories>
-    suspend fun searchTrendRepositories(): List<GhTrendRepository>
+    suspend fun searchTrendRepositories(since: GhTrendSince, language: GhLanguage?): List<GhTrendRepository>
 
     // details
     suspend fun getUserDetail(userName: String): GhUserDetail
@@ -62,7 +63,7 @@ interface GhApiRepository {
     suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String
 
     // others
-    suspend fun getLanguageColors(): List<GhLanguage>
+    suspend fun getLanguages(): List<GhLanguage>
 }
 
 class GhApiRepositoryImpl(
@@ -162,8 +163,13 @@ class GhApiRepositoryImpl(
         }
     }
 
-    override suspend fun searchTrendRepositories(): List<GhTrendRepository> = withContext(ioDispatcher) {
-        client.get("https://api.gitterapp.com/repositories", mapOf("since" to "weekly")).parse<List<GhTrendRepositoryEntity>>()!!.translate()
+    override suspend fun searchTrendRepositories(since: GhTrendSince, language: GhLanguage?): List<GhTrendRepository> = withContext(ioDispatcher) {
+        val params = mapOf(
+            "since" to since.value,
+            "language" to language?.title,
+        )
+
+        client.get("https://api.gitterapp.com/repositories", params).parse<List<GhTrendRepositoryEntity>>()!!.translate()
     }
 
     override suspend fun getUserDetail(userName: String): GhUserDetail = withContext(ioDispatcher) {
@@ -202,7 +208,7 @@ class GhApiRepositoryImpl(
         document.select("meta[property=og:image]").first()?.attr("content")!!
     }
 
-    override suspend fun getLanguageColors(): List<GhLanguage> = withContext(ioDispatcher) {
+    override suspend fun getLanguages(): List<GhLanguage> = withContext(ioDispatcher) {
         cachedLanguageColors ?: context.resources.openRawResource(R.raw.github_colors).use { inputStream ->
             val serializer = ListSerializer(GhLanguageEntity.serializer())
             val entities = Json.decodeFromString(serializer, inputStream.bufferedReader().readText())

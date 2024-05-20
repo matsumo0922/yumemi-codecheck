@@ -2,6 +2,7 @@ package jp.co.yumemi.android.code_check.feature.home.trend.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +22,7 @@ import me.matsumo.yumemi.codecheck.R
 internal fun HomeTrendTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior?,
     onClickDrawer: () -> Unit,
+    onClickSetting: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -40,6 +42,14 @@ internal fun HomeTrendTopAppBar(
                         contentDescription = "Drawer",
                     )
                 }
+            }
+        },
+        actions = {
+            IconButton(onClick = onClickSetting) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Setting",
+                )
             }
         },
         scrollBehavior = scrollBehavior,
