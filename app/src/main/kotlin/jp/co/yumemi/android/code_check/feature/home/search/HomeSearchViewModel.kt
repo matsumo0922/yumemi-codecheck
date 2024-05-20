@@ -131,7 +131,7 @@ class HomeSearchViewModel(
         }
     }
 
-    fun updateSetting(order: GhOrder, sort: GhRepositorySort) {
+    fun updateSetting(order: GhOrder?, sort: GhRepositorySort?) {
         viewModelScope.launch {
             val query = (_screenState.value as? ScreenState.Idle)?.data?.query.orEmpty()
 
@@ -151,6 +151,6 @@ data class HomeSearchUiState(
     val favoriteRepoNames: List<GhRepositoryName>,
     val searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
     val languages: List<GhLanguage>,
-    val selectedOrder: GhOrder,
-    val selectedSort: GhRepositorySort,
+    val selectedOrder: GhOrder?,
+    val selectedSort: GhRepositorySort?,
 )

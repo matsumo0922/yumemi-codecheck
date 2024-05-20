@@ -39,9 +39,9 @@ import me.matsumo.yumemi.codecheck.R
 
 @Composable
 internal fun HomeSearchSettingDialog(
-    selectedOrder: GhOrder,
-    selectedSort: GhRepositorySort,
-    onClickUpdateSetting: (GhOrder, GhRepositorySort) -> Unit,
+    selectedOrder: GhOrder?,
+    selectedSort: GhRepositorySort?,
+    onClickUpdateSetting: (GhOrder?, GhRepositorySort?) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val (order, setOrder) = remember { mutableStateOf(selectedOrder) }
@@ -60,13 +60,17 @@ internal fun HomeSearchSettingDialog(
             OrderSection(
                 modifier = Modifier.fillMaxWidth(),
                 selectedOrder = order,
-                onClickOrder = { setOrder.invoke(it) },
+                onClickOrder = {
+                    setOrder.invoke(if (it == order) null else it)
+                },
             )
 
             SortSection(
                 modifier = Modifier.fillMaxWidth(),
                 selectedSort = sort,
-                onClickSort = { setSort.invoke(it) },
+                onClickSort = {
+                    setSort.invoke(if (it == sort) null else it)
+                },
             )
 
             Row(
@@ -103,7 +107,7 @@ internal fun HomeSearchSettingDialog(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun OrderSection(
-    selectedOrder: GhOrder,
+    selectedOrder: GhOrder?,
     onClickOrder: (GhOrder) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -161,7 +165,7 @@ private fun OrderSection(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SortSection(
-    selectedSort: GhRepositorySort,
+    selectedSort: GhRepositorySort?,
     onClickSort: (GhRepositorySort) -> Unit,
     modifier: Modifier = Modifier,
 ) {

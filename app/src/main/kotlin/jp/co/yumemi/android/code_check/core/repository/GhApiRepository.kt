@@ -133,8 +133,8 @@ class GhApiRepositoryImpl(
     ): GhPaging<GhSearchUsers> = withContext(ioDispatcher) {
         val params = mapOf(
             "q" to query,
-            "sort" to sort?.value,
-            "order" to order?.value,
+            "sort" to sort?.value?.lowercase(),
+            "order" to order?.value?.lowercase(),
             "page" to page.toString(),
             "per_page" to ApiClient.PER_PAGE.toString(),
         )
@@ -152,8 +152,8 @@ class GhApiRepositoryImpl(
     ): GhPaging<GhSearchRepositories> = withContext(ioDispatcher) {
         val params = mapOf(
             "q" to query,
-            "sort" to sort?.value,
-            "order" to order?.value,
+            "sort" to sort?.value?.lowercase(),
+            "order" to order?.value?.lowercase(),
             "page" to page.toString(),
             "per_page" to ApiClient.PER_PAGE.toString(),
         )

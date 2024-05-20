@@ -86,8 +86,8 @@ fun HomeSearchRoute(
 @Composable
 private fun HomeSearchScreen(
     query: String,
-    selectedOrder: GhOrder,
-    selectedSort: GhRepositorySort,
+    selectedOrder: GhOrder?,
+    selectedSort: GhRepositorySort?,
     suggestions: ImmutableList<GhSearchHistory>,
     searchHistories: ImmutableList<GhSearchHistory>,
     searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
@@ -95,7 +95,7 @@ private fun HomeSearchScreen(
     languages: ImmutableList<GhLanguage>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
-    onClickUpdateSetting: (GhOrder, GhRepositorySort) -> Unit,
+    onClickUpdateSetting: (GhOrder?, GhRepositorySort?) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,

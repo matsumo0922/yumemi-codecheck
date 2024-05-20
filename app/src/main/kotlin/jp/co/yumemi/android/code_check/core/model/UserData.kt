@@ -21,7 +21,7 @@ data class UserData(
                 themeColorConfig = ThemeColorConfig.Blue,
                 trendSince = GhTrendSince.DAILY.value,
                 trendLanguage = "",
-                searchOrder = GhOrder.ASC.value,
+                searchOrder = "",
                 searchSort = "",
                 isAgreedPrivacyPolicy = false,
                 isAgreedTermsOfService = false,

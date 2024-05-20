@@ -21,8 +21,8 @@ interface UserDataRepository {
     suspend fun setUseDynamicColor(useDynamicColor: Boolean)
     suspend fun setTrendLanguage(language: GhLanguage?)
     suspend fun setTrendSince(since: GhTrendSince)
-    suspend fun setSearchOrder(order: GhOrder)
-    suspend fun setSearchSort(sort: GhRepositorySort)
+    suspend fun setSearchOrder(order: GhOrder?)
+    suspend fun setSearchSort(sort: GhRepositorySort?)
 }
 
 class UserDataRepositoryImpl(
@@ -63,11 +63,11 @@ class UserDataRepositoryImpl(
         userDataStore.setTrendSince(since.value)
     }
 
-    override suspend fun setSearchOrder(order: GhOrder) {
-        userDataStore.setSearchOrder(order.value)
+    override suspend fun setSearchOrder(order: GhOrder?) {
+        userDataStore.setSearchOrder(order?.value.orEmpty())
     }
 
-    override suspend fun setSearchSort(sort: GhRepositorySort) {
-        userDataStore.setSearchSort(sort.value)
+    override suspend fun setSearchSort(sort: GhRepositorySort?) {
+        userDataStore.setSearchSort(sort?.value.orEmpty())
     }
 }
