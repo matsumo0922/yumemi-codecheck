@@ -33,6 +33,7 @@ import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.LazyPagingItemsLoadContents
 import jp.co.yumemi.android.code_check.core.ui.components.SimpleAlertDialog
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchIdleSection
+import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchSettingDialog
 import jp.co.yumemi.android.code_check.feature.home.search.components.HomeSearchTopAppBar
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -68,12 +69,15 @@ fun HomeSearchRoute(
             searchRepositoriesPaging = it.searchRepositoriesPaging,
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
             languages = it.languages.toImmutableList(),
+            selectedOrder = it.selectedOrder,
+            selectedSort = it.selectedSort,
             onClickDrawerMenu = openDrawer,
             onClickSearch = viewModel::searchRepositories,
             onClickRemoveSearchHistory = viewModel::removeSearchHistory,
             onClickRepository = navigateToRepositoryDetail,
             onClickAddFavorite = viewModel::addFavorite,
             onClickRemoveFavorite = viewModel::removeFavorite,
+            onClickUpdateSetting = viewModel::updateSetting,
             onUpdateQuery = viewModel::updateQuery,
         )
     }
@@ -82,6 +86,8 @@ fun HomeSearchRoute(
 @Composable
 private fun HomeSearchScreen(
     query: String,
+    selectedOrder: GhOrder,
+    selectedSort: GhRepositorySort,
     suggestions: ImmutableList<GhSearchHistory>,
     searchHistories: ImmutableList<GhSearchHistory>,
     searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
@@ -89,6 +95,7 @@ private fun HomeSearchScreen(
     languages: ImmutableList<GhLanguage>,
     onClickDrawerMenu: () -> Unit,
     onClickSearch: (String, GhRepositorySort?, GhOrder?) -> Unit,
+    onClickUpdateSetting: (GhOrder, GhRepositorySort) -> Unit,
     onClickRemoveSearchHistory: (GhSearchHistory) -> Unit,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
@@ -99,6 +106,7 @@ private fun HomeSearchScreen(
     val density = LocalDensity.current
     val repositoriesPager = searchRepositoriesPaging.collectAsLazyPagingItems()
 
+    var isDisplayedSetting by remember { mutableStateOf(false) }
     var removeSearchHistoryItem by remember { mutableStateOf<GhSearchHistory?>(null) }
     var topAppBarHeight by remember { mutableIntStateOf(0) }
 
@@ -116,8 +124,9 @@ private fun HomeSearchScreen(
             suggestions = suggestions,
             searchHistories = searchHistories,
             onClickDrawerMenu = onClickDrawerMenu,
-            onClickSearch = { onClickSearch.invoke(it, null, null) },
+            onClickSearch = { onClickSearch.invoke(it, selectedSort, selectedOrder) },
             onClickRemoveSearchHistory = { removeSearchHistoryItem = it },
+            onClickSort = { isDisplayedSetting = true },
             onUpdateQuery = onUpdateQuery,
         )
 
@@ -159,6 +168,15 @@ private fun HomeSearchScreen(
                 removeSearchHistoryItem = null
             },
             isCaution = true,
+        )
+    }
+
+    if (isDisplayedSetting) {
+        HomeSearchSettingDialog(
+            selectedOrder = selectedOrder,
+            selectedSort = selectedSort,
+            onClickUpdateSetting = onClickUpdateSetting,
+            onDismiss = { isDisplayedSetting = false },
         )
     }
 }

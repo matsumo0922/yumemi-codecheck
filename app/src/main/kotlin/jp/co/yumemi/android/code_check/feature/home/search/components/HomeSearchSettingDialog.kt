@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Button
@@ -134,7 +135,6 @@ private fun OrderSection(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             for (order in GhOrder.entries) {
                 FilterChip(
@@ -176,7 +176,7 @@ private fun SortSection(
         ) {
             Icon(
                 modifier = Modifier.size(24.dp),
-                imageVector = Icons.Default.SwapVert,
+                imageVector = Icons.AutoMirrored.Filled.Sort,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )
@@ -193,7 +193,6 @@ private fun SortSection(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             for (order in GhRepositorySort.entries) {
                 FilterChip(

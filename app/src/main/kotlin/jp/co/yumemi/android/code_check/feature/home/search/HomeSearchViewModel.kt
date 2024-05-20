@@ -18,6 +18,7 @@ import jp.co.yumemi.android.code_check.core.model.updateWhenIdle
 import jp.co.yumemi.android.code_check.core.repository.GhApiRepository
 import jp.co.yumemi.android.code_check.core.repository.GhFavoriteRepository
 import jp.co.yumemi.android.code_check.core.repository.GhSearchHistoryRepository
+import jp.co.yumemi.android.code_check.core.repository.UserDataRepository
 import jp.co.yumemi.android.code_check.core.ui.extensions.emptyPaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +32,7 @@ class HomeSearchViewModel(
     private val ghApiRepository: GhApiRepository,
     private val ghFavoriteRepository: GhFavoriteRepository,
     private val ghSearchHistoryRepository: GhSearchHistoryRepository,
+    private val userDataRepository: UserDataRepository,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow<ScreenState<HomeSearchUiState>>(ScreenState.Loading)
@@ -58,17 +60,23 @@ class HomeSearchViewModel(
         }
     }
 
-    fun fetch() {
+    fun fetch(query: String = "") {
         viewModelScope.launch {
             _screenState.value = ScreenState.Loading
             _screenState.value = suspendRunCatching {
+                val selectedOrder = userDataRepository.userData.first().searchOrder
+                val selectedSort = userDataRepository.userData.first().searchSort
+                val searchHistories = ghSearchHistoryRepository.searchHistories.first()
+
                 HomeSearchUiState(
-                    query = "",
-                    suggestions = ghSearchHistoryRepository.searchHistories.first(),
-                    searchHistories = ghSearchHistoryRepository.searchHistories.first(),
+                    query = query,
+                    suggestions = searchHistories,
+                    searchHistories = searchHistories.filter { it.query.isAnyWordStartsWith(query) },
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
                     searchRepositoriesPaging = emptyPaging(),
                     languages = ghApiRepository.getLanguages(),
+                    selectedOrder = GhOrder.fromValue(selectedOrder),
+                    selectedSort = GhRepositorySort.fromValue(selectedSort),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -122,6 +130,17 @@ class HomeSearchViewModel(
             }
         }
     }
+
+    fun updateSetting(order: GhOrder, sort: GhRepositorySort) {
+        viewModelScope.launch {
+            val query = (_screenState.value as? ScreenState.Idle)?.data?.query.orEmpty()
+
+            userDataRepository.setSearchSort(sort)
+            userDataRepository.setSearchOrder(order)
+
+            fetch(query)
+        }
+    }
 }
 
 @Stable
@@ -132,4 +151,6 @@ data class HomeSearchUiState(
     val favoriteRepoNames: List<GhRepositoryName>,
     val searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
     val languages: List<GhLanguage>,
+    val selectedOrder: GhOrder,
+    val selectedSort: GhRepositorySort,
 )
