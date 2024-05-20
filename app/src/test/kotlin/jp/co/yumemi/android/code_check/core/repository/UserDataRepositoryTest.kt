@@ -11,6 +11,8 @@ import io.mockk.just
 import io.mockk.mockk
 import jp.co.yumemi.android.code_check.core.datastore.UserDataStore
 import jp.co.yumemi.android.code_check.core.model.GhLanguage
+import jp.co.yumemi.android.code_check.core.model.GhOrder
+import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
 import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.ThemeColorConfig
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
@@ -157,5 +159,37 @@ class UserDataRepositoryTest : FunSpec({
 
         // Assert
         coVerify { mockDataStore.setTrendSince(since) }
+    }
+
+    test("setSearchOrder should call setSearchOrder on data store with correct parameters") {
+        // Arrange
+        val repository = UserDataRepositoryImpl(mockDataStore)
+        val order = GhOrder.DESC
+
+        coEvery { mockDataStore.setSearchOrder(order.value) } just Runs
+
+        // Act
+        runTest {
+            repository.setSearchOrder(order)
+        }
+
+        // Assert
+        coVerify { mockDataStore.setSearchOrder(order.value) }
+    }
+
+    test("setSearchSort should call setSearchSort on data store with correct parameters") {
+        // Arrange
+        val repository = UserDataRepositoryImpl(mockDataStore)
+        val sort = GhRepositorySort.HELP_WANTED_ISSUES
+
+        coEvery { mockDataStore.setSearchSort(sort.value) } just Runs
+
+        // Act
+        runTest {
+            repository.setSearchSort(sort)
+        }
+
+        // Assert
+        coVerify { mockDataStore.setSearchSort(sort.value) }
     }
 })

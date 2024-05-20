@@ -108,4 +108,28 @@ class UserDataStoreTest : FunSpec({
         // Assert
         coVerify { mockPreferences[trendLanguageKey] = "kotlin" }
     }
+
+    test("setSearchOrder should set the search order value in preferences") {
+        // Arrange
+        val searchOrderKey = stringPreferencesKey(UserData::searchOrder.name)
+        val userDataStore = UserDataStore(mockDataStore, mockFormatter)
+
+        // Act
+        userDataStore.setSearchOrder("ASC")
+
+        // Assert
+        coVerify { mockPreferences[searchOrderKey] = "ASC" }
+    }
+
+    test("setSearchSort should set the search sort value in preferences") {
+        // Arrange
+        val searchSortKey = stringPreferencesKey(UserData::searchSort.name)
+        val userDataStore = UserDataStore(mockDataStore, mockFormatter)
+
+        // Act
+        userDataStore.setSearchSort("stars")
+
+        // Assert
+        coVerify { mockPreferences[searchSortKey] = "stars" }
+    }
 })
