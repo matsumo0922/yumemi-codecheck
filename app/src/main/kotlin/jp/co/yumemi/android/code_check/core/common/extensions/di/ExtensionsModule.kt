@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.core.extensions.di
+package jp.co.yumemi.android.code_check.core.common.extensions.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

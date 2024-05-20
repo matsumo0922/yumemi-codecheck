@@ -1,18 +1,17 @@
 package jp.co.yumemi.android.code_check.core.repository
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.fleeksoft.ksoup.Ksoup
 import io.ktor.client.statement.bodyAsText
+import jp.co.yumemi.android.code_check.core.common.extensions.convertRelativeUrlsToAbsolute
+import jp.co.yumemi.android.code_check.core.common.extensions.parse
+import jp.co.yumemi.android.code_check.core.common.extensions.parsePaging
 import jp.co.yumemi.android.code_check.core.datastore.GhCacheDataStore
-import jp.co.yumemi.android.code_check.core.extensions.convertRelativeUrlsToAbsolute
-import jp.co.yumemi.android.code_check.core.extensions.parse
-import jp.co.yumemi.android.code_check.core.extensions.parsePaging
-import jp.co.yumemi.android.code_check.core.extensions.toColor
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhPaging
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
@@ -23,6 +22,7 @@ import jp.co.yumemi.android.code_check.core.model.GhSearchUsers
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.model.GhUserDetail
 import jp.co.yumemi.android.code_check.core.model.GhUserSort
+import jp.co.yumemi.android.code_check.core.model.entity.GhLanguageEntity
 import jp.co.yumemi.android.code_check.core.model.entity.GhTrendRepositoryEntity
 import jp.co.yumemi.android.code_check.core.model.entity.RepositoryDetailEntity
 import jp.co.yumemi.android.code_check.core.model.entity.SearchRepositoriesEntity
@@ -37,11 +37,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 import me.matsumo.yumemi.codecheck.R
 
 interface GhApiRepository {
@@ -65,7 +62,7 @@ interface GhApiRepository {
     suspend fun getRepositoryOgImageLink(repo: GhRepositoryName): String
 
     // others
-    suspend fun getLanguageColors(): Map<String, Color?>
+    suspend fun getLanguageColors(): List<GhLanguage>
 }
 
 class GhApiRepositoryImpl(
@@ -77,7 +74,7 @@ class GhApiRepositoryImpl(
 
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
-    private var cachedLanguageColors: Map<String, Color?>? = null
+    private var cachedLanguageColors: List<GhLanguage>? = null
 
     override fun clearCache() {
         scope.launch {
@@ -205,12 +202,12 @@ class GhApiRepositoryImpl(
         document.select("meta[property=og:image]").first()?.attr("content")!!
     }
 
-    override suspend fun getLanguageColors(): Map<String, Color?> = withContext(ioDispatcher) {
+    override suspend fun getLanguageColors(): List<GhLanguage> = withContext(ioDispatcher) {
         cachedLanguageColors ?: context.resources.openRawResource(R.raw.github_colors).use { inputStream ->
-            val json = Json.decodeFromString(JsonObject.serializer(), inputStream.bufferedReader().readText())
-            val dataMap = json.map { it.key to it.value.jsonObject["color"]?.jsonPrimitive?.contentOrNull?.toColor() }
+            val serializer = ListSerializer(GhLanguageEntity.serializer())
+            val entities = Json.decodeFromString(serializer, inputStream.bufferedReader().readText())
 
-            dataMap.toMap()
+            entities.translate()
         }.also {
             cachedLanguageColors = it
         }

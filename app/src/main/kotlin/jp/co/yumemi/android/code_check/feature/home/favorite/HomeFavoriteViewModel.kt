@@ -1,11 +1,11 @@
 package jp.co.yumemi.android.code_check.feature.home.favorite
 
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
-import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
+import jp.co.yumemi.android.code_check.core.common.extensions.RateLimitException
+import jp.co.yumemi.android.code_check.core.common.extensions.suspendRunCatching
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
@@ -54,7 +54,7 @@ class HomeFavoriteViewModel(
                 HomeFavoriteUiState(
                     favoriteRepositories = ghFavoriteRepository.getFavoriteRepositories(),
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
-                    languageColors = ghApiRepository.getLanguageColors(),
+                    languages = ghApiRepository.getLanguageColors(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -80,5 +80,5 @@ class HomeFavoriteViewModel(
 data class HomeFavoriteUiState(
     val favoriteRepositories: List<GhRepositoryDetail>,
     val favoriteRepoNames: List<GhRepositoryName>,
-    val languageColors: Map<String, Color?>,
+    val languages: List<GhLanguage>,
 )

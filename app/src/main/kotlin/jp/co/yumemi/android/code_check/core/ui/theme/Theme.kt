@@ -13,8 +13,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
-import jp.co.yumemi.android.code_check.core.extensions.LocalStateHolder
-import jp.co.yumemi.android.code_check.core.extensions.StateHolder
+import jp.co.yumemi.android.code_check.core.common.extensions.LocalStateHolder
+import jp.co.yumemi.android.code_check.core.common.extensions.StateHolder
 import jp.co.yumemi.android.code_check.core.model.ThemeColorConfig
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
 import jp.co.yumemi.android.code_check.core.ui.theme.color.DarkBlueColorScheme
