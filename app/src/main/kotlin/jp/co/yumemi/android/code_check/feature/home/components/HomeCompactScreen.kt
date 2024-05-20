@@ -3,14 +3,13 @@ package jp.co.yumemi.android.code_check.feature.home.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.feature.home.HomeNavHost
 import jp.co.yumemi.android.code_check.feature.home.navigateToHomeDestination
@@ -20,14 +19,14 @@ import org.koin.compose.koinInject
 
 @Composable
 fun HomeCompactScreen(
+    drawerState: DrawerState,
+    navController: NavHostController,
     navigateToRepositoryDetail: (GhRepositoryName) -> Unit,
     navigateToSettingTop: () -> Unit,
     navigateToAboutApp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val navController = rememberNavController()
 
     ModalNavigationDrawer(
         modifier = modifier,
