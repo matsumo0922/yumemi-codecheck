@@ -47,7 +47,9 @@ class HomeTrendViewModel(
             _screenState.value = suspendRunCatching {
                 val allLanguages = ghApiRepository.getLanguages()
                 val selectedSince = GhTrendSince.from(userDataRepository.userData.first().trendSince)
-                val selectedLanguage = userDataRepository.userData.first().trendLanguage.let { allLanguages.find { lang -> lang.title == it } }
+                val selectedLanguage = userDataRepository.userData.first().trendLanguage.let {
+                    allLanguages.find { lang -> lang.title == it }
+                }
 
                 HomeTrendUiState(
                     selectedSince = selectedSince,

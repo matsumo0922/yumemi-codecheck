@@ -14,7 +14,7 @@ data class GhLanguage(
     val color: Color,
     val name: String,
     val title: String,
-    val url: String
+    val url: String,
 )
 
 fun List<GhLanguageEntity>.translate(): List<GhLanguage> {
@@ -23,7 +23,7 @@ fun List<GhLanguageEntity>.translate(): List<GhLanguage> {
             color = it.color.toColor(),
             name = it.name,
             title = it.title,
-            url = it.url
+            url = it.url,
         )
     }
 }

@@ -67,7 +67,7 @@ internal fun HomeTrendSettingDialog(
     LaunchedEffect(searchQuery) {
         filteredLanguages.clear()
         filteredLanguages.addAll(
-            allLanguages.filter { it.title.contains(searchQuery, ignoreCase = true) }
+            allLanguages.filter { it.title.contains(searchQuery, ignoreCase = true) },
         )
     }
 
@@ -188,7 +188,7 @@ private fun SinceSection(
                                 contentDescription = null,
                             )
                         }
-                    }
+                    },
                 )
             }
         }
@@ -269,7 +269,7 @@ private fun LanguagesSection(
                                 contentDescription = null,
                             )
                         }
-                    }
+                    },
                 )
             }
         }

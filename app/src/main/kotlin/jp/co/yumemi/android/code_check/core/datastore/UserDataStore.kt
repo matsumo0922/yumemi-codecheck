@@ -5,8 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import jp.co.yumemi.android.code_check.core.model.GhLanguage
-import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.ThemeColorConfig
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
 import jp.co.yumemi.android.code_check.core.model.UserData

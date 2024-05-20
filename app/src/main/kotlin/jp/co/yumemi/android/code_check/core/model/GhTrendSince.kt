@@ -7,7 +7,8 @@ import kotlinx.serialization.Serializable
 enum class GhTrendSince(val value: String) {
     DAILY("Daily"),
     WEEKLY("Weekly"),
-    MONTHLY("Monthly");
+    MONTHLY("Monthly"),
+    ;
 
     companion object {
         fun from(value: String): GhTrendSince {
@@ -15,7 +16,7 @@ enum class GhTrendSince(val value: String) {
                 "daily" -> DAILY
                 "weekly" -> WEEKLY
                 "monthly" -> MONTHLY
-                else ->{
+                else -> {
                     Logger.i { "Failed to evaluate a GhTrendSince [$value]. Returning default value." }
                     DAILY
                 }
