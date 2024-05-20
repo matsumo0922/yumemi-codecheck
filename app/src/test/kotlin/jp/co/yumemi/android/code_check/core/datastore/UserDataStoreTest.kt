@@ -84,4 +84,28 @@ class UserDataStoreTest : FunSpec({
         // Assert
         coVerify { mockPreferences[isUseDynamicColorKey] = true }
     }
+
+    test("setTrendSince should set the trend since value in preferences") {
+        // Arrange
+        val trendSinceKey = stringPreferencesKey(UserData::trendSince.name)
+        val userDataStore = UserDataStore(mockDataStore, mockFormatter)
+
+        // Act
+        userDataStore.setTrendSince("daily")
+
+        // Assert
+        coVerify { mockPreferences[trendSinceKey] = "daily" }
+    }
+
+    test("setTrendLanguage should set the trend language value in preferences") {
+        // Arrange
+        val trendLanguageKey = stringPreferencesKey(UserData::trendLanguage.name)
+        val userDataStore = UserDataStore(mockDataStore, mockFormatter)
+
+        // Act
+        userDataStore.setTrendLanguage("kotlin")
+
+        // Assert
+        coVerify { mockPreferences[trendLanguageKey] = "kotlin" }
+    }
 })
