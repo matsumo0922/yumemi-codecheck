@@ -4,7 +4,8 @@ import co.touchlab.kermit.Logger
 
 enum class GhOrder(val value: String) {
     ASC("ASC"),
-    DESC("DESC");
+    DESC("DESC"),
+    ;
 
     companion object {
         fun fromValue(value: String): GhOrder {
