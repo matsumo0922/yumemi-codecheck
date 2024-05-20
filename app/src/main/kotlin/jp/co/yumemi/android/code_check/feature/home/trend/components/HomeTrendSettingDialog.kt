@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Clear
@@ -31,9 +29,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,15 +58,17 @@ internal fun HomeTrendSettingDialog(
 ) {
     val (since, setSince) = remember { mutableStateOf(selectedSince) }
     val (language, setLanguage) = remember { mutableStateOf(selectedLanguage) }
-    val filteredLanguages = remember { allLanguages.toMutableStateList() }
-
     val (searchQuery, onUpdateSearchQuery) = remember { mutableStateOf("") }
+    val filteredLanguages = remember { mutableStateListOf<GhLanguage>() }
 
     LaunchedEffect(searchQuery) {
         filteredLanguages.clear()
-        filteredLanguages.addAll(
-            allLanguages.filter { it.title.contains(searchQuery, ignoreCase = true) },
-        )
+
+        if (searchQuery.isNotBlank()) {
+            filteredLanguages.addAll(
+                allLanguages.filter { it.title.contains(searchQuery, ignoreCase = true) }.take(10),
+            )
+        }
     }
 
     Dialog(onDismissRequest = onDismiss) {
@@ -81,32 +81,24 @@ internal fun HomeTrendSettingDialog(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .weight(1f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
-            ) {
-                SinceSection(
-                    selectedSince = since,
-                    onClickSince = setSince,
-                )
+            SinceSection(
+                selectedSince = since,
+                onClickSince = setSince,
+            )
 
-                LanguagesSection(
-                    searchQuery = searchQuery,
-                    languages = filteredLanguages.toImmutableList(),
-                    selectedLanguage = language,
-                    onUpdateSearchQuery = onUpdateSearchQuery,
-                    onClickLanguage = {
-                        if (language == it) {
-                            setLanguage.invoke(null)
-                        } else {
-                            setLanguage.invoke(it)
-                        }
-                    },
-                )
-            }
+            LanguagesSection(
+                searchQuery = searchQuery,
+                languages = filteredLanguages.toImmutableList(),
+                selectedLanguage = language,
+                onUpdateSearchQuery = onUpdateSearchQuery,
+                onClickLanguage = {
+                    if (language == it) {
+                        setLanguage.invoke(null)
+                    } else {
+                        setLanguage.invoke(it)
+                    }
+                },
+            )
 
             Row(
                 modifier = Modifier
@@ -127,7 +119,10 @@ internal fun HomeTrendSettingDialog(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(4.dp),
                     colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
-                    onClick = { onClickUpdate.invoke(since, language) },
+                    onClick = {
+                        onClickUpdate.invoke(since, language)
+                        onDismiss.invoke()
+                    },
                 ) {
                     Text(text = stringResource(R.string.common_ok))
                 }
