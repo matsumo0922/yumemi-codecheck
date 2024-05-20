@@ -13,16 +13,22 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
+import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.ScreenState
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendIdleSection
+import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendSettingDialog
 import jp.co.yumemi.android.code_check.feature.home.trend.components.HomeTrendTopAppBar
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -51,10 +57,14 @@ fun HomeTrendRoute(
     ) {
         HomeTrendScreen(
             modifier = Modifier.fillMaxSize(),
+            selectedSince = it.selectedSince,
+            selectedLanguage = it.selectedLanguage,
+            allLanguages = it.allLanguages.toImmutableList(),
             trendRepositories = it.trendingRepositories.toImmutableList(),
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
             onRequestRefresh = viewModel::fetch,
             onRequestOgImageLink = viewModel::requestOgImageLink,
+            onClickUpdateSetting = viewModel::updateSetting,
             onClickRepository = navigateToRepositoryDetail,
             onClickAddFavorite = viewModel::addFavorite,
             onClickRemoveFavorite = viewModel::removeFavorite,
@@ -68,8 +78,12 @@ fun HomeTrendRoute(
 private fun HomeTrendScreen(
     trendRepositories: ImmutableList<GhTrendRepository>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
+    selectedSince: GhTrendSince,
+    selectedLanguage: GhLanguage?,
+    allLanguages: ImmutableList<GhLanguage>,
     onRequestRefresh: () -> Unit,
     onRequestOgImageLink: suspend (GhRepositoryName) -> String,
+    onClickUpdateSetting: (GhTrendSince, GhLanguage?) -> Unit,
     onClickRepository: (GhRepositoryName) -> Unit,
     onClickAddFavorite: (GhRepositoryName) -> Unit,
     onClickRemoveFavorite: (GhRepositoryName) -> Unit,
@@ -78,6 +92,7 @@ private fun HomeTrendScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val refreshState = rememberPullToRefreshState()
+    var isDisplayedSetting by remember { mutableStateOf(false) }
 
     if (refreshState.isRefreshing) {
         LaunchedEffect(true) {
@@ -94,6 +109,7 @@ private fun HomeTrendScreen(
             HomeTrendTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 scrollBehavior = scrollBehavior,
+                onClickSetting = { isDisplayedSetting = true },
                 onClickDrawer = onClickDrawer,
             )
         },
@@ -128,5 +144,15 @@ private fun HomeTrendScreen(
                 contentColor = MaterialTheme.colorScheme.primary,
             )
         }
+    }
+
+    if (isDisplayedSetting) {
+        HomeTrendSettingDialog(
+            selectedSince = selectedSince,
+            selectedLanguage = selectedLanguage,
+            allLanguages = allLanguages,
+            onClickUpdate = onClickUpdateSetting,
+            onDismiss = { isDisplayedSetting = false },
+        )
     }
 }

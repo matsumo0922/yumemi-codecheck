@@ -24,7 +24,7 @@ import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.WebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
-import jp.co.yumemi.android.code_check.core.extensions.colorToHexString
+import jp.co.yumemi.android.code_check.core.common.extensions.colorToHexString
 
 @Composable
 internal fun RepositoryDetailReadMeSection(

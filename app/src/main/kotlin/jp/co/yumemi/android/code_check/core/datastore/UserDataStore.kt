@@ -26,6 +26,8 @@ class UserDataStore(
             setThemeConfig(data.themeConfig)
             setThemeColorConfig(data.themeColorConfig)
             setUseDynamicColor(data.isUseDynamicColor)
+            setTrendSince(data.trendSince)
+            setTrendLanguage(data.trendLanguage)
         }
     }
 
@@ -56,6 +58,18 @@ class UserDataStore(
     suspend fun setUseDynamicColor(useDynamicColor: Boolean) {
         preference.edit {
             it[booleanPreferencesKey(UserData::isUseDynamicColor.name)] = useDynamicColor
+        }
+    }
+
+    suspend fun setTrendSince(trendSince: String) {
+        preference.edit {
+            it[stringPreferencesKey(UserData::trendSince.name)] = trendSince
+        }
+    }
+
+    suspend fun setTrendLanguage(trendLanguage: String) {
+        preference.edit {
+            it[stringPreferencesKey(UserData::trendLanguage.name)] = trendLanguage
         }
     }
 }

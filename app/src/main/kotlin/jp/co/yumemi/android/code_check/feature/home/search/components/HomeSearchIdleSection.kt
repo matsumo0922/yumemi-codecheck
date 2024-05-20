@@ -8,25 +8,24 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
-import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
+import jp.co.yumemi.android.code_check.core.common.extensions.drawVerticalScrollbar
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhSearchRepositories
 import jp.co.yumemi.android.code_check.core.model.asRepositoryDetail
 import jp.co.yumemi.android.code_check.core.ui.components.RepositoryItem
 import jp.co.yumemi.android.code_check.core.ui.extensions.IntRangeSaver
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 
 @Composable
 internal fun HomeSearchIdleSection(
     query: String,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
-    languageColors: ImmutableMap<String, Color?>,
+    languages: ImmutableList<GhLanguage>,
     pagingAdapter: LazyPagingItems<GhSearchRepositories.Item>,
     contentPadding: PaddingValues,
     onClickRepository: (GhRepositoryName) -> Unit,
@@ -55,7 +54,7 @@ internal fun HomeSearchIdleSection(
                     isFavorite = favoriteRepoNames.contains(item.repoName),
                     item = item.asRepositoryDetail(),
                     markupRange = markupRange,
-                    languageColor = languageColors[item.language],
+                    languageColor = languages.find { it.title == item.language }?.color,
                     onClickRepository = onClickRepository,
                     onClickAddFavorite = onClickAddFavorite,
                     onClickRemoveFavorite = onClickRemoveFavorite,

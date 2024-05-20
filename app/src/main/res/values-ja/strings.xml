@@ -1,6 +1,6 @@
 <resources>
     <!-- Common -->
-    <string name="common_ok">Android Engineer CodeCheck</string>
+    <string name="common_ok">OK</string>
     <string name="common_cancel">キャンセル</string>
     <string name="common_allow">許可</string>
     <string name="common_denied">拒否</string>
@@ -20,11 +20,8 @@
     <string name="common_details">詳細</string>
     <string name="common_delete">削除</string>
     <string name="common_completed">完了</string>
-    <string name="common_download">ダウンロード</string>
-    <string name="common_downloaded">ダウンロードしました</string>
     <string name="common_see_more">もっと見る</string>
-    <string name="common_block">ブロック</string>
-    <string name="common_unblock">解除</string>
+    <string name="common_search">検索</string>
 
     <!-- Common Error -->
     <string name="error_executed">エラーが発生しました</string>
@@ -64,6 +61,8 @@
     <string name="trending_title">トレンド</string>
     <string name="trending_empty_title">トレンドがありません</string>
     <string name="trending_empty_message">次回更新までしばらくお待ちください</string>
+    <string name="trending_language">言語</string>
+    <string name="trending_since">期間</string>
     
     <!-- Settings -->
     <string name="settings_title">設定</string>

@@ -16,7 +16,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import jp.co.yumemi.android.code_check.core.extensions.ToastUtils
+import jp.co.yumemi.android.code_check.core.common.extensions.ToastUtils
 import jp.co.yumemi.android.code_check.core.model.YacBuildConfig
 import jp.co.yumemi.android.code_check.core.ui.AsyncLoadContents
 import jp.co.yumemi.android.code_check.feature.setting.SettingTopAppBar

@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.core.extensions
+package jp.co.yumemi.android.code_check.core.common.extensions
 
 /*
  * MIT License

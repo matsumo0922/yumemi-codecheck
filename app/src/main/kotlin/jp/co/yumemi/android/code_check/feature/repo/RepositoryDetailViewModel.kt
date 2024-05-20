@@ -3,8 +3,8 @@ package jp.co.yumemi.android.code_check.feature.repo
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
-import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
+import jp.co.yumemi.android.code_check.core.common.extensions.RateLimitException
+import jp.co.yumemi.android.code_check.core.common.extensions.suspendRunCatching
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState

@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.core.extensions
+package jp.co.yumemi.android.code_check.core.common.extensions
 
 import co.touchlab.kermit.Logger
 import kotlin.coroutines.cancellation.CancellationException

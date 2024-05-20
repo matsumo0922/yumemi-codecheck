@@ -11,7 +11,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import jp.co.yumemi.android.code_check.core.extensions.drawVerticalScrollbar
+import jp.co.yumemi.android.code_check.core.common.extensions.drawVerticalScrollbar
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.ui.components.TrendRepositoryItem

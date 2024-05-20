@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.core.repository
 
+import androidx.compose.ui.graphics.Color
 import io.kotest.core.spec.style.FunSpec
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -9,6 +10,8 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import jp.co.yumemi.android.code_check.core.datastore.UserDataStore
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
+import jp.co.yumemi.android.code_check.core.model.GhTrendSince
 import jp.co.yumemi.android.code_check.core.model.ThemeColorConfig
 import jp.co.yumemi.android.code_check.core.model.ThemeConfig
 import jp.co.yumemi.android.code_check.core.model.UserData
@@ -120,5 +123,39 @@ class UserDataRepositoryTest : FunSpec({
 
         // Assert
         coVerify { mockDataStore.setUseDynamicColor(useDynamicColor) }
+    }
+
+    test("setTrendLanguage should call setTrendLanguage on data store with correct parameters") {
+        // Arrange
+        val repository = UserDataRepositoryImpl(mockDataStore)
+        val language = "Kotlin"
+        val ghLanguage = GhLanguage(Color.Unspecified, "", "Kotlin", "")
+
+        coEvery { mockDataStore.setTrendLanguage(language) } just Runs
+
+        // Act
+        runTest {
+            repository.setTrendLanguage(ghLanguage)
+        }
+
+        // Assert
+        coVerify { mockDataStore.setTrendLanguage(language) }
+    }
+
+    test("setTrendSince should call setTrendSince on data store with correct parameters") {
+        // Arrange
+        val repository = UserDataRepositoryImpl(mockDataStore)
+        val since = "Daily"
+        val ghTrendSince = GhTrendSince.DAILY
+
+        coEvery { mockDataStore.setTrendSince(since) } just Runs
+
+        // Act
+        runTest {
+            repository.setTrendSince(ghTrendSince)
+        }
+
+        // Assert
+        coVerify { mockDataStore.setTrendSince(since) }
     }
 })

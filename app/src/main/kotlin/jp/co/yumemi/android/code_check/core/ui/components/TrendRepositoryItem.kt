@@ -44,7 +44,7 @@ import co.touchlab.kermit.Logger
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
-import jp.co.yumemi.android.code_check.core.extensions.toColor
+import jp.co.yumemi.android.code_check.core.common.extensions.toColor
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhTrendRepository
 import jp.co.yumemi.android.code_check.core.ui.extensions.ComponentPreviews

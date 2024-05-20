@@ -1,13 +1,13 @@
 package jp.co.yumemi.android.code_check.feature.home.search
 
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import jp.co.yumemi.android.code_check.core.extensions.RateLimitException
-import jp.co.yumemi.android.code_check.core.extensions.isAnyWordStartsWith
-import jp.co.yumemi.android.code_check.core.extensions.suspendRunCatching
+import jp.co.yumemi.android.code_check.core.common.extensions.RateLimitException
+import jp.co.yumemi.android.code_check.core.common.extensions.isAnyWordStartsWith
+import jp.co.yumemi.android.code_check.core.common.extensions.suspendRunCatching
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhOrder
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.GhRepositorySort
@@ -68,7 +68,7 @@ class HomeSearchViewModel(
                     searchHistories = ghSearchHistoryRepository.searchHistories.first(),
                     favoriteRepoNames = ghFavoriteRepository.favoriteData.first().repos,
                     searchRepositoriesPaging = emptyPaging(),
-                    languageColors = ghApiRepository.getLanguageColors(),
+                    languages = ghApiRepository.getLanguages(),
                 )
             }.fold(
                 onSuccess = { ScreenState.Idle(it) },
@@ -131,5 +131,5 @@ data class HomeSearchUiState(
     val searchHistories: List<GhSearchHistory>,
     val favoriteRepoNames: List<GhRepositoryName>,
     val searchRepositoriesPaging: Flow<PagingData<GhSearchRepositories.Item>>,
-    val languageColors: Map<String, Color?>,
+    val languages: List<GhLanguage>,
 )

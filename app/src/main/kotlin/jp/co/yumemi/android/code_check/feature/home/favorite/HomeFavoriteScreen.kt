@@ -14,9 +14,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jp.co.yumemi.android.code_check.core.model.GhLanguage
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryDetail
 import jp.co.yumemi.android.code_check.core.model.GhRepositoryName
 import jp.co.yumemi.android.code_check.core.model.ScreenState
@@ -25,9 +25,7 @@ import jp.co.yumemi.android.code_check.core.ui.components.EmptyView
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteIdleSection
 import jp.co.yumemi.android.code_check.feature.home.favorite.components.HomeFavoriteTopAppBar
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableMap
 import me.matsumo.yumemi.codecheck.R
 import org.koin.androidx.compose.koinViewModel
 
@@ -56,7 +54,7 @@ fun HomeFavoriteRoute(
             modifier = Modifier.fillMaxSize(),
             favoriteRepositories = it.favoriteRepositories.toImmutableList(),
             favoriteRepoNames = it.favoriteRepoNames.toImmutableList(),
-            languageColors = it.languageColors.toImmutableMap(),
+            languages = it.languages.toImmutableList(),
             onRequestRefresh = viewModel::fetch,
             onClickDrawer = openDrawer,
             onClickRepository = navigateToRepositoryDetail,
@@ -71,7 +69,7 @@ fun HomeFavoriteRoute(
 private fun HomeFavoriteScreen(
     favoriteRepositories: ImmutableList<GhRepositoryDetail>,
     favoriteRepoNames: ImmutableList<GhRepositoryName>,
-    languageColors: ImmutableMap<String, Color?>,
+    languages: ImmutableList<GhLanguage>,
     onRequestRefresh: () -> Unit,
     onClickDrawer: () -> Unit,
     onClickRepository: (GhRepositoryName) -> Unit,
@@ -109,7 +107,7 @@ private fun HomeFavoriteScreen(
                     modifier = Modifier.fillMaxSize(),
                     favoriteRepositories = favoriteRepositories,
                     favoriteRepoNames = favoriteRepoNames,
-                    languageColors = languageColors,
+                    languages = languages,
                     contentPadding = it,
                     onClickRepository = onClickRepository,
                     onClickAddFavorite = onClickAddFavorite,
