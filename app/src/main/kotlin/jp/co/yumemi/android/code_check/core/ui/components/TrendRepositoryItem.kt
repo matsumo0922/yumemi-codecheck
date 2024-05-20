@@ -109,14 +109,16 @@ fun TrendRepositoryItem(
                 },
             )
 
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = trendRepository.description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-            )
+            if (trendRepository.description.isNotBlank()) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = trendRepository.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
 
             Row(
                 modifier = Modifier
@@ -125,10 +127,12 @@ fun TrendRepositoryItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                LanguageCard(
-                    language = trendRepository.language,
-                    languageColor = trendRepository.languageColor.toColor(),
-                )
+                if (trendRepository.language != null && trendRepository.languageColor != null) {
+                    LanguageCard(
+                        language = trendRepository.language,
+                        languageColor = trendRepository.languageColor.toColor(),
+                    )
+                }
 
                 CountCard(
                     count = trendRepository.stars,

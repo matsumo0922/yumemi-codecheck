@@ -18,9 +18,9 @@ class GhTrendRepositoryEntity(
     @SerialName("forks")
     val forks: Int,
     @SerialName("language")
-    val language: String,
+    val language: String?,
     @SerialName("languageColor")
-    val languageColor: String,
+    val languageColor: String?,
     @SerialName("name")
     val name: String,
     @SerialName("stars")
