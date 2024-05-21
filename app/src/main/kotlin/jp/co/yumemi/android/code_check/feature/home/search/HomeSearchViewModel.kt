@@ -90,6 +90,8 @@ class HomeSearchViewModel(
         sort: GhRepositorySort?,
         order: GhOrder?,
     ) {
+        if (query.isBlank()) return
+
         viewModelScope.launch {
             ghSearchHistoryRepository.addSearchHistory(query)
 

@@ -71,8 +71,10 @@ internal fun HomeSearchTopAppBar(
         query = query,
         onQueryChange = onUpdateQuery,
         onSearch = {
-            setActive.invoke(false)
-            onClickSearch.invoke(it)
+            if (it.isNotBlank()) {
+                setActive.invoke(false)
+                onClickSearch.invoke(it)
+            }
         },
         active = isActive,
         onActiveChange = setActive,
@@ -124,7 +126,7 @@ internal fun HomeSearchTopAppBar(
                 key = { it.query },
             ) {
                 AnimatedVisibility(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(fadeInSpec = null, fadeOutSpec = null),
                     visible = suggestions.contains(it),
                     enter = fadeIn(tween(150)),
                     exit = fadeOut(tween(150)),
@@ -144,9 +146,12 @@ internal fun HomeSearchTopAppBar(
                 }
             }
 
-            item {
-                OutlinedButton(onClick = onClickSort) {
-                    Text(stringResource(R.string.search_sort))
+            item("Button") {
+                OutlinedButton(
+                    modifier = Modifier.padding(16.dp),
+                    onClick = onClickSort,
+                ) {
+                    Text("${stringResource(R.string.search_order)} / ${stringResource(R.string.search_sort)}")
                 }
             }
         }
